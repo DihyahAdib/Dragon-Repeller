@@ -30,6 +30,8 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
+const controlsForMonsters = document.querySelector("#controlsForMonsters");
+
 //initialize buttons
 
 button1.onclick = goStore;
@@ -98,13 +100,13 @@ async function buyHealth() {
         console.log("Health purchased, Gold reduced to", gold);
         text.innerText = ("Health purchased, -10 Gold");
         await new Promise(resolve => setTimeout(resolve, 800));
-        text.innerText = (" ");
+        text.innerText = "";
         
         if (gold <= 0) {
             button3.disabled = true;
             text.innerText = ("Not Enough Gold!");
             await new Promise(resolve => setTimeout(resolve, 1800));
-            text.innerText = (" ");
+            text.innerText = "";
         }
     }  
 }
@@ -117,7 +119,7 @@ async function buyWeapon() {
         console.log("Weapon purchased, Gold reduced to", gold);
         text.innerText = ("Weapon purchased, -30 Gold");
         await new Promise(resolve => setTimeout(resolve, 800));
-        text.innerText = (" ");
+        text.innerText = "";
         
         if (currentWeapon === 1) {
             button5.disabled = true;
@@ -140,9 +142,23 @@ async function goCave() {
     text.innerText = "Going To Cave...";
 
     await new Promise(resolve => setTimeout(resolve, 400));
+
+    controlsForMonsters.style.display = "block"
+    button6.style.display = "inline-block";
+    button7.style.display = "inline-block";
+    button8.style.display = "inline-block";
+    button9.style.display = "inline-block";
     button3.style.display = "none";
     button5.style.display = "none";
+    if (level === 0) {
+        text.innerText = "Dragon Locked: Get More Levels!";
+        await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+    await new Promise(resolve => setTimeout(resolve, 300));
+    text.innerText = ""
+
 }
+
 function fightGhoul() {
     console.log("Fighting The Dragon!")
 }
@@ -152,6 +168,14 @@ function fightBeast() {
 function fightWereWolf() {
 
 }
-function fightDragon() {
+async function fightDragon() {
     console.log("Fighting The Dragon!")
+    if (level === 0) {
+        text.innerText = "Dragon Locked: Get More Levels!";
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        button9.disabled = true;
+        text.innerText = ""
+    } else {
+
+    }
 }

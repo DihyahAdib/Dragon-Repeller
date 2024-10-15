@@ -95,6 +95,13 @@ body {
 
 .buttonsForMonsters {
     justify-content: space-around;
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
 }
 
 #controls {
