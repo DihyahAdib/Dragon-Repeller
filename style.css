@@ -54,12 +54,27 @@ body {
 }
 
 #game {
-    max-width: 50%;
+    max-width: 40%;
     height: 85%;
     overflow: hidden;
     background-color: lightgray;
     color: white;
-    margin: 0 auto;
+    margin: 0 inherit;
+    margin-left: auto;
+    margin-right: auto; /* CHANGE THESE WITH JS LATER  myDiv.style.margin-left = "20em"; myDiv.style.margin-right = "10em"; */
+    padding: 20px;
+    border-radius: 10px 10px;
+}
+
+#shopUI {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    background-color: rgb(131, 131, 131);
+    color: white;
+    margin: 0 inherit;
+    margin-left: auto;
+    margin-right: auto; /* CHANGE THESE WITH JS LATER  myDiv.style.margin-left = "20em"; myDiv.style.margin-right = "10em"; */
     padding: 20px;
     border-radius: 10px 10px;
 }
@@ -114,12 +129,14 @@ body {
 }
 
 #controlsForMonsters {
-    display: flex;
-    margin: 13px;
-    flex-direction: column;
+    height: 110px;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px; 
+    margin: 40px;
     border: 2px black solid;
     border-radius: 20px 12px;
-    padding: 5px;
+    padding: 3em 2.8em 2em 2.8em;
 }
 
 #monsterStats {

@@ -1,12 +1,12 @@
 let level = 0;
 let xp = 0;
 let health = 100;
-let gold = 100;
+let gold = 50;
 let currentWeapon = 0;
-
+let fightingState = [0, 1, 2];
 let fighting;
 let monsterHealth;
-let inventory = ["Stick"];
+let inventory = ["Sword"];
 
 const button1 = document.querySelector("#button1"); //--- ONLY STORE BUTTON ---//
 const button2 = document.querySelector("#button2"); //--- ONLY CAVE BUTTON ---//
@@ -86,6 +86,12 @@ async function justBack() {
     button3.style.display = "none";
     button5.style.display = "none";
 
+    controlsForMonsters.style.display = "none";
+    button6.style.display = "none";
+    button7.style.display = "none";
+    button8.style.display = "none";
+    button9.style.display = "none";
+
     await new Promise(resolve => setTimeout(resolve, 100));
     text.innerText = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 }
@@ -117,7 +123,7 @@ async function buyWeapon() {
         currentWeapon++;
         
         console.log("Weapon purchased, Gold reduced to", gold);
-        text.innerText = ("Weapon purchased, -30 Gold");
+        text.innerText = (nameOfWeapon + " purchased, -30 Gold");
         await new Promise(resolve => setTimeout(resolve, 800));
         text.innerText = "";
         
@@ -143,13 +149,16 @@ async function goCave() {
 
     await new Promise(resolve => setTimeout(resolve, 400));
 
-    controlsForMonsters.style.display = "block"
+    controlsForMonsters.style.display = "block";
     button6.style.display = "inline-block";
     button7.style.display = "inline-block";
     button8.style.display = "inline-block";
     button9.style.display = "inline-block";
+
+    button1.disabled = true;
     button3.style.display = "none";
     button5.style.display = "none";
+
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
         await new Promise(resolve => setTimeout(resolve, 2000));
