@@ -1,25 +1,38 @@
+//Inspired by FreeCodeCamp Developed by Dihyah Adib.//
+
 let level = 0;
 let xp = 0;
 let health = 100;
-let gold = 50;
+let gold = 150;
 let currentWeapon = 0;
 let fightingState = [0, 1, 2];
 let fighting;
 let monsterHealth;
 let inventory = ["Sword"];
 
-const button1 = document.querySelector("#button1"); //--- ONLY STORE BUTTON ---//
-const button2 = document.querySelector("#button2"); //--- ONLY CAVE BUTTON ---//
-const button3 = document.querySelector("#button3"); //--- ONLY BUY10HP BUTTON ---//
+// -------------- POTION BUTTONS -----------------------//
+const button10HP = document.querySelector("#button10HP"); 
+const button50HP = document.querySelector("#button50HP");
+const button100HP = document.querySelector("#button100HP"); 
 
-const button4 = document.querySelector("#button4"); //--- ONLY BACK BUTTON ---//
-const button5 = document.querySelector("#button5"); //--- ONLY BUYWEAPON BUTTON ---//
-const button6 = document.querySelector("#button6"); //--- ONLY GHOUL BUTTON ---//
+// -------------- DIRECTIONAL BUTTONS -----------------------//
+const buttonBack = document.querySelector("#buttonBack"); 
+const buttonStore = document.querySelector("#buttonStore");
+const buttonCave = document.querySelector("#buttonCave");
 
-const button7 = document.querySelector("#button7"); //--- ONLY BEAST BUTTON ---//
-const button8 = document.querySelector("#button8"); //--- ONLY WEREWOLF BUTTON ---//
-const button9 = document.querySelector("#button9"); //--- ONLY DRAGGGOOON BUTTON ---//
+// -------------- WEAPONS BUTTONS -----------------------//
+const buttonSword = document.querySelector("#buttonSword");
+const buttonScythe = document.querySelector("#buttonScythe");
+const buttonGreatHammer = document.querySelector("#buttonGreatHammer");
+const buttonExcalibur = document.querySelector("#buttonExcalibur");
 
+// -------------- MONSTER BUTTONS -----------------------//
+const buttonGhoul = document.querySelector("#buttonGhoul");
+const buttonBeast = document.querySelector("#buttonBeast");
+const buttonWereWolf = document.querySelector("#buttonWereWolf");
+const buttonDragon = document.querySelector("#buttonDragon"); 
+
+// -------------- TEXT BUTTONS -----------------------//
 const levelText = document.querySelector("#levelText");
 const text = document.querySelector("#text");
 const xpText = document.querySelector("#xpText");
@@ -36,18 +49,28 @@ const monsterHealthText = document.querySelector("#monsterHealth");
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 
 //initialize buttons
+// ------ POTION INITIALIZATION ------//
+button10HP.onclick = buyHealth10;
+button50HP.onclick = buyHealth50;
+button100HP.onclick = buyHealth100;
 
-button1.onclick = goStore;
-button2.onclick = goCave;
-button3.onclick = buyHealth;
+// ------ DIRECTIONAL INITIALIZATION ------//
+buttonBack.onclick = justBack;
+buttonStore.onclick = goStore;
+buttonCave.onclick = goCave;
 
-button4.onclick = justBack;
-button5.onclick = buyWeapon;
-button6.onclick = fightGhoul;
+// ------ WEAPON INITIALIZATION ------//
+buttonSword.onclick = buyWeapon;
+buttonScythe.onclick = buyWeapon;
+buttonGreatHammer.onclick = buyWeapon;
+buttonExcalibur.onclick = buyWeapon;
 
-button7.onclick = fightBeast;
-button8.onclick = fightWereWolf;
-button9.onclick = fightDragon;
+// ------ MONSTER INITIALIZATION ------//
+buttonGhoul.onclick = fightGhoul;
+buttonBeast.onclick = fightBeast;
+buttonWereWolf.onclick = fightWereWolf;
+buttonDragon.onclick = fightDragon;
+
 
 async function goStore() {
     console.log("Going To Store");
@@ -87,16 +110,15 @@ async function justBack() {
     text.innerText = "Going Back To Main Menu...";
 
     await new Promise(resolve => setTimeout(resolve, 400));
-    button1.disabled = false;
-    button3.style.display = "none";
+    buttonStore.disabled = false;
 
     shopText.style.visibility = "hidden";
     controlsForMonsters.style.display = "none";
     //These buttons are for monster buttons//
-    button6.style.display = "none";
-    button7.style.display = "none";
-    button8.style.display = "none";
-    button9.style.display = "none";
+    buttonGhoul.style.display = "none";
+    buttonBeast.style.display = "none";
+    buttonWereWolf.style.display = "none";
+    buttonDragon.style.display = "none";
     //------------------------------------//
     gameText.style.marginLeft = "auto";
     gameText.style.marginRight = "auto";
@@ -104,39 +126,71 @@ async function justBack() {
     text.innerText = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 }
 
-async function buyHealth() {
+async function buyHealth10() {
     if (gold >= 10) {
         gold -= 10;
         goldText.innerText = gold;
         health += 10; 
         healthText.innerText = health;
-        
         console.log("Health purchased, Gold reduced to", gold);
         text.innerText = ("Health purchased, -10 Gold");
         await new Promise(resolve => setTimeout(resolve, 800));
         text.innerText = "";
-        
-        if (gold <= 0) {
-            button3.disabled = true;
-            text.innerText = ("Not Enough Gold!");
-            await new Promise(resolve => setTimeout(resolve, 1800));
+    }  
+    if (gold <= 0) {
+        button10HP.disabled = true;
+        text.innerText = ("Not Enough Gold!");
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        text.innerText = "";
+    }
+}
+async function buyHealth50() {
+    if (gold <= 50 || level === 0) {
+        button50HP.disabled = true;
+        text.innerText = ("Not Enough Gold!");
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        text.innerText = "";
+        if (gold >= 50 && level === 5) {
+            gold -= 50;
+            goldText.innerText = gold;
+            health += 50; 
+            healthText.innerText = health;
+            console.log("Health purchased, Gold reduced to", gold);
+            text.innerText = ("Health purchased, -50 Gold");
+            await new Promise(resolve => setTimeout(resolve, 800));
+            text.innerText = "";
+        } 
+    }
+}
+async function buyHealth100() {
+    if (gold <= 100 || level === 0) {
+        button100HP.disabled = true;
+        text.innerText = ("Not Enough Gold!");
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        text.innerText = "";
+        if (gold >= 100 && level === 10) {
+            gold -= 100;
+            goldText.innerText = gold;
+            health += 100; 
+            healthText.innerText = health;
+            console.log("Health purchased, Gold reduced to", gold);
+            text.innerText = ("Health purchased, -100 Gold");
+            await new Promise(resolve => setTimeout(resolve, 800));
             text.innerText = "";
         }
-    }  
+    }
 }
 async function buyWeapon() {
     if (gold >= 30) {
         gold -= 30;
         goldText.innerText = gold;
         currentWeapon++;
-        
         console.log("Weapon purchased, Gold reduced to", gold);
         text.innerText = (nameOfWeapon + " purchased, -30 Gold");
         await new Promise(resolve => setTimeout(resolve, 800));
         text.innerText = "";
-        
         if (currentWeapon === 1) {
-            button5.disabled = true;
+            buttonSword.disabled = true;
             await new Promise(resolve => setTimeout(resolve, 400));
         }
     } 
@@ -158,14 +212,14 @@ async function goCave() {
     await new Promise(resolve => setTimeout(resolve, 400));
 
     controlsForMonsters.style.display = "block";
-    button6.style.display = "inline-block";
-    button7.style.display = "inline-block";
-    button8.style.display = "inline-block";
-    button9.style.display = "inline-block";
+    buttonGhoul.style.display = "inline-block";
+    buttonBeast.style.display = "inline-block";
+    buttonWereWolf.style.display = "inline-block";
+    buttonDragon.style.display = "inline-block";
 
-    button1.disabled = true;
-    button3.style.display = "none";
-    button5.style.display = "none";
+    buttonStore.disabled = true;
+    buttonHP.style.display = "none";
+    buttonSword.style.display = "none";
 
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
@@ -190,9 +244,9 @@ async function fightDragon() {
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
         await new Promise(resolve => setTimeout(resolve, 1500));
-        button9.disabled = true;
+        buttonDragon.disabled = true;
         text.innerText = ""
     } else {
-
+        text.innerText = "Something will happen idk yet lol"
     }
 }

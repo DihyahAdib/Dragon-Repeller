@@ -14,12 +14,12 @@
                 <span class="stat">Level: <strong><span id="levelText">0</span></strong></span>
                 <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
                 <span class="stat">Health: <strong><span id="healthText">100</span></strong></span>
-                <span class="stat">Gold: <strong><span id="goldText">50</span></strong></span>
+                <span class="stat">Gold: <strong><span id="goldText">150</span></strong></span>
             </div>
             <div id="controls">
-                <button class="buttons" id="button1">Store</button>
-                <button class="buttons" id="button2">Go to cave</button>
-                <button class="buttons" id="button4">Back</button>
+                <button class="buttons" id="buttonStore">Store</button>
+                <button class="buttons" id="buttonCave">Go to cave</button>
+                <button class="buttons" id="buttonBack">Back</button>
             </div>
             <div style="display: none;" id="monsterStats">
                 <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
@@ -29,10 +29,10 @@
                 You are in the town square. Where do you want to go? Use the buttons above.
             </div>
             <div style="display: none;" id="controlsForMonsters">
-                <button class="buttonsForMonsters" id="button6" style="display: none;">Fight The Ghoul</button>
-                <button class="buttonsForMonsters" id="button7" style="display: none;">Fight The Beast</button>
-                <button class="buttonsForMonsters" id="button8" style="display: none;">Fight The werewolf</button>
-                <button class="buttonsForMonsters" id="button9" style="display: none;">Fight The Dragon</button>
+                <button class="buttonsForMonsters" id="buttonGhoul" style="display: none;">Fight The Ghoul</button>
+                <button class="buttonsForMonsters" id="buttonBeast" style="display: none;">Fight The Beast</button>
+                <button class="buttonsForMonsters" id="buttonWereWolf" style="display: none;">Fight The WereWolf</button>
+                <button class="buttonsForMonsters" id="buttonDragon" style="display: none;">Fight The Dragon</button>
             </div>
         </div>
         <div style="visibility: hidden;" id="shopUI"> 
@@ -40,16 +40,16 @@
                 <hr><h1>Weapon Shop</h1><hr>
                 <p>Hover over buttons to display price.</p>
                 <ul>
-                    <button title="This Cost 30g" class="buttonsForWeapons" id="button5">Sword</button>
-                    <button title="This Cost 50g" class="buttonsForWeapons">Scythe</button>
-                    <button title="This Cost 100g" class="buttonsForWeapons">Great Hammer</button>
-                    <button title="This Cost 150g" class="buttonsForWeapons">Excalibur</button>
+                    <button title="This Cost 30g" class="buttonsForWeapons" id="buttonSword">Sword</button>
+                    <button title="This Cost 50g" class="buttonsForWeapons" id="buttonScythe">Scythe</button>
+                    <button title="This Cost 100g" class="buttonsForWeapons" id="buttonGreatHammer">Great Hammer</button>
+                    <button title="This Cost 150g" class="buttonsForWeapons" id="buttonExcalibur">Excalibur</button>
                 </ul>
                 <hr><h1>Potion Shop</h1><hr>
                 <ul>
-                    <button title="This Cost 10g" class="buttonsForPotions" id="button3">10 HP</button>
-                    <button title="This Cost 10g" class="buttonsForPotions" id="button3">30 HP</button>
-                    <button title="This Cost 10g" class="buttonsForPotions" id="button3">50 HP</button>
+                    <button title="This Cost 10g" class="buttonsForPotions" id="button10HP">10 HP</button>
+                    <button title="This Cost 50g" class="buttonsForPotions" id="button50HP">50 HP</button>
+                    <button title="This Cost 100g" class="buttonsForPotions" id="button100HP">100 HP</button>
                 </ul>
             </div>
         </div>
