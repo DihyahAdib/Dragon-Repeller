@@ -1,0 +1,140 @@
+@font-face {
+    font-family: "Comforta";
+    src: url(./Comfortaa-Light.ttf);
+}
+@font-face {
+    font-family: "Nexa";
+    src: url(./Nexa-Heavy.ttf);
+}
+@font-face {
+    font-family: "Dreams";
+    src: url(./CaviarDreams.ttf);
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
+    background-size: 200% 200%;
+    animation: color 35.5s ease-in-out infinite;
+    overflow: hidden;
+}
+
+@keyframes color{
+    0%{
+        background-position: 0 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0 50%;
+    }
+}
+
+#nameGame {
+    align-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: "Dreams";
+    font-size: 40px;
+    text-align: center;
+    color: rgb(243, 243, 243);
+}
+
+#text {
+    font-family: "Dreams";
+    font-weight: 560;
+    height: 4em;
+    background-color: black;
+    color: white;
+    padding: 2em;
+    font-size: 25px;
+    text-align: center;
+}
+
+#game {
+    max-width: 50%;
+    height: 85%;
+    overflow: hidden;
+    background-color: lightgray;
+    color: white;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px 10px;
+}
+
+.buttons {
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
+}
+
+.buttons:hover {
+    background-color: rgb(160, 160, 160);
+    color: rgb(255, 255, 255);
+}
+
+#button4 {
+    border: none;
+}
+
+#button4:hover {
+    background-color: #0a416e;
+    color: whitesmoke;
+} 
+
+.buttonsForMonsters:hover {
+    background-color: rgb(197, 102, 47);
+    color: rgb(255, 255, 255);
+}
+
+.buttonsForMonsters {
+    justify-content: space-around;
+}
+
+#controls {
+    display: flex;
+    margin: 13px;
+    flex-direction: column;
+    border: 2px black solid;
+    border-radius: 20px 12px;
+    padding: 5px;
+}
+
+#controlsForMonsters {
+    display: flex;
+    margin: 13px;
+    flex-direction: column;
+    border: 2px black solid;
+    border-radius: 20px 12px;
+    padding: 5px;
+}
+
+#monsterStats {
+    border: 1px black solid;
+    color: white;
+    padding: 5px;
+    background-color: red;
+}
+
+#stats {
+    border: 1px black solid;
+    border-radius: 24px 12px;
+    color: black;
+    padding: 5px;
+    text-align: left;
+}
+
+.stat {
+    font-family: "Nexa";
+    font-size: 20px;
+    display: inline-flex; 
+    justify-content:space-between; /* Space the text evenly */
+    padding-right: 10px;
+    margin: 5px 10px;
+}

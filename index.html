@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>JS Game</title>
+    </head>
+
+    <body>
+        <h1 id="nameGame">Dragon Repeller</h1>
+        <div id="game">
+            <div id="stats">
+                <span class="stat">Level: <strong><span id="levelText">0</span></strong></span>
+                <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
+                <span class="stat">Health: <strong><span id="healthText">100</span></strong></span>
+                <span class="stat">Gold: <strong><span id="goldText">100</span></strong></span>
+            </div>
+
+            <div id="controls">
+                <button class="buttons" id="button1">Store</button>
+                <button class="buttons" id="button2">Go to cave</button>
+                <button class="buttons" id="button3" style="display: none;">Buy 10 Hp | 10 Gold</button>
+                <button class="buttons" id="button5" style="display: none;">Buy Sword | 30 Gold</button>
+                <button class="buttons" id="button4">Back</button>
+            </div>
+
+            <div style="display: none;" id="monsterStats">
+                <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
+                <span class="stat">Health: <strong><span id="monsterHealth"></span></strong></span>
+            </div>
+
+            <div class="texttext" id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
+                You are in the town square. Where do you want to go? Use the buttons above.
+            </div>
+
+            <div id="controlsForMonsters">
+                <button class="buttonsForMonsters" id="button6" style="display: flex;">Fight The Ghoul !</button>
+                <button class="buttonsForMonsters" id="button7" style="display: flex;">Fight The Beast !</button>
+                <button class="buttonsForMonsters" id="button8" style="display: flex;">Fight The werewolf !</button>
+                <button class="buttonsForMonsters" id="button9" style="display: flex;">Fight The Dragon !</button>
+            </div>
+        </div>
+    </body>
+    <script type="module" src=""></script>
+    <script src="script.js"></script>
+</html>
