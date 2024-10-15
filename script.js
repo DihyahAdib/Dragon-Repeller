@@ -26,6 +26,9 @@ const xpText = document.querySelector("#xpText");
 const healthText = document.querySelector("#healthText");
 const goldText = document.querySelector("#goldText");
 
+const gameText = document.querySelector("#game");
+const shopText = document.querySelector("#shopUI");
+
 const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
@@ -61,9 +64,10 @@ async function goStore() {
     text.innerText = "Going To Store...";
 
     await new Promise(resolve => setTimeout(resolve, 400));
-    button3.style.display = "inline-block";
-    button5.style.display = "inline-block";
-
+    //everything after this is what should change visually.
+    shopText.style.visibility = "visible";
+    gameText.style.marginLeft = "20em";
+    gameText.style.marginRight = "20em";
     text.innerText = " ";
 }
 
@@ -83,15 +87,19 @@ async function justBack() {
     text.innerText = "Going Back To Main Menu...";
 
     await new Promise(resolve => setTimeout(resolve, 400));
+    button1.disabled = false;
     button3.style.display = "none";
-    button5.style.display = "none";
 
+    shopText.style.visibility = "hidden";
     controlsForMonsters.style.display = "none";
+    //These buttons are for monster buttons//
     button6.style.display = "none";
     button7.style.display = "none";
     button8.style.display = "none";
     button9.style.display = "none";
-
+    //------------------------------------//
+    gameText.style.marginLeft = "auto";
+    gameText.style.marginRight = "auto";
     await new Promise(resolve => setTimeout(resolve, 100));
     text.innerText = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 }

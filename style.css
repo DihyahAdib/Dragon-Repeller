@@ -45,7 +45,7 @@ body {
 #text {
     font-family: "Dreams";
     font-weight: 560;
-    height: 4em;
+    height: 8em;
     background-color: black;
     color: white;
     padding: 2em;
@@ -63,20 +63,84 @@ body {
     margin-left: auto;
     margin-right: auto; /* CHANGE THESE WITH JS LATER  myDiv.style.margin-left = "20em"; myDiv.style.margin-right = "10em"; */
     padding: 20px;
+    border: 4px black solid;
     border-radius: 10px 10px;
+}
+#stats {
+    overflow: auto;
+    border: 1px black solid;
+    border-radius: 24px 12px;
+    color: black;
+    padding: 5px;
+    text-align: left;
 }
 
 #shopUI {
-    width: 100px;
-    height: 100px;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 21.8em;
+    height: 40em;
+    overflow: auto;
+
     background-color: rgb(131, 131, 131);
     color: white;
-    margin: 0 inherit;
-    margin-left: auto;
-    margin-right: auto; /* CHANGE THESE WITH JS LATER  myDiv.style.margin-left = "20em"; myDiv.style.margin-right = "10em"; */
-    padding: 20px;
-    border-radius: 10px 10px;
+
+    margin-top: -43%; /* Do NOT change this value perfect top section lol*/
+    margin-bottom: auto;
+    margin-left: 72em;
+    margin-right: 8.8em; 
+
+    padding: 10px;
+    border-radius: 12px 12px 24px 24px; /*Top-left, top-right, bottom-right, bottom-left*/
+    border: 4px black solid;
+
+    scroll-behavior: smooth;
+    scrollbar-color: rgb(29, 29, 29);
+}
+
+#weaponShop h1 { /* STYLE the title only*/
+    font-family: "Nexa";
+    text-align: center;
+    padding: 5px;
+    margin: 0%;
+}
+#weaponShop p { /* STYLE the title only*/
+    font-family: "Dreams";
+    text-align: center;
+    padding: 5px;
+    margin: 0%;
+}
+
+#weaponShop hr {
+    width: 72%;
+    align-content: center;
+}
+#weaponShop {
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+.buttonsForWeapons {
+    width: 88%;
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
+}
+.buttonsForPotions {
+    width: 88%;
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
 }
 
 .buttons {
@@ -91,6 +155,10 @@ body {
 
 .buttons:hover {
     background-color: rgb(160, 160, 160);
+    color: rgb(255, 255, 255);
+}
+.buttonsForWeapons:hover {
+    background-color: rgb(148, 223, 87);
     color: rgb(255, 255, 255);
 }
 
@@ -144,14 +212,6 @@ body {
     color: white;
     padding: 5px;
     background-color: red;
-}
-
-#stats {
-    border: 1px black solid;
-    border-radius: 24px 12px;
-    color: black;
-    padding: 5px;
-    text-align: left;
 }
 
 .stat {
