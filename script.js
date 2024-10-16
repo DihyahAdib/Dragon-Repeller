@@ -1,15 +1,17 @@
 //Inspired by FreeCodeCamp Developed by Dihyah Adib.//
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
+
 let score = 0;
 let level = 0;
 let xp = 0;
+let xpMultiplier = 1.5;
 let health = 100;
 let gold = 150;
-let currentWeapon = 0;
+let currentWeaponIndex = 0;
+let inventory = ["Sword"];
 let fightingState = [0, 1, 2];
 let fighting;
 let monsterHealth;
-let inventory = ["Sword"];
 
 //-------------- POTION BUTTONS -----------------------//
 const button10HP = document.querySelector("#button10HP"); 
@@ -42,6 +44,7 @@ const goldText = document.querySelector("#goldText");
 
 const gameText = document.querySelector("#game");
 const shopText = document.querySelector("#shopUI");
+const inventoryText = document.querySelector("#inventoryUI");
 
 //-------------- MONSTER ATRIBUTES -----------------------//
 const monsterStats = document.querySelector("#monsterStats");
@@ -49,6 +52,8 @@ const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
+
+const weapons = ["None", "Sword", "Scythe", "Great Hammer", "Excalibur"];
 
 // ------ POTION INITIALIZATION ------//
 button10HP.onclick = buyHealth10;
@@ -72,9 +77,25 @@ buttonBeast.onclick = fightBeast;
 buttonWereWolf.onclick = fightWereWolf;
 buttonDragon.onclick = fightDragon;
 
-async function delayUpdate(textElement, message, delay) {                                                                           //trying to remember these parameters is kinda hard
+async function delayUpdate(textElement, message, delay) {   
+    console.log("Delay started");
     await new Promise(resolve => setTimeout(resolve, delay));
+    console.log("Updating text");
     textElement.innerText = message;
+}
+
+function updateWeapon(newWeaponIndex) {
+    currentWeaponIndex = newWeaponIndex;
+    currentWeapon = weapons[currentWeaponIndex];
+    console.log("Equipped Weapon:", currentWeapon);
+    text.innerText = `Equipped: ${currentWeapon}`;
+}
+
+function LevelCalc() {
+    xp *= xpMultiplier + 2;
+    let totalxpAmount = xpMultiplier;
+    level = totalxpAmount;
+    console.log(level);
 }
 
 async function goStore() {
@@ -120,9 +141,7 @@ async function goCave() {
         text.innerText = "Dragon Locked: Get More Levels!";
         await new Promise(resolve => setTimeout(resolve, 2000));
     }
-    await new Promise(resolve => setTimeout(resolve, 300));
     text.innerText = ""
-
 }
 
 async function buyHealth10() {
@@ -146,6 +165,7 @@ async function buyHealth50() {
         text.innerText = ("Not Enough Levels!");
         await new Promise(resolve => setTimeout(resolve, 1800));
         text.innerText = "";
+
         if (gold >= 50 && level === 5) {
             gold -= 50; health += 50;
             goldText.innerText = gold;
@@ -161,9 +181,9 @@ async function buyHealth50() {
 async function buyHealth100() {
     if (gold <= 100 || level === 0) {
         button100HP.disabled = true;
-        text.innerText = ("Not Enough Levels!");
-        await new Promise(resolve => setTimeout(resolve, 1800));
+        await delayUpdate(text, "Not Enough Levels!", 800);
         text.innerText = "";
+
         if (gold >= 100 && level === 10) {
             gold -= 100; health += 100;
             goldText.innerText = gold;
@@ -176,23 +196,67 @@ async function buyHealth100() {
     }
 }
 
-async function buyWeapon() {
-    if (currentWeapon < nameOfWeapons.length - 1) {
-        if (gold >= 30) {
-            gold -= 30;
-            goldText.innerText = gold;
-            currentWeapon++;
-            console.log("Weapon purchased, Gold reduced to", gold);
-            text.innerText = (nameOfWeapons + " purchased, -30 Gold");
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            text.innerText = "";
-            if (currentWeapon === 1) {
-                buttonSword.disabled = true;
-                await new Promise(resolve => setTimeout(resolve, 300));
-            }
-        }
-    } 
+// Updated weapon purchase functions
+async function buySword() {
+    if (gold >= 30 && level >= 0) {
+        gold -= 30;
+        goldText.innerText = gold;
+        updateWeapon(1); // Equip "Sword"
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+        buttonSword.disabled = true;
+    } else {
+        text.innerText = "Not enough gold or levels for the Sword!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+    }
 }
+
+async function buyScythe() {
+    if (gold >= 100 && level >= 3) {
+        gold -= 100;
+        goldText.innerText = gold;
+        updateWeapon(2); // Equip "Scythe"
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+        buttonScythe.disabled = true;
+    } else {
+        text.innerText = "Not enough gold or levels for the Scythe!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+    }
+}
+
+async function buyGreatHammer() {
+    if (gold >= 100 && level >= 8) {
+        gold -= 100;
+        goldText.innerText = gold;
+        updateWeapon(3); // Equip "Great Hammer"
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+        buttonGreatHammer.disabled = true;
+    } else {
+        text.innerText = "Not enough gold or levels for the Great Hammer!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+    }
+}
+
+async function buyExcalibur() {
+    if (gold >= 150 && level >= 15) {
+        gold -= 150;
+        goldText.innerText = gold;
+        updateWeapon(4); // Equip "Excalibur"
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+        buttonExcalibur.disabled = true;
+    } else {
+        text.innerText = "Not enough gold or levels for the Excalibur!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+    }
+}
+
 
 function fightGhoul() {
     console.log("Fighting The Dragon!")
@@ -213,17 +277,4 @@ async function fightDragon() {
     } else {
         text.innerText = "Something will happen idk yet lol"
     }
-}
-
-async function buySword() {
-    
-}
-async function buyScythe() {
-    
-}
-async function buyGreatHammer() {
-    
-}
-async function buyExcalibur() {
-    
 }

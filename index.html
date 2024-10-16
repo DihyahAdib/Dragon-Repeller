@@ -19,6 +19,7 @@
             <div id="controls">
                 <button class="buttons" id="buttonStore">Store</button>
                 <button class="buttons" id="buttonCave">Go to cave</button>
+                <button class="buttons" id="buttonInventory">Inventory</button>
                 <button class="buttons" id="buttonBack">Back</button>
             </div>
             <div style="display: none;" id="monsterStats">
@@ -37,6 +38,7 @@
                 </div>
             </div>
         </div>
+
         <div style="visibility: hidden;" id="shopUI"> 
             <div id="weaponShop">
                 <hr><h1>Weapon Shop</h1><hr>
@@ -53,6 +55,19 @@
                     <button title="This Cost 50g" class="buttonsForPotions" id="button50HP">50 HP</button>
                     <button title="This Cost 100g" class="buttonsForPotions" id="button100HP">100 HP</button>
                 </ul>
+            </div>
+        </div>
+
+        <div style="visibility: visible;" id="inventoryUI"> 
+            <div id="inventory">
+                <hr><h1>Inventory</h1><hr>
+                <p>Click the buttons to display their Lore</p>
+                <form>
+                    <button class="label" id="buttonInventory">Sword</button>
+                    <button class="label" id="buttonInventory">Scythe</button>
+                    <button class="label" id="buttonInventory">Great Hammer</button>
+                    <button class="label" id="buttonInventory">Excalibur</button>
+                </form>
             </div>
         </div>
     </body>

@@ -98,6 +98,29 @@ body {
     scrollbar-color: rgb(29, 29, 29);
 }
 
+#inventoryUI {
+    display: flex;
+    flex-direction: column;
+    width: 21.8em;
+    height: 40em;
+    overflow: auto;
+
+    background-color: rgb(131, 131, 131);
+    color: white;
+
+    margin-top: -35%; /* Do NOT change this value perfect top section lol*/
+    margin-bottom: auto;
+    margin-right: 72em;
+    margin-left: 8.8em; 
+
+    padding: 10px;
+    border-radius: 12px 12px 24px 24px; /*Top-left, top-right, bottom-right, bottom-left*/
+    border: 4px black solid;
+
+    scroll-behavior: smooth;
+    scrollbar-color: rgb(29, 29, 29);
+}
+
 #weaponShop h1 { /* STYLE the title only*/
     font-family: "Nexa";
     text-align: center;
@@ -121,6 +144,29 @@ body {
     margin-left: 0%;
     margin-right: 0%;
 }
+#inventory h1 { /* STYLE the title only*/
+    font-family: "Nexa";
+    text-align: center;
+    padding: 5px;
+    margin: 0%;
+}
+#inventory p { /* STYLE the title only*/
+    font-family: "Dreams";
+    text-align: center;
+    padding: 5px;
+    margin: 0%;
+}
+
+#inventory hr {
+    width: 72%;
+    align-content: center;
+}
+#inventory {
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
 
 .buttonsForWeapons {
     width: 88%;
@@ -132,6 +178,17 @@ body {
     border: none;
     border-radius: 20px 20px;
 }
+
+.label {
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
+}
+
 .buttonsForPotions {
     width: 88%;
     font-size: 17px;
@@ -170,7 +227,6 @@ body {
     background-color: #0a416e;
     color: whitesmoke;
 } 
-
 #buttonGhoul:hover {
     background-color: rgb(197, 170, 47);
     color: rgb(255, 255, 255);
