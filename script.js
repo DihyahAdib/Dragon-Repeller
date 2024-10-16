@@ -2,11 +2,11 @@
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 
 let score = 0;
-let level = 30;
+let level = 0;
 let xp = 0;
 let xpMultiplier = 1.5;
 let health = 100;
-let gold = 250;
+let gold = 50;
 let currentWeaponIndex = 0;
 let inventory = ["None"];
 let fightingState = [0, 1, 2];
@@ -16,22 +16,18 @@ let monsterHealth;
 const button10HP = document.querySelector("#button10HP"); 
 const button50HP = document.querySelector("#button50HP");
 const button100HP = document.querySelector("#button100HP"); 
-
 const buttonBack = document.querySelector("#buttonBack"); 
 const buttonStore = document.querySelector("#buttonStore");
 const buttonCave = document.querySelector("#buttonCave");
 const buttonInventory = document.querySelector("#buttonInventory");
-
 const buttonSword = document.querySelector("#buttonSword");
 const buttonScythe = document.querySelector("#buttonScythe");
 const buttonGreatHammer = document.querySelector("#buttonGreatHammer");
 const buttonExcalibur = document.querySelector("#buttonExcalibur");
-
 const buttonGhoul = document.querySelector("#buttonGhoul");
 const buttonBeast = document.querySelector("#buttonBeast");
 const buttonWereWolf = document.querySelector("#buttonWereWolf");
 const buttonDragon = document.querySelector("#buttonDragon"); 
-
 const levelText = document.querySelector("#levelText");
 const text = document.querySelector("#text");
 const xpText = document.querySelector("#xpText");
@@ -41,15 +37,12 @@ const buttonSwordText = document.querySelector("#buttonSwordText");
 const buttonScytheText = document.querySelector("#buttonScytheText");
 const buttonGreatHammerText = document.querySelector("#buttonGreatHammerText");
 const buttonExcaliburText = document.querySelector("#buttonExcaliburText");
-
 const gameText = document.querySelector("#game");
 const shopText = document.querySelector("#shopUI");
 const inventoryText = document.querySelector("#inventoryUI");
-
 const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
-
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 
 const weapons = [
@@ -101,10 +94,10 @@ async function updateWeapon(newWeaponIndex) {
 }
 
 function LevelCalc() {
-    xp *= xpMultiplier + 2;
-    let totalxpAmount = xpMultiplier;
-    level = totalxpAmount;
-    console.log(level);
+    xp *= xpMultiplier;
+    level = Math.floor(xp / 100); // Example: 100 XP per level
+    console.log("Current XP:", xp);
+    console.log("Current Level:", level);
 }
 
 async function goStore() {
@@ -149,6 +142,7 @@ async function goCave() {
     await new Promise(resolve => setTimeout(resolve, 200));
     buttonStore.disabled = true;
     controlsForMonsters.style.visibility = "visible";
+    inventoryText.style.visibility = "hidden";
     buttonGhoul.style.display = "flex";
     buttonBeast.style.display = "flex";
     buttonWereWolf.style.display = "flex";
@@ -168,7 +162,9 @@ async function buyHealth10() {
         gold -= 10; health += 10;
         goldText.innerText = gold;
         healthText.innerText = health;
-        await delayUpdate(text, "Health purchased, -10 Gold", 800);
+        console.log("Health purchased, Gold reduced to", gold);
+        text.innerText = ("Health purchased, -10 Gold");
+        await new Promise(resolve => setTimeout(resolve, 1000));
         text.innerText = "";
     }  
     if (gold <= 0) {
@@ -179,39 +175,40 @@ async function buyHealth10() {
 }
 
 async function buyHealth50() {
-    if (gold <= 50 || level === 0) {
+    if (gold >= 50 && level >= 20) { // soy pro let them buy
+        gold -= 50; health += 50;
+        goldText.innerText = gold;
+        healthText.innerText = health;
+        console.log("Health purchased, Gold reduced to", gold);
+        text.innerText = ("Health purchased, -50 Gold");
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+    } 
+    if (gold <= 50 || level === 0) { // too noob dont let them buy
         button50HP.disabled = true;
-        text.innerText = ("Not Enough Levels!");
+        text.innerText = ("Not Enough Levels Or Gold!");
         await new Promise(resolve => setTimeout(resolve, 1800));
         text.innerText = "";
-
-        if (gold >= 50 && level === 5) {
-            gold -= 50; health += 50;
-            goldText.innerText = gold;
-            healthText.innerText = health;
-            console.log("Health purchased, Gold reduced to", gold);
-            text.innerText = ("Health purchased, -50 Gold");
-            await new Promise(resolve => setTimeout(resolve, 800));
-            text.innerText = "";
-        } 
     }
+
+    
 }
 
 async function buyHealth100() {
+    if (gold >= 100 && level >= 30) {
+        gold -= 100; health += 100;
+        goldText.innerText = gold;
+        healthText.innerText = health;
+        console.log("Health purchased, Gold reduced to", gold);
+        text.innerText = ("Health purchased, -100 Gold");
+        await new Promise(resolve => setTimeout(resolve, 800));
+        text.innerText = "";
+    }
     if (gold <= 100 || level === 0) {
         button100HP.disabled = true;
-        await delayUpdate(text, "Not Enough Levels!", 800);
+        await delayUpdate(text, "Not Enough Levels Or Gold!", 800);
         text.innerText = "";
 
-        if (gold >= 100 && level === 10) {
-            gold -= 100; health += 100;
-            goldText.innerText = gold;
-            healthText.innerText = health;
-            console.log("Health purchased, Gold reduced to", gold);
-            text.innerText = ("Health purchased, -100 Gold");
-            await new Promise(resolve => setTimeout(resolve, 800));
-            text.innerText = "";
-        }
     }
 }
 
@@ -284,13 +281,39 @@ async function buyExcalibur() {
     }
 }
 
-function fightGhoul() {
-    console.log("Fighting The Dragon!")
+async function fightGhoul() {
+    console.log("Fighting The Ghoul!")
+    if (level === 0) { //we want to allow the player to do something first before restriction, or at least thats how i learned it works for the functions above
+        text.innerText = "Ghoul Locked: Get More Levels!";
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        buttonDragon.disabled = true;
+        text.innerText = ""
+    } else {
+        text.innerText = "Something will happen idk yet lol"
+    }
 }
-function fightBeast() {
-    console.log("Fighting The Dragon!")
+async function fightBeast() {
+    console.log("Fighting The Beast!")
+    if (level === 0) {
+        text.innerText = "Beast Locked: Get More Levels!";
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        buttonDragon.disabled = true;
+        text.innerText = ""
+    } else {
+        text.innerText = "Something will happen idk yet lol"
+    }
+    
 }
-function fightWereWolf() {
+async function fightWereWolf() {
+    console.log("Fighting The WereWolf!")
+    if (level === 0) {
+        text.innerText = "WereWolf Locked: Get More Levels!";
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        buttonDragon.disabled = true;
+        text.innerText = ""
+    } else {
+        text.innerText = "Something will happen idk yet lol"
+    }
 }
 async function fightDragon() {
     console.log("Fighting The Dragon!")
