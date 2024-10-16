@@ -1,5 +1,6 @@
 //Inspired by FreeCodeCamp Developed by Dihyah Adib.//
-
+let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
+let score = 0;
 let level = 0;
 let xp = 0;
 let health = 100;
@@ -10,29 +11,29 @@ let fighting;
 let monsterHealth;
 let inventory = ["Sword"];
 
-// -------------- POTION BUTTONS -----------------------//
+//-------------- POTION BUTTONS -----------------------//
 const button10HP = document.querySelector("#button10HP"); 
 const button50HP = document.querySelector("#button50HP");
 const button100HP = document.querySelector("#button100HP"); 
 
-// -------------- DIRECTIONAL BUTTONS -----------------------//
+//-------------- DIRECTIONAL BUTTONS -----------------------//
 const buttonBack = document.querySelector("#buttonBack"); 
 const buttonStore = document.querySelector("#buttonStore");
 const buttonCave = document.querySelector("#buttonCave");
 
-// -------------- WEAPONS BUTTONS -----------------------//
+//-------------- WEAPONS BUTTONS -----------------------//
 const buttonSword = document.querySelector("#buttonSword");
 const buttonScythe = document.querySelector("#buttonScythe");
 const buttonGreatHammer = document.querySelector("#buttonGreatHammer");
 const buttonExcalibur = document.querySelector("#buttonExcalibur");
 
-// -------------- MONSTER BUTTONS -----------------------//
+//-------------- MONSTER BUTTONS -----------------------//
 const buttonGhoul = document.querySelector("#buttonGhoul");
 const buttonBeast = document.querySelector("#buttonBeast");
 const buttonWereWolf = document.querySelector("#buttonWereWolf");
 const buttonDragon = document.querySelector("#buttonDragon"); 
 
-// -------------- TEXT BUTTONS -----------------------//
+//-------------- TEXT BUTTONS -----------------------//
 const levelText = document.querySelector("#levelText");
 const text = document.querySelector("#text");
 const xpText = document.querySelector("#xpText");
@@ -42,13 +43,13 @@ const goldText = document.querySelector("#goldText");
 const gameText = document.querySelector("#game");
 const shopText = document.querySelector("#shopUI");
 
+//-------------- MONSTER ATRIBUTES -----------------------//
 const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 
-//initialize buttons
 // ------ POTION INITIALIZATION ------//
 button10HP.onclick = buyHealth10;
 button50HP.onclick = buyHealth50;
@@ -60,10 +61,10 @@ buttonStore.onclick = goStore;
 buttonCave.onclick = goCave;
 
 // ------ WEAPON INITIALIZATION ------//
-buttonSword.onclick = buyWeapon;
-buttonScythe.onclick = buyWeapon;
-buttonGreatHammer.onclick = buyWeapon;
-buttonExcalibur.onclick = buyWeapon;
+buttonSword.onclick = buySword;
+buttonScythe.onclick = buyScythe;
+buttonGreatHammer.onclick = buyGreatHammer;
+buttonExcalibur.onclick = buyExcalibur;
 
 // ------ MONSTER INITIALIZATION ------//
 buttonGhoul.onclick = fightGhoul;
@@ -71,155 +72,49 @@ buttonBeast.onclick = fightBeast;
 buttonWereWolf.onclick = fightWereWolf;
 buttonDragon.onclick = fightDragon;
 
+async function delayUpdate(textElement, message, delay) {                                                                           //trying to remember these parameters is kinda hard
+    await new Promise(resolve => setTimeout(resolve, delay));
+    textElement.innerText = message;
+}
 
 async function goStore() {
-    console.log("Going To Store");
-    await new Promise(resolve => setTimeout(resolve, 400));
-    text.innerText = "Going To Store";
-
-    await new Promise(resolve => setTimeout(resolve, 100));
-    text.innerText = "Going To Store.";
-
+    await delayUpdate(text, "Going To Store", 100);
+    await delayUpdate(text, "Going To Store.", 200);
+    await delayUpdate(text, "Going To Store..", 200);
+    await delayUpdate(text, "Going To Store...", 300);
     await new Promise(resolve => setTimeout(resolve, 200));
-    text.innerText = "Going To Store..";
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
-    text.innerText = "Going To Store...";
-
-    await new Promise(resolve => setTimeout(resolve, 400));
-    //everything after this is what should change visually.
     shopText.style.visibility = "visible";
-    gameText.style.marginLeft = "20em";
-    gameText.style.marginRight = "20em";
+    gameText.style.marginLeft = "20em"; gameText.style.marginRight = "20em";
     text.innerText = " ";
 }
 
 async function justBack() {
- 
-    console.log("Going back");
-    await new Promise(resolve => setTimeout(resolve, 400));
-    text.innerText = "Going Back To Main menu";
-
-    await new Promise(resolve => setTimeout(resolve, 100));
-    text.innerText = "Going Back To Main menu.";
-
+    await delayUpdate(text, "Going Back To Main Menu", 100);
+    await delayUpdate(text, "Going Back To Main Menu.", 200);
+    await delayUpdate(text, "Going Back To Main Menu..", 200);
+    await delayUpdate(text, "Going Back To Main Menu...", 300);
     await new Promise(resolve => setTimeout(resolve, 200));
-    text.innerText = "Going Back To Main menu..";
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
-    text.innerText = "Going Back To Main Menu...";
-
-    await new Promise(resolve => setTimeout(resolve, 400));
     buttonStore.disabled = false;
-
     shopText.style.visibility = "hidden";
     controlsForMonsters.style.display = "none";
-    //These buttons are for monster buttons//
-    buttonGhoul.style.display = "none";
-    buttonBeast.style.display = "none";
-    buttonWereWolf.style.display = "none";
-    buttonDragon.style.display = "none";
-    //------------------------------------//
-    gameText.style.marginLeft = "auto";
-    gameText.style.marginRight = "auto";
-    await new Promise(resolve => setTimeout(resolve, 100));
-    text.innerText = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
+    gameText.style.marginLeft = "auto"; gameText.style.marginRight = "auto"; //re-align
+    text.innerText = instructions;
 }
 
-async function buyHealth10() {
-    if (gold >= 10) {
-        gold -= 10;
-        goldText.innerText = gold;
-        health += 10; 
-        healthText.innerText = health;
-        console.log("Health purchased, Gold reduced to", gold);
-        text.innerText = ("Health purchased, -10 Gold");
-        await new Promise(resolve => setTimeout(resolve, 800));
-        text.innerText = "";
-    }  
-    if (gold <= 0) {
-        button10HP.disabled = true;
-        text.innerText = ("Not Enough Gold!");
-        await new Promise(resolve => setTimeout(resolve, 1800));
-        text.innerText = "";
-    }
-}
-async function buyHealth50() {
-    if (gold <= 50 || level === 0) {
-        button50HP.disabled = true;
-        text.innerText = ("Not Enough Gold!");
-        await new Promise(resolve => setTimeout(resolve, 1800));
-        text.innerText = "";
-        if (gold >= 50 && level === 5) {
-            gold -= 50;
-            goldText.innerText = gold;
-            health += 50; 
-            healthText.innerText = health;
-            console.log("Health purchased, Gold reduced to", gold);
-            text.innerText = ("Health purchased, -50 Gold");
-            await new Promise(resolve => setTimeout(resolve, 800));
-            text.innerText = "";
-        } 
-    }
-}
-async function buyHealth100() {
-    if (gold <= 100 || level === 0) {
-        button100HP.disabled = true;
-        text.innerText = ("Not Enough Gold!");
-        await new Promise(resolve => setTimeout(resolve, 1800));
-        text.innerText = "";
-        if (gold >= 100 && level === 10) {
-            gold -= 100;
-            goldText.innerText = gold;
-            health += 100; 
-            healthText.innerText = health;
-            console.log("Health purchased, Gold reduced to", gold);
-            text.innerText = ("Health purchased, -100 Gold");
-            await new Promise(resolve => setTimeout(resolve, 800));
-            text.innerText = "";
-        }
-    }
-}
-async function buyWeapon() {
-    if (gold >= 30) {
-        gold -= 30;
-        goldText.innerText = gold;
-        currentWeapon++;
-        console.log("Weapon purchased, Gold reduced to", gold);
-        text.innerText = (nameOfWeapon + " purchased, -30 Gold");
-        await new Promise(resolve => setTimeout(resolve, 800));
-        text.innerText = "";
-        if (currentWeapon === 1) {
-            buttonSword.disabled = true;
-            await new Promise(resolve => setTimeout(resolve, 400));
-        }
-    } 
-}
 async function goCave() {
-    console.log("Going To Cave");
-    await new Promise(resolve => setTimeout(resolve, 400));
-    text.innerText = "Going To Cave";
-
-    await new Promise(resolve => setTimeout(resolve, 100));
-    text.innerText = "Going To Cave.";
-
+    await delayUpdate(text, "Going To Cave", 100);
+    await delayUpdate(text, "Going To Cave.", 200);
+    await delayUpdate(text, "Going To Cave..", 200);
+    await delayUpdate(text, "Going To Cave...", 300);
     await new Promise(resolve => setTimeout(resolve, 200));
-    text.innerText = "Going To Cave..";
-    
-    await new Promise(resolve => setTimeout(resolve, 300));
-    text.innerText = "Going To Cave...";
-
-    await new Promise(resolve => setTimeout(resolve, 400));
-
-    controlsForMonsters.style.display = "block";
-    buttonGhoul.style.display = "inline-block";
-    buttonBeast.style.display = "inline-block";
-    buttonWereWolf.style.display = "inline-block";
-    buttonDragon.style.display = "inline-block";
-
     buttonStore.disabled = true;
-    buttonHP.style.display = "none";
-    buttonSword.style.display = "none";
+    controlsForMonsters.style.visibility = "visible";
+    buttonGhoul.style.display = "flex";
+    buttonBeast.style.display = "flex";
+    buttonWereWolf.style.display = "flex";
+    buttonDragon.style.display = "flex";
+    gameText.style.marginLeft = "auto"; gameText.style.marginRight = "auto";
+    shopText.style.visibility = "hidden";
 
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
@@ -228,6 +123,75 @@ async function goCave() {
     await new Promise(resolve => setTimeout(resolve, 300));
     text.innerText = ""
 
+}
+
+async function buyHealth10() {
+    if (gold >= 10) {
+        gold -= 10; health += 10;
+        goldText.innerText = gold;
+        healthText.innerText = health;
+        await delayUpdate(text, "Health purchased, -10 Gold", 800);
+        text.innerText = "";
+    }  
+    if (gold <= 0) {
+        button10HP.disabled = true;
+        await delayUpdate(text, "Not Enough Gold!", 1800);
+        text.innerText = "";
+    }
+}
+
+async function buyHealth50() {
+    if (gold <= 50 || level === 0) {
+        button50HP.disabled = true;
+        text.innerText = ("Not Enough Levels!");
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        text.innerText = "";
+        if (gold >= 50 && level === 5) {
+            gold -= 50; health += 50;
+            goldText.innerText = gold;
+            healthText.innerText = health;
+            console.log("Health purchased, Gold reduced to", gold);
+            text.innerText = ("Health purchased, -50 Gold");
+            await new Promise(resolve => setTimeout(resolve, 800));
+            text.innerText = "";
+        } 
+    }
+}
+
+async function buyHealth100() {
+    if (gold <= 100 || level === 0) {
+        button100HP.disabled = true;
+        text.innerText = ("Not Enough Levels!");
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        text.innerText = "";
+        if (gold >= 100 && level === 10) {
+            gold -= 100; health += 100;
+            goldText.innerText = gold;
+            healthText.innerText = health;
+            console.log("Health purchased, Gold reduced to", gold);
+            text.innerText = ("Health purchased, -100 Gold");
+            await new Promise(resolve => setTimeout(resolve, 800));
+            text.innerText = "";
+        }
+    }
+}
+
+async function buyWeapon() {
+    if (currentWeapon < nameOfWeapons.length - 1) {
+        if (gold >= 30) {
+            gold -= 30;
+            goldText.innerText = gold;
+            currentWeapon++;
+            console.log("Weapon purchased, Gold reduced to", gold);
+            text.innerText = (nameOfWeapons + " purchased, -30 Gold");
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            text.innerText = "";
+            if (currentWeapon === 1) {
+                buttonSword.disabled = true;
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+        }
+    } 
 }
 
 function fightGhoul() {
@@ -249,4 +213,17 @@ async function fightDragon() {
     } else {
         text.innerText = "Something will happen idk yet lol"
     }
+}
+
+async function buySword() {
+    
+}
+async function buyScythe() {
+    
+}
+async function buyGreatHammer() {
+    
+}
+async function buyExcalibur() {
+    
 }
