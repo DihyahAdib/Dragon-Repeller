@@ -11,10 +11,10 @@
         <h1 id="nameGame">Dragon Repeller</h1>
         <div id="game">
             <div id="stats">
-                <span class="stat">Level: <strong><span id="levelText">0</span></strong></span>
+                <span class="stat">Level: <strong><span id="levelText">30</span></strong></span>
                 <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
                 <span class="stat">Health: <strong><span id="healthText">100</span></strong></span>
-                <span class="stat">Gold: <strong><span id="goldText">150</span></strong></span>
+                <span class="stat">Gold: <strong><span id="goldText">250</span></strong></span>
             </div>
             <div id="controls">
                 <button class="buttons" id="buttonStore">Store</button>
@@ -44,10 +44,10 @@
                 <hr><h1>Weapon Shop</h1><hr>
                 <p>Hover over buttons to display price.</p>
                 <ul>
-                    <button title="This Cost 30g" class="buttonsForWeapons" id="buttonSword">Sword</button>
-                    <button title="This Cost 50g" class="buttonsForWeapons" id="buttonScythe">Scythe</button>
-                    <button title="This Cost 100g" class="buttonsForWeapons" id="buttonGreatHammer">Great Hammer</button>
-                    <button title="This Cost 150g" class="buttonsForWeapons" id="buttonExcalibur">Excalibur</button>
+                    <button title="This Cost 30g Power: " class="buttonsForWeapons" id="buttonSword">Sword</button>
+                    <button title="This Cost 50g Power: " class="buttonsForWeapons" id="buttonScythe">Scythe</button>
+                    <button title="This Cost 100g Power: " class="buttonsForWeapons" id="buttonGreatHammer">Great Hammer</button>
+                    <button title="This Cost 150g Power: " class="buttonsForWeapons" id="buttonExcalibur">Excalibur</button>
                 </ul>
                 <hr><h1>Potion Shop</h1><hr>
                 <ul>
@@ -58,16 +58,17 @@
             </div>
         </div>
 
-        <div style="visibility: visible;" id="inventoryUI"> 
+        <div style="visibility: hidden;" id="inventoryUI"> 
             <div id="inventory">
                 <hr><h1>Inventory</h1><hr>
                 <p>Click the buttons to display their Lore</p>
-                <form>
-                    <button class="label" id="buttonInventory">Sword</button>
-                    <button class="label" id="buttonInventory">Scythe</button>
-                    <button class="label" id="buttonInventory">Great Hammer</button>
-                    <button class="label" id="buttonInventory">Excalibur</button>
-                </form>
+                <p id="smallestext">Currently owned weapons:</p>
+                <ul>
+                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">Sword</button>
+                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">Scythe</button>
+                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
+                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
+                </ul>
             </div>
         </div>
     </body>

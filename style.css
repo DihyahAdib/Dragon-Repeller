@@ -87,7 +87,7 @@ body {
 
     margin-top: -43%; /* Do NOT change this value perfect top section lol*/
     margin-bottom: auto;
-    margin-left: 72em;
+    margin-left: 85em;
     margin-right: 8.8em; 
 
     padding: 10px;
@@ -127,6 +127,7 @@ body {
     padding: 5px;
     margin: 0%;
 }
+
 #weaponShop p { /* STYLE the title only*/
     font-family: "Dreams";
     text-align: center;
@@ -138,18 +139,21 @@ body {
     width: 72%;
     align-content: center;
 }
+
 #weaponShop {
     margin-top: 0%;
     margin-bottom: 0%;
     margin-left: 0%;
     margin-right: 0%;
 }
+
 #inventory h1 { /* STYLE the title only*/
     font-family: "Nexa";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
+
 #inventory p { /* STYLE the title only*/
     font-family: "Dreams";
     text-align: center;
@@ -161,6 +165,7 @@ body {
     width: 72%;
     align-content: center;
 }
+
 #inventory {
     margin-top: 0%;
     margin-bottom: 0%;
@@ -178,8 +183,10 @@ body {
     border: none;
     border-radius: 20px 20px;
 }
-
-.label {
+.buttonsForWeaponsText {
+    justify-content: center; /* Center horizontally */
+    align-items: center; 
+    width: 88%;
     font-size: 17px;
     font-family: "Comforta";
     font-weight: bolder;
@@ -210,19 +217,25 @@ body {
     border-radius: 20px 20px;
 }
 
-.buttons:hover {
-    background-color: rgb(160, 160, 160);
+#button4 {
+    border: none;
+}
+.buttonsForPotions:hover {
+    background-color: rgb(180, 87, 223);
     color: rgb(255, 255, 255);
 }
 .buttonsForWeapons:hover {
     background-color: rgb(148, 223, 87);
     color: rgb(255, 255, 255);
 }
-
-#button4 {
-    border: none;
+.buttonsForWeaponsText:hover {
+    background-color: rgb(87, 223, 189);
+    color: rgb(255, 255, 255);
 }
-
+.buttons:hover {
+    background-color: rgb(160, 160, 160);
+    color: rgb(255, 255, 255);
+}
 #button4:hover {
     background-color: #0a416e;
     color: whitesmoke;

@@ -2,59 +2,65 @@
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 
 let score = 0;
-let level = 0;
+let level = 30;
 let xp = 0;
 let xpMultiplier = 1.5;
 let health = 100;
-let gold = 150;
+let gold = 250;
 let currentWeaponIndex = 0;
-let inventory = ["Sword"];
+let inventory = ["None"];
 let fightingState = [0, 1, 2];
 let fighting;
 let monsterHealth;
 
-//-------------- POTION BUTTONS -----------------------//
 const button10HP = document.querySelector("#button10HP"); 
 const button50HP = document.querySelector("#button50HP");
 const button100HP = document.querySelector("#button100HP"); 
 
-//-------------- DIRECTIONAL BUTTONS -----------------------//
 const buttonBack = document.querySelector("#buttonBack"); 
 const buttonStore = document.querySelector("#buttonStore");
 const buttonCave = document.querySelector("#buttonCave");
+const buttonInventory = document.querySelector("#buttonInventory");
 
-//-------------- WEAPONS BUTTONS -----------------------//
 const buttonSword = document.querySelector("#buttonSword");
 const buttonScythe = document.querySelector("#buttonScythe");
 const buttonGreatHammer = document.querySelector("#buttonGreatHammer");
 const buttonExcalibur = document.querySelector("#buttonExcalibur");
 
-//-------------- MONSTER BUTTONS -----------------------//
 const buttonGhoul = document.querySelector("#buttonGhoul");
 const buttonBeast = document.querySelector("#buttonBeast");
 const buttonWereWolf = document.querySelector("#buttonWereWolf");
 const buttonDragon = document.querySelector("#buttonDragon"); 
 
-//-------------- TEXT BUTTONS -----------------------//
 const levelText = document.querySelector("#levelText");
 const text = document.querySelector("#text");
 const xpText = document.querySelector("#xpText");
 const healthText = document.querySelector("#healthText");
 const goldText = document.querySelector("#goldText");
+const buttonSwordText = document.querySelector("#buttonSwordText");
+const buttonScytheText = document.querySelector("#buttonScytheText");
+const buttonGreatHammerText = document.querySelector("#buttonGreatHammerText");
+const buttonExcaliburText = document.querySelector("#buttonExcaliburText");
 
 const gameText = document.querySelector("#game");
 const shopText = document.querySelector("#shopUI");
 const inventoryText = document.querySelector("#inventoryUI");
 
-//-------------- MONSTER ATRIBUTES -----------------------//
 const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 
-const weapons = ["None", "Sword", "Scythe", "Great Hammer", "Excalibur"];
+const weapons = [
+    {name: "None", strength: 0},
+    {name: "Sword", strength: 10},
+    {name: "Scythe", strength: 50},
+    {name: "GreatHammer", strength: 100},
+    {name: "Excalibur", strength: 200}
+]
 
+buttonInventory.onclick = openInventory;
 // ------ POTION INITIALIZATION ------//
 button10HP.onclick = buyHealth10;
 button50HP.onclick = buyHealth50;
@@ -84,11 +90,14 @@ async function delayUpdate(textElement, message, delay) {
     textElement.innerText = message;
 }
 
-function updateWeapon(newWeaponIndex) {
+async function updateWeapon(newWeaponIndex) {
     currentWeaponIndex = newWeaponIndex;
     currentWeapon = weapons[currentWeaponIndex];
     console.log("Equipped Weapon:", currentWeapon);
-    text.innerText = `Equipped: ${currentWeapon}`;
+    const { name, strength } = currentWeapon; // Destructure the currentWeapon properties
+    await delayUpdate(text,`Equipped: ${name} with a strength of: ${strength}`, 500);
+    await new Promise(resolve => setTimeout(resolve, 4500));
+    text.innerText = "";
 }
 
 function LevelCalc() {
@@ -105,7 +114,16 @@ async function goStore() {
     await delayUpdate(text, "Going To Store...", 300);
     await new Promise(resolve => setTimeout(resolve, 200));
     shopText.style.visibility = "visible";
-    gameText.style.marginLeft = "20em"; gameText.style.marginRight = "20em";
+    text.innerText = "";
+}
+
+async function openInventory() {
+    await delayUpdate(text, "Going To Inventory", 100);
+    await delayUpdate(text, "Going To Inventory.", 200);
+    await delayUpdate(text, "Going To Inventory..", 200);
+    await delayUpdate(text, "Going To Inventory...", 300);
+    await new Promise(resolve => setTimeout(resolve, 200));
+    inventoryText.style.visibility = "visible";
     text.innerText = " ";
 }
 
@@ -116,8 +134,9 @@ async function justBack() {
     await delayUpdate(text, "Going Back To Main Menu...", 300);
     await new Promise(resolve => setTimeout(resolve, 200));
     buttonStore.disabled = false;
+    inventoryText.style.visibility = "hidden";
     shopText.style.visibility = "hidden";
-    controlsForMonsters.style.display = "none";
+    controlsForMonsters.style.visibility = "hidden";
     gameText.style.marginLeft = "auto"; gameText.style.marginRight = "auto"; //re-align
     text.innerText = instructions;
 }
@@ -203,6 +222,8 @@ async function buySword() {
         goldText.innerText = gold;
         updateWeapon(1); // Equip "Sword"
         await new Promise(resolve => setTimeout(resolve, 1000));
+        buttonSwordText.style.display = "flex";
+        await new Promise(resolve => setTimeout(resolve, 1000));
         text.innerText = "";
         buttonSword.disabled = true;
     } else {
@@ -217,6 +238,8 @@ async function buyScythe() {
         gold -= 100;
         goldText.innerText = gold;
         updateWeapon(2); // Equip "Scythe"
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        buttonScytheText.style.display = "flex";
         await new Promise(resolve => setTimeout(resolve, 1000));
         text.innerText = "";
         buttonScythe.disabled = true;
@@ -233,6 +256,8 @@ async function buyGreatHammer() {
         goldText.innerText = gold;
         updateWeapon(3); // Equip "Great Hammer"
         await new Promise(resolve => setTimeout(resolve, 1000));
+        buttonGreatHammerText.style.display = "flex";
+        await new Promise(resolve => setTimeout(resolve, 1000));
         text.innerText = "";
         buttonGreatHammer.disabled = true;
     } else {
@@ -248,6 +273,8 @@ async function buyExcalibur() {
         goldText.innerText = gold;
         updateWeapon(4); // Equip "Excalibur"
         await new Promise(resolve => setTimeout(resolve, 1000));
+        buttonExcaliburText.style.display = "flex";
+        await new Promise(resolve => setTimeout(resolve, 1000));
         text.innerText = "";
         buttonExcalibur.disabled = true;
     } else {
@@ -257,7 +284,6 @@ async function buyExcalibur() {
     }
 }
 
-
 function fightGhoul() {
     console.log("Fighting The Dragon!")
 }
@@ -265,7 +291,6 @@ function fightBeast() {
     console.log("Fighting The Dragon!")
 }
 function fightWereWolf() {
-
 }
 async function fightDragon() {
     console.log("Fighting The Dragon!")
