@@ -5,6 +5,7 @@ let score = 0;
 let level = 0;
 let xp = 0;
 let xpMultiplier = 1.5;
+let monsterMultipier = 2.5;
 let health = 100;
 let gold = 50;
 let currentWeaponIndex = 0;
@@ -12,6 +13,7 @@ let inventory = ["None"];
 let fightingState = [0, 1, 2];
 let fighting;
 let monsterHealth;
+let monsterWorth;
 
 const button10HP = document.querySelector("#button10HP"); 
 const button50HP = document.querySelector("#button50HP");
@@ -45,6 +47,8 @@ const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 
+const buttonAttack = document.querySelector("#buttonAttack");
+
 const weapons = [
     {name: "None", strength: 0},
     {name: "Sword", strength: 10},
@@ -76,6 +80,8 @@ buttonBeast.onclick = fightBeast;
 buttonWereWolf.onclick = fightWereWolf;
 buttonDragon.onclick = fightDragon;
 
+buttonAttack.onclick = randomizedNumber;
+
 async function delayUpdate(textElement, message, delay) {   
     console.log("Delay started");
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -92,6 +98,12 @@ async function updateWeapon(newWeaponIndex) {
     await new Promise(resolve => setTimeout(resolve, 4500));
     text.innerText = "";
 }
+
+function randomizedNumber(min, max) { //this is the number the game rolls i still need to let the player pick a number.
+    return Math.floor(Math.random() * (min - max + 1) + min);
+}
+const randomizedRollNumOutCome = Math.floor(Math.random() * 3) + 1
+console.log(randomizedRollNumOutCome);
 
 function LevelCalc() {
     xp *= xpMultiplier;
@@ -212,7 +224,6 @@ async function buyHealth100() {
     }
 }
 
-// Updated weapon purchase functions
 async function buySword() {
     if (gold >= 30 && level >= 0) {
         gold -= 30;
@@ -282,16 +293,34 @@ async function buyExcalibur() {
 }
 
 async function fightGhoul() {
+    let ghoulWorth = 10;
+    ghoulWorth = monsterWorth;
     console.log("Fighting The Ghoul!")
-    if (level === 0) { //we want to allow the player to do something first before restriction, or at least thats how i learned it works for the functions above
-        text.innerText = "Ghoul Locked: Get More Levels!";
+
+    if (currentWeaponIndex === 0) { // If the player hasnt bought any weapon
+
+        text.innerText = "You need to buy a weapon first!"
+        await new Promise(resolve => setTimeout(resolve, 2800));
+        text.innerText = "";
+        return;
+
+    } else if (level === 0 && currentWeaponIndex === 1) { //If everything is good output this code
+        await delayUpdate(text, "You Aproach The Ghoul", 100);
+        await delayUpdate(text, "You Aproach The Ghoul.", 200);
+        await delayUpdate(text, "You Aproach The Ghoul..", 200);
+        await delayUpdate(text, "You Aproach The Ghoul...", 300);
+        buttonBeast.style.visibility = "hidden";
+        buttonWereWolf.style.visibility = "hidden";
+        buttonDragon.style.visibility = "hidden";
         await new Promise(resolve => setTimeout(resolve, 1500));
-        buttonDragon.disabled = true;
         text.innerText = ""
-    } else {
-        text.innerText = "Something will happen idk yet lol"
+        playerHitMonster();
     }
+
 }
+
+
+
 async function fightBeast() {
     console.log("Fighting The Beast!")
     if (level === 0) {
@@ -325,4 +354,29 @@ async function fightDragon() {
     } else {
         text.innerText = "Something will happen idk yet lol"
     }
+}
+
+
+
+function playerHitMonster() {
+    if (playerRollNum === randomizedRollNumOutCome) {
+        let reward = monsterWorth * monsterMultipier;
+        gold += reward;
+        goldText.innerText = gold;
+    }
+}
+
+function overSwung() {
+    if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === dodgeDodge) {
+        dodgeDodge = randomizedRollNum + 1;
+        text.innerText = "You over swung and narrowly dodged the monster!";
+    }
+}
+
+function dodgedAttack() {
+    if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === dodge) {
+        dodge = randomizedRollNum - 1;
+        text.innerText = "You narrowly dodged the monster!";
+    }
+    
 }
