@@ -55,37 +55,34 @@ const weapons = [
     {name: "Scythe", strength: 50},
     {name: "GreatHammer", strength: 100},
     {name: "Excalibur", strength: 200}
-]
+];
 
-buttonInventory.onclick = openInventory;
-// ------ POTION INITIALIZATION ------//
+const monsters = [
+    {name: "Ghoul", health: 150, strength: 20, worth: 10},
+    {name: "Beast", health: 250, strength: 20, worth: 15},
+    {name: "WereWolf", health: 300, strength: 20, worth: 20},
+    {name: "Dragon", health: 500, strength: 20, worth: 25}
+];
+
 button10HP.onclick = buyHealth10;
 button50HP.onclick = buyHealth50;
 button100HP.onclick = buyHealth100;
-
-// ------ DIRECTIONAL INITIALIZATION ------//
+buttonInventory.onclick = openInventory;
 buttonBack.onclick = justBack;
 buttonStore.onclick = goStore;
 buttonCave.onclick = goCave;
-
-// ------ WEAPON INITIALIZATION ------//
 buttonSword.onclick = buySword;
 buttonScythe.onclick = buyScythe;
 buttonGreatHammer.onclick = buyGreatHammer;
 buttonExcalibur.onclick = buyExcalibur;
-
-// ------ MONSTER INITIALIZATION ------//
 buttonGhoul.onclick = fightGhoul;
 buttonBeast.onclick = fightBeast;
 buttonWereWolf.onclick = fightWereWolf;
 buttonDragon.onclick = fightDragon;
-
-buttonAttack.onclick = randomizedNumber;
+buttonAttack.onclick = playerGuess;
 
 async function delayUpdate(textElement, message, delay) {   
-    console.log("Delay started");
     await new Promise(resolve => setTimeout(resolve, delay));
-    console.log("Updating text");
     textElement.innerText = message;
 }
 
@@ -95,21 +92,28 @@ async function updateWeapon(newWeaponIndex) {
     console.log("Equipped Weapon:", currentWeapon);
     const { name, strength } = currentWeapon; // Destructure the currentWeapon properties
     await delayUpdate(text,`Equipped: ${name} with a strength of: ${strength}`, 500);
-    await new Promise(resolve => setTimeout(resolve, 4500));
+    await new Promise(resolve => setTimeout(resolve, 2500));
     text.innerText = "";
 }
 
-function randomizedNumber(min, max) { //this is the number the game rolls i still need to let the player pick a number.
-    return Math.floor(Math.random() * (min - max + 1) + min);
+async function updateMonster(newMonsterIndex) {
+    currentMonsterIndex = newMonsterIndex;
+    currentMonster = weapons[currentMonsterIndex];
+    console.log("Equipped Weapon:", currentMonster);
+    const { name, health } = currentMonster; // Destructure the currentMonster properties
+    await delayUpdate(text,`Equipped: ${name} with a strength of: ${health}`, 500);
+    await new Promise(resolve => setTimeout(resolve, 2500));
+    text.innerText = "";
 }
-const randomizedRollNumOutCome = Math.floor(Math.random() * 3) + 1
-console.log(randomizedRollNumOutCome);
+
+
+function randomizedNumber() {
+    return Math.floor(Math.random() * 3) + 1;
+}
 
 function LevelCalc() {
     xp *= xpMultiplier;
     level = Math.floor(xp / 100); // Example: 100 XP per level
-    console.log("Current XP:", xp);
-    console.log("Current Level:", level);
 }
 
 async function goStore() {
@@ -142,7 +146,6 @@ async function justBack() {
     inventoryText.style.visibility = "hidden";
     shopText.style.visibility = "hidden";
     controlsForMonsters.style.visibility = "hidden";
-    gameText.style.marginLeft = "auto"; gameText.style.marginRight = "auto"; //re-align
     text.innerText = instructions;
 }
 
@@ -159,9 +162,7 @@ async function goCave() {
     buttonBeast.style.display = "flex";
     buttonWereWolf.style.display = "flex";
     buttonDragon.style.display = "flex";
-    gameText.style.marginLeft = "auto"; gameText.style.marginRight = "auto";
     shopText.style.visibility = "hidden";
-
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -172,38 +173,25 @@ async function goCave() {
 async function buyHealth10() {
     if (gold >= 10) {
         gold -= 10; health += 10;
-        goldText.innerText = gold;
-        healthText.innerText = health;
-        console.log("Health purchased, Gold reduced to", gold);
-        text.innerText = ("Health purchased, -10 Gold");
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
-    }  
-    if (gold <= 0) {
-        button10HP.disabled = true;
+        goldText.innerText = gold; healthText.innerText = health;
+        await delayUpdate(text, "Health purchased, -10 Gold", 1800);
+    } else {
         await delayUpdate(text, "Not Enough Gold!", 1800);
-        text.innerText = "";
     }
+    text.innerText = "";
 }
 
 async function buyHealth50() {
     if (gold >= 50 && level >= 20) { // soy pro let them buy
         gold -= 50; health += 50;
-        goldText.innerText = gold;
-        healthText.innerText = health;
-        console.log("Health purchased, Gold reduced to", gold);
-        text.innerText = ("Health purchased, -50 Gold");
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
+        goldText.innerText = gold; healthText.innerText = health;
+        await delayUpdate(text, "Health purchased, -50 Gold", 1800);
     } 
     if (gold <= 50 || level === 0) { // too noob dont let them buy
         button50HP.disabled = true;
-        text.innerText = ("Not Enough Levels Or Gold!");
-        await new Promise(resolve => setTimeout(resolve, 1800));
-        text.innerText = "";
+        await delayUpdate(text, "Not Enough Gold or Levels!", 1800);
     }
-
-    
+    text.innerText = ""; 
 }
 
 async function buyHealth100() {
@@ -225,19 +213,12 @@ async function buyHealth100() {
 }
 
 async function buySword() {
-    if (gold >= 30 && level >= 0) {
+    if (gold >= 30) {
         gold -= 30;
         goldText.innerText = gold;
-        updateWeapon(1); // Equip "Sword"
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await updateWeapon(1); // Equip "Sword"
         buttonSwordText.style.display = "flex";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
         buttonSword.disabled = true;
-    } else {
-        text.innerText = "Not enough gold or levels for the Sword!";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
     }
 }
 
@@ -293,33 +274,23 @@ async function buyExcalibur() {
 }
 
 async function fightGhoul() {
-    let ghoulWorth = 10;
     ghoulWorth = monsterWorth;
-    console.log("Fighting The Ghoul!")
 
     if (currentWeaponIndex === 0) { // If the player hasnt bought any weapon
+        await delayUpdate(text, "You need to buy a weapon first!", 2800);
 
-        text.innerText = "You need to buy a weapon first!"
-        await new Promise(resolve => setTimeout(resolve, 2800));
-        text.innerText = "";
-        return;
-
-    } else if (level === 0 && currentWeaponIndex === 1) { //If everything is good output this code
-        await delayUpdate(text, "You Aproach The Ghoul", 100);
-        await delayUpdate(text, "You Aproach The Ghoul.", 200);
-        await delayUpdate(text, "You Aproach The Ghoul..", 200);
+    } else { //If everything is good output this code
+        await delayUpdate(text, "You Aproach The Ghoul", 100); 
+        await delayUpdate(text, "You Aproach The Ghoul.", 200); 
+        await delayUpdate(text, "You Aproach The Ghoul..", 200); 
         await delayUpdate(text, "You Aproach The Ghoul...", 300);
         buttonBeast.style.visibility = "hidden";
         buttonWereWolf.style.visibility = "hidden";
         buttonDragon.style.visibility = "hidden";
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        text.innerText = ""
-        playerHitMonster();
+        buttonAttack.style.display = "block";
+        await delayUpdate(text, "", 1500);
     }
-
 }
-
-
 
 async function fightBeast() {
     console.log("Fighting The Beast!")
@@ -356,27 +327,45 @@ async function fightDragon() {
     }
 }
 
+async function playerGuess() {
+    let playerRollNum = parseInt(prompt("Guess the correct number to Attack, 1 - 3: "));
+    if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
+        await delayUpdate(text, "Please enter a valid number between 1 and 3.", 2000);
+        return;
+    }
 
+    const randomizedRollNumOutCome = randomizedNumber();  console.log("Game rolled:", randomizedRollNumOutCome);  console.log("Player guessed:", playerRollNum);
+    
+    if (playerRollNum === randomizedRollNumOutCome) {
+        await delayUpdate(text, "You hit the monster!", 2000);
+        playerHitMonster();
+    } else {
+        await delayUpdate(text, "You missed! The monster landed a hit. Try again!", 2000);
+        monsterHit();
+    }
+    healthText.innerText = health;
+    
+}
+
+function monsterHit() {
+    health -= currentMonsterIndex[strength];
+    if (health <= 0) {
+        health = 0;
+        text.innerText = "You have been defeated!";
+    }
+}
 
 function playerHitMonster() {
-    if (playerRollNum === randomizedRollNumOutCome) {
-        let reward = monsterWorth * monsterMultipier;
-        gold += reward;
-        goldText.innerText = gold;
-    }
+    let reward = 10 * monsterWorth;
+    gold += reward;
+    goldText.innerText = gold;
+    console.log(monsterWorth);
 }
 
 function overSwung() {
-    if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === dodgeDodge) {
-        dodgeDodge = randomizedRollNum + 1;
-        text.innerText = "You over swung and narrowly dodged the monster!";
-    }
+    text.innerText = "You over swung and narrowly dodged the monster!";
 }
 
 function dodgedAttack() {
-    if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === dodge) {
-        dodge = randomizedRollNum - 1;
-        text.innerText = "You narrowly dodged the monster!";
-    }
-    
+    text.innerText = "You narrowly dodged the monster!";
 }
