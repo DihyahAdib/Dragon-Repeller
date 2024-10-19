@@ -12,7 +12,8 @@
 }
 
 body {
-    height: 100vh;
+    margin-top: -4px;
+    height: 115vh;
     width: 100%;
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
     background-size: 200% 200%;
@@ -34,12 +35,12 @@ body {
 
 #nameGame {
     align-content: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 0px;
+    margin-bottom:  0.5em;
     font-family: "Dreams";
     font-size: 40px;
     text-align: center;
-    color: rgb(243, 243, 243);
+    color: rgb(0, 0, 0);
 }
 
 #text {
@@ -321,4 +322,29 @@ body {
     justify-content:space-between; /* Space the text evenly */
     padding-right: 10px;
     margin: 5px 10px;
+}
+
+.fade-in {
+    animation: fadeIn 3s;
+}
+.fade-out {
+    animation: fadeIn 3s;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }

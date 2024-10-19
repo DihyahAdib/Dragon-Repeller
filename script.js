@@ -2,14 +2,14 @@
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 
 let score = 0;
-let level = 0;
+let level = 1;//change this back to zero later
 let xp = 0;
 let xpMultiplier = 1.5;
 let monsterMultipier = 2.5;
 let health = 100;
 let gold = 50;
 
-let currentWeaponIndex = 0;
+let currentWeaponIndex = 2;//change this back to zero later
 let weaponName;
 let weaponStrength;
 let inventory = ["None"];
@@ -114,6 +114,9 @@ async function updateMonster(newMonsterIndex) {
     monsterHealth = health;
     monsterStrength = strength;
     monsterWorth = worth;
+    
+    monsterNameText.innerText = name;
+    monsterHealthText.innerText = health;
     await new Promise(resolve => setTimeout(resolve, 1500));
     text.innerText = "";
 }
@@ -253,7 +256,7 @@ async function buyGreatHammer() {
     if (gold >= 100 && level >= 8) {
         gold -= 100;
         goldText.innerText = gold;
-        updateWeapon(3); // Equip "Great Hammer"
+        await updateWeapon(3); // Equip "Great Hammer"
         await new Promise(resolve => setTimeout(resolve, 1000));
         buttonGreatHammerText.style.display = "flex";
         buttonGreatHammer.disabled = true;
@@ -268,7 +271,7 @@ async function buyExcalibur() {
     if (gold >= 150 && level >= 15) {
         gold -= 150;
         goldText.innerText = gold;
-        updateWeapon(4); // Equip "Excalibur"
+        await updateWeapon(4); // Equip "Excalibur"
         await new Promise(resolve => setTimeout(resolve, 1000));
         buttonExcaliburText.style.display = "flex";
         buttonExcalibur.disabled = true;
@@ -280,47 +283,62 @@ async function buyExcalibur() {
 }
 
 async function fightGhoul() {
-    currentMonsterStats();
+    currentMonsterStats(0);
     if (currentWeaponIndex === 0) { // If the player hasnt bought any weapon
-        await delayUpdate(text, "You need to buy a weapon first!", 2000);
-
+        text.innerText = "You need to buy a weapon first!";
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        text.innerText = ""
     } else { //If everything is good output this code
         await delayUpdate(text, "You Aproach The Ghoul", 200); 
         await delayUpdate(text, "You Aproach The Ghoul.", 200); 
         await delayUpdate(text, "You Aproach The Ghoul..", 200); 
         await delayUpdate(text, "You Aproach The Ghoul...", 200);
+        await updateMonster(0);
+        buttonBack.disabled = true;
+        buttonStore.disabled = true;
+
         controlsForMonsters.style.visibility = "visible";
         monsterStats.style.display = "flex";
         monsterNameText.style.display = "flex";
         monsterHealthText.style.display = "flex";
-
-        buttonBack.disabled = true;
-        buttonStore.disabled = true;
-
+        inventoryText.style.visibility = "hidden";
         shopText.style.visibility = "hidden";
         buttonBeast.style.visibility = "hidden";
         buttonWereWolf.style.visibility = "hidden";
         buttonDragon.style.visibility = "hidden";
         buttonAttack.style.display = "block";
-        await updateMonster(0); // Set to Ghoul
-
     }
 }
 async function fightBeast() {
-    currentMonsterStats();
-    console.log("Fighting The Beast!")
-    if (level === 0) {
-        text.innerText = "Beast Locked: Get More Levels!";
+    currentMonsterStats(1);
+    if (currentWeaponIndex === 0 || level === 0) {
+        text.innerText = "You need to buy a weapon or level up first!";
         await new Promise(resolve => setTimeout(resolve, 1500));
-        buttonDragon.disabled = true;
-        text.innerText = ""
-    } else {
-        text.innerText = "Something will happen idk yet lol"
+        text.innerText = "";
+    } else { //If everything is good output this code
+        await delayUpdate(text, "You Aproach The Beast", 200); 
+        await delayUpdate(text, "You Aproach The Beast.", 200); 
+        await delayUpdate(text, "You Aproach The Beast..", 200); 
+        await delayUpdate(text, "You Aproach The Beast...", 200);
+        await updateMonster(1);
+        buttonBack.disabled = true;
+        buttonStore.disabled = true;
+
+        controlsForMonsters.style.visibility = "visible";
+        monsterStats.style.display = "flex";
+        monsterNameText.style.display = "flex";
+        monsterHealthText.style.display = "flex";
+        inventoryText.style.visibility = "hidden";
+        shopText.style.visibility = "hidden";
+        buttonGhoul.style.visibility = "hidden";
+        buttonWereWolf.style.visibility = "hidden";
+        buttonDragon.style.visibility = "hidden";
+        buttonAttack.style.display = "block";
     }
     
 }
 async function fightWereWolf() {
-    currentMonsterStats();
+    currentMonsterStats(2);
     console.log("Fighting The WereWolf!")
     if (level === 0) {
         text.innerText = "WereWolf Locked: Get More Levels!";
@@ -332,7 +350,7 @@ async function fightWereWolf() {
     }
 }
 async function fightDragon() {
-    currentMonsterStats();
+    currentMonsterStats(3);
     console.log("Fighting The Dragon!")
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
@@ -345,6 +363,7 @@ async function fightDragon() {
 }
 
 async function playerGuess() {
+    currentMonsterStats();
     let playerRollNum = parseInt(prompt("Guess the correct number to Attack, 1 - 3: "));
     if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
         await delayUpdate(text, "Please enter a valid number between 1 and 3.", 1500);
@@ -412,8 +431,11 @@ function playerHitMonster() {
 
 function monsterHitPlayer() {
     const currentMonster = monsters[currentMonsterIndex];
-    const currentWeapon = weapons[currentWeaponIndex];
     health -= monsterStrength;
+
+
+    currentMonster.strength -= health
+
     if (health <= 0) {
         health = 0;
         text.innerText = "You have been defeated!";
