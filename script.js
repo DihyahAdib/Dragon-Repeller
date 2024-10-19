@@ -8,10 +8,14 @@ let xpMultiplier = 1.5;
 let monsterMultipier = 2.5;
 let health = 100;
 let gold = 50;
+
 let currentWeaponIndex = 0;
+let weaponName;
+let weaponStrength;
 let inventory = ["None"];
-let fightingState = [0, 1, 2];
-let fighting;
+
+let currentMonsterIndex = 0;
+let monsterStrength;
 let monsterHealth;
 let monsterWorth;
 
@@ -59,9 +63,9 @@ const weapons = [
 
 const monsters = [
     {name: "Ghoul", health: 150, strength: 20, worth: 10},
-    {name: "Beast", health: 250, strength: 20, worth: 15},
-    {name: "WereWolf", health: 300, strength: 20, worth: 20},
-    {name: "Dragon", health: 500, strength: 20, worth: 25}
+    {name: "Beast", health: 250, strength: 50, worth: 15},
+    {name: "WereWolf", health: 300, strength: 100, worth: 20},
+    {name: "Dragon", health: 500, strength: 200, worth: 25}
 ];
 
 button10HP.onclick = buyHealth10;
@@ -80,6 +84,10 @@ buttonBeast.onclick = fightBeast;
 buttonWereWolf.onclick = fightWereWolf;
 buttonDragon.onclick = fightDragon;
 buttonAttack.onclick = playerGuess;
+buttonSwordText.onclick = showLore;
+buttonScytheText.onclick = showLore;
+buttonGreatHammerText.onclick = showLore;
+buttonExcaliburText.onclick = showLore;
 
 async function delayUpdate(textElement, message, delay) {   
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -88,61 +96,69 @@ async function delayUpdate(textElement, message, delay) {
 
 async function updateWeapon(newWeaponIndex) {
     currentWeaponIndex = newWeaponIndex;
-    currentWeapon = weapons[currentWeaponIndex];
+    const currentWeapon = weapons[currentWeaponIndex];
     console.log("Equipped Weapon:", currentWeapon);
     const { name, strength } = currentWeapon; // Destructure the currentWeapon properties
+    weaponName = name;
+    weaponStrength = strength;
     await delayUpdate(text,`Equipped: ${name} with a strength of: ${strength}`, 500);
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     text.innerText = "";
 }
 
 async function updateMonster(newMonsterIndex) {
     currentMonsterIndex = newMonsterIndex;
-    currentMonster = weapons[currentMonsterIndex];
-    console.log("Equipped Weapon:", currentMonster);
-    const { name, health } = currentMonster; // Destructure the currentMonster properties
-    await delayUpdate(text,`Equipped: ${name} with a strength of: ${health}`, 500);
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    const currentMonster = monsters[currentMonsterIndex];
+    console.log("Fighting Monster:", currentMonster);
+    const { name, health, strength, worth } = currentMonster; // Destructure the currentMonster properties
+    monsterHealth = health;
+    monsterStrength = strength;
+    monsterWorth = worth;
+    await new Promise(resolve => setTimeout(resolve, 1500));
     text.innerText = "";
 }
-
 
 function randomizedNumber() {
     return Math.floor(Math.random() * 3) + 1;
 }
 
 function LevelCalc() {
-    xp *= xpMultiplier;
-    level = Math.floor(xp / 100); // Example: 100 XP per level
+    if (xp === 100) {
+        level++;
+        levelText.innerText = level
+    }
 }
 
+function showLore() {
+    //
+}
 async function goStore() {
-    await delayUpdate(text, "Going To Store", 100);
+    await delayUpdate(text, "Going To Store", 200);
     await delayUpdate(text, "Going To Store.", 200);
     await delayUpdate(text, "Going To Store..", 200);
-    await delayUpdate(text, "Going To Store...", 300);
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await delayUpdate(text, "Going To Store...", 200);
     shopText.style.visibility = "visible";
     text.innerText = "";
+    buttonStore.disabled = true;
 }
 
 async function openInventory() {
-    await delayUpdate(text, "Going To Inventory", 100);
+    await delayUpdate(text, "Going To Inventory", 200);
     await delayUpdate(text, "Going To Inventory.", 200);
     await delayUpdate(text, "Going To Inventory..", 200);
-    await delayUpdate(text, "Going To Inventory...", 300);
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await delayUpdate(text, "Going To Inventory...", 200);
     inventoryText.style.visibility = "visible";
     text.innerText = " ";
+    buttonInventory.disabled = true;
 }
 
 async function justBack() {
-    await delayUpdate(text, "Going Back To Main Menu", 100);
+    await delayUpdate(text, "Going Back To Main Menu", 200);
     await delayUpdate(text, "Going Back To Main Menu.", 200);
     await delayUpdate(text, "Going Back To Main Menu..", 200);
-    await delayUpdate(text, "Going Back To Main Menu...", 300);
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await delayUpdate(text, "Going Back To Main Menu...", 200);
     buttonStore.disabled = false;
+    buttonInventory.disabled = false;
     inventoryText.style.visibility = "hidden";
     shopText.style.visibility = "hidden";
     controlsForMonsters.style.visibility = "hidden";
@@ -150,12 +166,13 @@ async function justBack() {
 }
 
 async function goCave() {
-    await delayUpdate(text, "Going To Cave", 100);
+    await delayUpdate(text, "Going To Cave", 200);
     await delayUpdate(text, "Going To Cave.", 200);
     await delayUpdate(text, "Going To Cave..", 200);
-    await delayUpdate(text, "Going To Cave...", 300);
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await delayUpdate(text, "Going To Cave...", 200);
     buttonStore.disabled = true;
+    buttonStore.disabled = false;
+    buttonInventory.disabled = false;
     controlsForMonsters.style.visibility = "visible";
     inventoryText.style.visibility = "hidden";
     buttonGhoul.style.display = "flex";
@@ -163,10 +180,6 @@ async function goCave() {
     buttonWereWolf.style.display = "flex";
     buttonDragon.style.display = "flex";
     shopText.style.visibility = "hidden";
-    if (level === 0) {
-        text.innerText = "Dragon Locked: Get More Levels!";
-        await new Promise(resolve => setTimeout(resolve, 2000));
-    }
     text.innerText = ""
 }
 
@@ -174,9 +187,11 @@ async function buyHealth10() {
     if (gold >= 10) {
         gold -= 10; health += 10;
         goldText.innerText = gold; healthText.innerText = health;
-        await delayUpdate(text, "Health purchased, -10 Gold", 1800);
+        text.innerText = `Health purchased, ${gold} gold left`;
+        await new Promise(resolve => setTimeout(resolve, 1000));
     } else {
-        await delayUpdate(text, "Not Enough Gold!", 1800);
+        text.innerText = "Not Enough Gold!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
     text.innerText = "";
 }
@@ -185,11 +200,12 @@ async function buyHealth50() {
     if (gold >= 50 && level >= 20) { // soy pro let them buy
         gold -= 50; health += 50;
         goldText.innerText = gold; healthText.innerText = health;
-        await delayUpdate(text, "Health purchased, -50 Gold", 1800);
-    } 
-    if (gold <= 50 || level === 0) { // too noob dont let them buy
+        text.innerText = `Health purchased, ${gold} gold left`;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    } else { // too noob dont let them buy
         button50HP.disabled = true;
-        await delayUpdate(text, "Not Enough Gold or Levels!", 1800);
+        text.innerText = "Not Enough Gold or Levels!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
     text.innerText = ""; 
 }
@@ -197,19 +213,15 @@ async function buyHealth50() {
 async function buyHealth100() {
     if (gold >= 100 && level >= 30) {
         gold -= 100; health += 100;
-        goldText.innerText = gold;
-        healthText.innerText = health;
-        console.log("Health purchased, Gold reduced to", gold);
-        text.innerText = ("Health purchased, -100 Gold");
-        await new Promise(resolve => setTimeout(resolve, 800));
-        text.innerText = "";
-    }
-    if (gold <= 100 || level === 0) {
+        goldText.innerText = gold; healthText.innerText = health;
+        text.innerText = `Health purchased, ${gold} gold left`;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    } else {
         button100HP.disabled = true;
-        await delayUpdate(text, "Not Enough Levels Or Gold!", 800);
-        text.innerText = "";
-
+        text.innerText = "Not Enough Gold or Levels!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
+    text.innerText = "";
 }
 
 async function buySword() {
@@ -226,17 +238,15 @@ async function buyScythe() {
     if (gold >= 100 && level >= 3) {
         gold -= 100;
         goldText.innerText = gold;
-        updateWeapon(2); // Equip "Scythe"
+        await updateWeapon(2); // Equip "Scythe"
         await new Promise(resolve => setTimeout(resolve, 1000));
         buttonScytheText.style.display = "flex";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
         buttonScythe.disabled = true;
     } else {
         text.innerText = "Not enough gold or levels for the Scythe!";
         await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
     }
+    text.innerText = "";
 }
 
 async function buyGreatHammer() {
@@ -246,14 +256,12 @@ async function buyGreatHammer() {
         updateWeapon(3); // Equip "Great Hammer"
         await new Promise(resolve => setTimeout(resolve, 1000));
         buttonGreatHammerText.style.display = "flex";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
         buttonGreatHammer.disabled = true;
     } else {
         text.innerText = "Not enough gold or levels for the Great Hammer!";
         await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
     }
+    text.innerText = "";
 }
 
 async function buyExcalibur() {
@@ -263,36 +271,43 @@ async function buyExcalibur() {
         updateWeapon(4); // Equip "Excalibur"
         await new Promise(resolve => setTimeout(resolve, 1000));
         buttonExcaliburText.style.display = "flex";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
         buttonExcalibur.disabled = true;
     } else {
         text.innerText = "Not enough gold or levels for the Excalibur!";
         await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
     }
+    text.innerText = "";
 }
 
 async function fightGhoul() {
-    ghoulWorth = monsterWorth;
-
+    currentMonsterStats();
     if (currentWeaponIndex === 0) { // If the player hasnt bought any weapon
-        await delayUpdate(text, "You need to buy a weapon first!", 2800);
+        await delayUpdate(text, "You need to buy a weapon first!", 2000);
 
     } else { //If everything is good output this code
-        await delayUpdate(text, "You Aproach The Ghoul", 100); 
+        await delayUpdate(text, "You Aproach The Ghoul", 200); 
         await delayUpdate(text, "You Aproach The Ghoul.", 200); 
         await delayUpdate(text, "You Aproach The Ghoul..", 200); 
-        await delayUpdate(text, "You Aproach The Ghoul...", 300);
+        await delayUpdate(text, "You Aproach The Ghoul...", 200);
+        controlsForMonsters.style.visibility = "visible";
+        monsterStats.style.display = "flex";
+        monsterNameText.style.display = "flex";
+        monsterHealthText.style.display = "flex";
+
+        buttonBack.disabled = true;
+        buttonStore.disabled = true;
+
+        shopText.style.visibility = "hidden";
         buttonBeast.style.visibility = "hidden";
         buttonWereWolf.style.visibility = "hidden";
         buttonDragon.style.visibility = "hidden";
         buttonAttack.style.display = "block";
-        await delayUpdate(text, "", 1500);
+        await updateMonster(0); // Set to Ghoul
+
     }
 }
-
 async function fightBeast() {
+    currentMonsterStats();
     console.log("Fighting The Beast!")
     if (level === 0) {
         text.innerText = "Beast Locked: Get More Levels!";
@@ -305,6 +320,7 @@ async function fightBeast() {
     
 }
 async function fightWereWolf() {
+    currentMonsterStats();
     console.log("Fighting The WereWolf!")
     if (level === 0) {
         text.innerText = "WereWolf Locked: Get More Levels!";
@@ -316,6 +332,7 @@ async function fightWereWolf() {
     }
 }
 async function fightDragon() {
+    currentMonsterStats();
     console.log("Fighting The Dragon!")
     if (level === 0) {
         text.innerText = "Dragon Locked: Get More Levels!";
@@ -330,42 +347,95 @@ async function fightDragon() {
 async function playerGuess() {
     let playerRollNum = parseInt(prompt("Guess the correct number to Attack, 1 - 3: "));
     if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
-        await delayUpdate(text, "Please enter a valid number between 1 and 3.", 2000);
+        await delayUpdate(text, "Please enter a valid number between 1 and 3.", 1500);
         return;
     }
 
-    const randomizedRollNumOutCome = randomizedNumber();  console.log("Game rolled:", randomizedRollNumOutCome);  console.log("Player guessed:", playerRollNum);
+    const randomizedRollNumOutCome = randomizedNumber();  
+    console.log("Game rolled:", randomizedRollNumOutCome);  
+    console.log("Player guessed:", playerRollNum);
     
     if (playerRollNum === randomizedRollNumOutCome) {
-        await delayUpdate(text, "You hit the monster!", 2000);
+        text.innerText = "You hit the monster!";
+        console.log("you hit");
         playerHitMonster();
-    } else {
-        await delayUpdate(text, "You missed! The monster landed a hit. Try again!", 2000);
-        monsterHit();
-    }
-    healthText.innerText = health;
-    
-}
 
-function monsterHit() {
-    health -= currentMonsterIndex[strength];
-    if (health <= 0) {
-        health = 0;
-        text.innerText = "You have been defeated!";
+    } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
+        text.innerText = "You over swung and missed the monster! try again...";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("over swung");
+        text.innerText = "";
+        xp += 10; //additional xp given for not getitng hit.
+        xpText.innerText = xp;
+        return;
+
+    } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
+        text.innerText = "You narrowly dodged the monster! try again...";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("dodged");
+        text.innerText = "";
+        xp += 10; //additional xp given for not getitng hit.
+        xpText.innerText = xp;
+        return;
+
+    } else if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 2 ||  playerRollNum === randomizedRollNumOutCome - 2) {
+        text.innerText = "The monster completely missed the monster and it has attacked you!";
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        text.innerText = "";
+        console.log("monster fights back");
+        monsterHitPlayer();
     }
 }
 
 function playerHitMonster() {
-    let reward = 10 * monsterWorth;
+    const currentMonster = monsters[currentMonsterIndex];
+    const currentWeapon = weapons[currentWeaponIndex];
+    let reward = 2 * monsterWorth;
+
+    xp += 20; // Example value, increase XP for hitting the monster
     gold += reward;
     goldText.innerText = gold;
-    console.log(monsterWorth);
+    xpText.innerText = xp;
+
+    currentMonster.health -= currentWeapon.strength;
+
+    monsterHealthText.innerText = currentMonster.health;
+
+    if (currentMonster.health <= 0) {
+        text.innerText = `You defeated the ${currentMonster.name}!`;
+        // Optionally, you can handle what happens after the monster is defeated (e.g., reward the player)
+        //controlsForMonsters.style.visibility = "hidden";
+        //buttonAttack.style.display = "none";
+        //monsterStats.style.display = "none";
+    }
 }
 
-function overSwung() {
-    text.innerText = "You over swung and narrowly dodged the monster!";
+function monsterHitPlayer() {
+    const currentMonster = monsters[currentMonsterIndex];
+    const currentWeapon = weapons[currentWeaponIndex];
+    health -= monsterStrength;
+    if (health <= 0) {
+        health = 0;
+        text.innerText = "You have been defeated!";
+
+    }
+    healthText.innerText = health;
 }
 
-function dodgedAttack() {
-    text.innerText = "You narrowly dodged the monster!";
+function currentMonsterStats() {
+    const currentMonster = monsters[currentMonsterIndex];
+
+    if (currentMonster) {
+        // Update the monster name and health text elements
+        monsterNameText.innerText = currentMonster.name;
+        monsterHealthText.innerText = currentMonster.health;
+    } else {
+        // If no current monster is selected, clear the text
+        monsterNameText.innerText = "No monster selected";
+        monsterHealthText.innerText = "";
+    }
 }
+
+currentMonsterStats();
+
+LevelCalc();
