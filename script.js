@@ -1,9 +1,9 @@
-//Inspired by FreeCodeCamp Developed by Dihyah Adib.//
+// Inspired by FreeCodeCamp, Developed by Dihyah Adib.
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 let loreSword = "Wait you thought this weapon had importance? hahaha your crazy!";
-let loreScythe = "";
-let loreGreatHammer = "";
-let loreExcalibur = "";
+let loreScythe = "They say the grim reaper his weapon from the sight of the mightiest hero.";
+let loreGreatHammer = "They say that they said, only when they say what they said they'd say.";
+let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
 
 let score = 0;
 let level = 0;
@@ -15,9 +15,10 @@ let currentMonsterIndex = 0;
 
 const xpMultiplier = 1.5;
 const monsterMultipier = 2.5;
+
+const inventory = ["None"];
 let weaponName;
 let weaponStrength;
-let inventory = ["None"];
 let monsterStrength;
 let monsterHealth;
 let monsterWorth;
@@ -209,6 +210,7 @@ async function goCave() {
     buttonWereWolf.style.display = "flex";
     buttonDragon.style.display = "flex";
     shopText.style.visibility = "hidden";
+    textText.style.visibility = "hidden";
     text.innerText = ""
 }
 
