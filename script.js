@@ -1,18 +1,23 @@
 //Inspired by FreeCodeCamp Developed by Dihyah Adib.//
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
+let loreSword = "Wait you thought this weapon had importance? hahaha your crazy!";
+let loreScythe = "";
+let loreGreatHammer = "";
+let loreExcalibur = "";
 
 let score = 0;
-let level = 0;//change this back to zero later
+let level = 0;
 let xp = 0;
-let xpMultiplier = 1.5;
-let monsterMultipier = 2.5;
 let health = 100;
 let gold = 50;
-let currentWeaponIndex = 0;//change this back to zero later
+let currentWeaponIndex = 0;
+let currentMonsterIndex = 0;
+
+const xpMultiplier = 1.5;
+const monsterMultipier = 2.5;
 let weaponName;
 let weaponStrength;
 let inventory = ["None"];
-let currentMonsterIndex = 0;
 let monsterStrength;
 let monsterHealth;
 let monsterWorth;
@@ -34,6 +39,7 @@ const buttonWereWolf = document.querySelector("#buttonWereWolf");
 const buttonDragon = document.querySelector("#buttonDragon"); 
 const levelText = document.querySelector("#levelText");
 const text = document.querySelector("#text");
+const textText = document.querySelector("#textText");
 const xpText = document.querySelector("#xpText");
 const healthText = document.querySelector("#healthText");
 const goldText = document.querySelector("#goldText");
@@ -49,20 +55,20 @@ const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 const buttonAttack = document.querySelector("#buttonAttack");
+const LoserScreen = document.querySelector("#LoserScreen");
 
-// NOTE TO SELF HP OF MONSTERS ARE CURRENTLY TOO HIGHER FOR THE DMG OUTPUT OF WEAPONS PLEASE MAKE THE WEAPONS STRONGER//
 const weapons = [
-    {name: "None", strength: 0},
-    {name: "Sword", strength: 10},
+    {name: "None", strength: 0}, 
+    {name: "Sword", strength: 25},
     {name: "Scythe", strength: 50},
-    {name: "GreatHammer", strength: 100},
+    {name: "GreatHammer", strength: 75},
     {name: "Excalibur", strength: 200}
 ];
 
 const monsters = [
-    {name: "Ghoul", health: 150, strength: 20, worth: 10},
-    {name: "Beast", health: 250, strength: 50, worth: 15},
-    {name: "WereWolf", health: 300, strength: 100, worth: 20},
+    {name: "Ghoul", health: 50, strength: 25, worth: 10},
+    {name: "Beast", health: 100, strength: 50, worth: 15},
+    {name: "WereWolf", health: 200, strength: 100, worth: 20},
     {name: "Dragon", health: 500, strength: 200, worth: 25}
 ];
 
@@ -82,10 +88,20 @@ buttonBeast.onclick = fightBeast;
 buttonWereWolf.onclick = fightWereWolf;
 buttonDragon.onclick = fightDragon;
 buttonAttack.onclick = playerGuess;
-buttonSwordText.onclick = showLore;
-buttonScytheText.onclick = showLore;
-buttonGreatHammerText.onclick = showLore;
-buttonExcaliburText.onclick = showLore;
+buttonSwordText.onclick = showLore1;
+buttonScytheText.onclick = showLore2;
+buttonGreatHammerText.onclick = showLore3;
+buttonExcaliburText.onclick = showLore4;
+
+function disableButton() {
+    controlsForMonsters.style.visibility = "visible";
+    monsterStats.style.display = "flex";
+    monsterNameText.style.display = "flex";
+    monsterHealthText.style.display = "flex";
+    inventoryText.style.visibility = "hidden";
+    shopText.style.visibility = "hidden";
+    buttonAttack.style.display = "block";
+}
 
 async function delayUpdate(textElement, message, delay) {   
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -124,15 +140,27 @@ function randomizedNumber() {
 }
 
 function LevelCalc() {
-    if (xp === 100) {
-        level++;
-        levelText.innerText = level
+    if (xp >= 100) {
+        xp -= 100;
+        level+= 1;
+        levelText.innerText = level;
+        xpText.innerText = xp;
     }
 }
 
-function showLore() {
-    //
+function showLore1() { textText.style.visibility = "visible";
+    textText.innerText = loreSword;
+} 
+function showLore2() { textText.style.visibility = "visible";
+    textText.innerText = loreScythe;
+} 
+function showLore3() { textText.style.visibility = "visible";
+    textText.innerText = loreGreatHammer;
+} 
+function showLore4() { textText.style.visibility = "visible";
+    textText.innerText = loreExcalibur;
 }
+
 async function goStore() {
     await delayUpdate(text, "Going To Store", 200);
     await delayUpdate(text, "Going To Store.", 200);
@@ -292,19 +320,13 @@ async function fightGhoul() {
         await delayUpdate(text, "You Aproach The Ghoul..", 200); 
         await delayUpdate(text, "You Aproach The Ghoul...", 200);
         await updateMonster(0);
+        disableButton();
         buttonBack.disabled = true;
         buttonStore.disabled = true;
 
-        controlsForMonsters.style.visibility = "visible";
-        monsterStats.style.display = "flex";
-        monsterNameText.style.display = "flex";
-        monsterHealthText.style.display = "flex";
-        inventoryText.style.visibility = "hidden";
-        shopText.style.visibility = "hidden";
         buttonBeast.style.visibility = "hidden";
         buttonWereWolf.style.visibility = "hidden";
         buttonDragon.style.visibility = "hidden";
-        buttonAttack.style.display = "block";
     }
 }
 async function fightBeast() {
@@ -319,44 +341,56 @@ async function fightBeast() {
         await delayUpdate(text, "You Aproach The Beast..", 200); 
         await delayUpdate(text, "You Aproach The Beast...", 200);
         await updateMonster(1);
+        disableButton();
         buttonBack.disabled = true;
         buttonStore.disabled = true;
 
-        controlsForMonsters.style.visibility = "visible";
-        monsterStats.style.display = "flex";
-        monsterNameText.style.display = "flex";
-        monsterHealthText.style.display = "flex";
-        inventoryText.style.visibility = "hidden";
-        shopText.style.visibility = "hidden";
         buttonGhoul.style.visibility = "hidden";
         buttonWereWolf.style.visibility = "hidden";
         buttonDragon.style.visibility = "hidden";
-        buttonAttack.style.display = "block";
     }
     
 }
 async function fightWereWolf() {
     currentMonsterStats(2);
-    console.log("Fighting The WereWolf!")
-    if (level === 0) {
-        text.innerText = "WereWolf Locked: Get More Levels!";
+    if (currentWeaponIndex === 0 || level === 0) {
+        text.innerText = "You need to buy a weapon or level up first!";
         await new Promise(resolve => setTimeout(resolve, 1500));
-        buttonDragon.disabled = true;
-        text.innerText = ""
+        text.innerText = "";
     } else {
-        text.innerText = "Something will happen idk yet lol"
+        await delayUpdate(text, "You Aproach The WereWolf", 200); 
+        await delayUpdate(text, "You Aproach The WereWolf.", 200); 
+        await delayUpdate(text, "You Aproach The WereWolf..", 200); 
+        await delayUpdate(text, "You Aproach The WereWolf...", 200);
+        await updateMonster(2);
+        disableButton();
+        buttonBack.disabled = true;
+        buttonStore.disabled = true;
+
+        buttonGhoul.style.visibility = "hidden";
+        buttonBeast.style.visibility = "hidden";
+        buttonDragon.style.visibility = "hidden";
     }
 }
 async function fightDragon() {
     currentMonsterStats(3);
-    console.log("Fighting The Dragon!")
-    if (level === 0) {
-        text.innerText = "Dragon Locked: Get More Levels!";
+    if (currentWeaponIndex === 0 || level === 0) {
+        text.innerText = "You need to buy a weapon or level up first!";
         await new Promise(resolve => setTimeout(resolve, 1500));
-        buttonDragon.disabled = true;
-        text.innerText = ""
-    } else {
-        text.innerText = "Something will happen idk yet lol"
+        text.innerText = "";
+    } else if (currentWeaponIndex === 4 && level >= 20) {
+        await delayUpdate(text, "You Aproach The Dragon", 200); 
+        await delayUpdate(text, "You Aproach The Dragon.", 200); 
+        await delayUpdate(text, "You Aproach The Dragon..", 200); 
+        await delayUpdate(text, "You Aproach The Dragon...", 200);
+        await updateMonster(3);
+        disableButton();
+        buttonBack.disabled = true;
+        buttonStore.disabled = true;
+
+        buttonGhoul.style.visibility = "hidden";
+        buttonBeast.style.visibility = "hidden";
+        buttonWereWolf.style.visibility = "hidden";
     }
 }
 
@@ -367,47 +401,43 @@ async function playerGuess() {
         await delayUpdate(text, "Please enter a valid number between 1 and 3.", 1500);
         return;
     }
-
     const randomizedRollNumOutCome = randomizedNumber();  
     console.log("Game rolled:", randomizedRollNumOutCome);  
     console.log("Player guessed:", playerRollNum);
     
     if (playerRollNum === randomizedRollNumOutCome) {
         text.innerText = "You hit the monster!";
-        console.log("you hit");
         playerHitMonster();
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        text.innerText = "";
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
         text.innerText = "You over swung and missed the monster! try again...";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("over swung");
-        text.innerText = "";
         xp += 10; //additional xp given for not getitng hit.
         xpText.innerText = xp;
-        return;
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        text.innerText = "";
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
         text.innerText = "You narrowly dodged the monster! try again...";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("dodged");
-        text.innerText = "";
         xp += 10; //additional xp given for not getitng hit.
         xpText.innerText = xp;
-        return;
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        text.innerText = "";
+
 
     } else if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 2 ||  playerRollNum === randomizedRollNumOutCome - 2) {
-        text.innerText = "The monster completely missed the monster and it has attacked you!";
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        text.innerText = "";
-        console.log("monster fights back");
+        text.innerText = "You completely missed the monster and it has attacked you!";
         monsterHitPlayer();
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        text.innerText = "";
     }
+    text.innerText = "";
 }
 
 function playerHitMonster() {
     const currentMonster = monsters[currentMonsterIndex];
     const currentWeapon = weapons[currentWeaponIndex];
-    const killedMonster = document.querySelector("#killedMonster");
 
     let reward = 2 * monsterWorth;
     xp += 20; // Example value, increase XP for hitting the monster
@@ -415,30 +445,23 @@ function playerHitMonster() {
     goldText.innerText = gold;
     xpText.innerText = xp;
 
+    LevelCalc();
+
+    xpText.innerText = xp;
     currentMonster.health -= currentWeapon.strength;
     monsterHealthText.innerText = currentMonster.health;
 
-    killedMonster.classList.add("fadeInAndOut");
-
     if (currentMonster.health <= 0) {
+        currentMonster.health = 0;
         text.innerText = `You defeated the ${currentMonster.name}!`;
+        currentMonsterStats();
         animateMonsterDefeat();
+    } else {
+        text.innerText = ""; 
     }
 }
 
-function animateMonsterDefeat() {
-    const currentMonster = monsters[currentMonsterIndex];
-    const killedMonster = document.querySelector("#killedMonster");
-
-    killedMonster.classList.add("fadeInAndOut");
-
-    setTimeout(() => {
-        killedMonster.classList.remove("fadeInAndOut")
-    }, 2400);
-
-}
-
-function monsterHitPlayer() {
+async function monsterHitPlayer() {
     const currentMonster = monsters[currentMonsterIndex];
     health -= monsterStrength;
 
@@ -448,7 +471,9 @@ function monsterHitPlayer() {
     if (health <= 0) {
         health = 0;
         text.innerText = "You have been defeated!";
-        
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        text.innerText = "";
+        LoserScreen.style.visibility = "visible";
     }
     healthText.innerText = health;
 }

@@ -8,6 +8,12 @@
     </head>
 
     <body>
+        <div id="LoserScreen">
+            <div id="Loser">You Lose!
+                <p id="LoserExplain">Reload page to try again.</p>
+            </div>
+            
+        </div>
         <section class="BODYGAME">
             <div id="game">
                 <h1 id="nameGame">Dragon Repeller</h1>
@@ -23,27 +29,26 @@
                     <button class="buttons" id="buttonInventory">Inventory</button>
                     <button class="buttons" id="buttonBack">Back</button>
                 </div>
-                <div style="display: none;" id="monsterStats">
+                <div id="monsterStats">
                     <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
                     <span class="stat">Health: <strong><span id="monsterHealth"></span></strong></span>
                 </div>
-                <div class="texttext" id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
-                    You are in the town square. Where do you want to go? Use the buttons above.
-                </div>
-                <div style="visibility: hidden;" id="controlsForMonsters">
+                <div id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
+                    You are in the town square. Where do you want to go? Use the buttons above.</div>
+                <div id="controlsForMonsters">
                     <div>
-                        <button class="buttonsForMonsters" id="buttonGhoul" style="display: none;">Fight The Ghoul</button>
-                        <button class="buttonsForMonsters" id="buttonBeast" style="display: none;">Fight The Beast</button>
-                        <button class="buttonsForMonsters" id="buttonWereWolf" style="display: none;">Fight The WereWolf</button>
-                        <button class="buttonsForMonsters" id="buttonDragon" style="display: none;">Fight The Dragon</button>
+                        <button class="buttonsForMonsters" id="buttonGhoul">Fight The Ghoul</button>
+                        <button class="buttonsForMonsters" id="buttonBeast">Fight The Beast</button>
+                        <button class="buttonsForMonsters" id="buttonWereWolf">Fight The WereWolf</button>
+                        <button class="buttonsForMonsters" id="buttonDragon">Fight The Dragon</button>
                     </div>
                     <div>
-                        <button class="buttonForAttack" id="buttonAttack" style="display: none;">Attack!</button>
+                        <button class="buttonForAttack" id="buttonAttack">Attack!</button>
                     </div>
                 </div>
             </div>
     
-            <div style="visibility: hidden;" id="shopUI"> 
+            <div id="shopUI"> 
                 <div id="weaponShop">
                     <hr><h1>Weapon Shop</h1><hr>
                     <p>Hover over buttons to display price.</p>
@@ -62,7 +67,7 @@
                 </div>
             </div>
     
-            <div style="visibility: hidden;" id="inventoryUI"> 
+            <div id="inventoryUI"> 
                 <div id="inventory">
                     <hr><h1>Inventory</h1><hr>
                     <p>Click the buttons to display their Lore</p>
@@ -73,6 +78,7 @@
                         <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
                         <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
                     </ul>
+                    <div id="textText"></div>
                 </div>
             </div>
         </section>

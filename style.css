@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: "Comforta";
     src: url(./Fonts/Comfortaa-Light.ttf);
@@ -23,7 +22,7 @@
 body {
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
     background-size: 200% 200%;
-    animation: colorC 35.5s ease-in-out infinite;
+    animation: colorC 35s ease-in-out infinite;
     overflow: hidden;
 }
 
@@ -42,7 +41,8 @@ body {
 #nameGame {
     align-content: center;
     margin-top: 0px;
-    margin-bottom:  0.5em;
+    margin-bottom:  0.3em;
+    padding: 8px;
     font-family: "Dreams";
     font-size: 40px;
     text-align: center;
@@ -57,6 +57,12 @@ body {
     color: white;
     padding: 2em;
     font-size: 25px;
+    text-align: center;
+}
+
+#textText {
+    visibility: hidden;
+    font-family: "Nexa";
     text-align: center;
 }
 
@@ -83,6 +89,7 @@ body {
 }
 
 #shopUI {
+    visibility: hidden;
     display: flex;
     flex-direction: column;
     width: 21.8em;
@@ -106,6 +113,7 @@ body {
 }
 
 #inventoryUI {
+    visibility: hidden;
     display: flex;
     flex-direction: column;
     width: 21.8em;
@@ -215,6 +223,7 @@ body {
 }
 
 .buttonsForMonsters {
+    display: none;
     max-width: 30em;
     width: 20em;
     justify-content: center;
@@ -228,6 +237,7 @@ body {
 }
 
 .buttonForAttack {
+    display: none;
     max-width: 30em;
     width: 10em;
     justify-content: center;
@@ -289,6 +299,8 @@ body {
     background-color: rgb(197, 40, 47);
     color: rgb(255, 255, 255);
 }
+
+
 #buttonAttack:hover {
     background-color: rgb(255, 0, 13);
     color: rgb(255, 255, 255);
@@ -303,6 +315,7 @@ body {
 }
 
 #controlsForMonsters {
+    visibility: hidden;
     height: 120px;
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -315,6 +328,7 @@ body {
 }
 
 #monsterStats {
+    display: none;
     border: 1px black solid;
     color: white;
     padding: 5px;
@@ -336,7 +350,6 @@ body {
     background-size: 200% 200%;
     background-color: white;
     animation: fadeIn_Out 6s infinite;
-    z-index: 10;
 }
 
 @keyframes fadeIn_Out {
@@ -352,4 +365,34 @@ body {
     100%{
         opacity: 0;
     }
+}
+
+#LoserScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: hidden;
+}
+
+#LoserExplain {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    color: rgb(153, 0, 0);
+}
+
+#Loser {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 26px;
+    color: red;
+
 }
