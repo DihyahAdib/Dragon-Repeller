@@ -23,11 +23,11 @@
 body {
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
     background-size: 200% 200%;
-    animation: color 35.5s ease-in-out infinite;
+    animation: colorC 35.5s ease-in-out infinite;
     overflow: hidden;
 }
 
-@keyframes color{
+@keyframes colorC{
     0%{
         background-position: 0 50%;
     }
