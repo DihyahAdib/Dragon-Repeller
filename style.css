@@ -1,20 +1,26 @@
+
 @font-face {
     font-family: "Comforta";
-    src: url(./Comfortaa-Light.ttf);
+    src: url(./Fonts/Comfortaa-Light.ttf);
 }
 @font-face {
     font-family: "Nexa";
-    src: url(./Nexa-Heavy.ttf);
+    src: url(./Fonts/Nexa-Heavy.ttf);
 }
 @font-face {
     font-family: "Dreams";
-    src: url(./CaviarDreams.ttf);
+    src: url(./Fonts/CaviarDreams.ttf);
+}
+@font-face {
+    font-family: "NORM";
+    src: url(./Fonts/LEMONMILK-Regular.otf);
+}
+@font-face {
+    font-family: "BOLD";
+    src: url(./Fonts/LEMONMILK-Bold.otf);
 }
 
 body {
-    margin-top: -4px;
-    height: 115vh;
-    width: 100%;
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
     background-size: 200% 200%;
     animation: color 35.5s ease-in-out infinite;
@@ -46,7 +52,7 @@ body {
 #text {
     font-family: "Dreams";
     font-weight: 560;
-    height: 7em;
+    height: 6em;
     background-color: black;
     color: white;
     padding: 2em;
@@ -324,27 +330,26 @@ body {
     margin: 5px 10px;
 }
 
-.fade-in {
-    animation: fadeIn 3s;
+.fadeInAndOut {
+    height: 110vh;
+    width: 100%;
+    background-size: 200% 200%;
+    background-color: white;
+    animation: fadeIn_Out 6s infinite;
+    z-index: 10;
 }
-.fade-out {
-    animation: fadeIn 3s;
-}
-@keyframes fadeIn {
-    from {
+
+@keyframes fadeIn_Out {
+    0%{
         opacity: 0;
     }
-
-    to {
+    50%{
         opacity: 1;
     }
-}
-@keyframes fadeOut {
-    from {
-        opacity: 1;
+    60%{
+        opacity: 0.6; 
     }
-
-    to {
+    100%{
         opacity: 0;
     }
 }

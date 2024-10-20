@@ -2,18 +2,16 @@
 let instructions = "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above.";
 
 let score = 0;
-let level = 1;//change this back to zero later
+let level = 0;//change this back to zero later
 let xp = 0;
 let xpMultiplier = 1.5;
 let monsterMultipier = 2.5;
 let health = 100;
 let gold = 50;
-
-let currentWeaponIndex = 2;//change this back to zero later
+let currentWeaponIndex = 0;//change this back to zero later
 let weaponName;
 let weaponStrength;
 let inventory = ["None"];
-
 let currentMonsterIndex = 0;
 let monsterStrength;
 let monsterHealth;
@@ -50,9 +48,9 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
-
 const buttonAttack = document.querySelector("#buttonAttack");
 
+// NOTE TO SELF HP OF MONSTERS ARE CURRENTLY TOO HIGHER FOR THE DMG OUTPUT OF WEAPONS PLEASE MAKE THE WEAPONS STRONGER//
 const weapons = [
     {name: "None", strength: 0},
     {name: "Sword", strength: 10},
@@ -409,24 +407,35 @@ async function playerGuess() {
 function playerHitMonster() {
     const currentMonster = monsters[currentMonsterIndex];
     const currentWeapon = weapons[currentWeaponIndex];
-    let reward = 2 * monsterWorth;
+    const killedMonster = document.querySelector("#killedMonster");
 
+    let reward = 2 * monsterWorth;
     xp += 20; // Example value, increase XP for hitting the monster
     gold += reward;
     goldText.innerText = gold;
     xpText.innerText = xp;
 
     currentMonster.health -= currentWeapon.strength;
-
     monsterHealthText.innerText = currentMonster.health;
+
+    killedMonster.classList.add("fadeInAndOut");
 
     if (currentMonster.health <= 0) {
         text.innerText = `You defeated the ${currentMonster.name}!`;
-        // Optionally, you can handle what happens after the monster is defeated (e.g., reward the player)
-        //controlsForMonsters.style.visibility = "hidden";
-        //buttonAttack.style.display = "none";
-        //monsterStats.style.display = "none";
+        animateMonsterDefeat();
     }
+}
+
+function animateMonsterDefeat() {
+    const currentMonster = monsters[currentMonsterIndex];
+    const killedMonster = document.querySelector("#killedMonster");
+
+    killedMonster.classList.add("fadeInAndOut");
+
+    setTimeout(() => {
+        killedMonster.classList.remove("fadeInAndOut")
+    }, 2400);
+
 }
 
 function monsterHitPlayer() {
@@ -439,7 +448,7 @@ function monsterHitPlayer() {
     if (health <= 0) {
         health = 0;
         text.innerText = "You have been defeated!";
-
+        
     }
     healthText.innerText = health;
 }
@@ -457,6 +466,7 @@ function currentMonsterStats() {
         monsterHealthText.innerText = "";
     }
 }
+
 
 currentMonsterStats();
 
