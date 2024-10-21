@@ -57,7 +57,8 @@ const monsterHealthText = document.querySelector("#monsterHealth");
 const controlsForMonsters = document.querySelector("#controlsForMonsters");
 const buttonAttack = document.querySelector("#buttonAttack");
 const LoserScreen = document.querySelector("#LoserScreen");
-
+const beatBossScreen = document.querySelector("#beatBossScreen");
+ 
 const weapons = [
     {name: "None", strength: 0}, 
     {name: "Sword", strength: 25},
@@ -408,33 +409,24 @@ async function playerGuess() {
     console.log("Player guessed:", playerRollNum);
     
     if (playerRollNum === randomizedRollNumOutCome) {
-        text.innerText = "You hit the monster!";
         playerHitMonster();
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        text.innerText = "";
+        text.innerText = "You hit the monster!";
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
         text.innerText = "You over swung and missed the monster! try again...";
-        xp += 10; //additional xp given for not getitng hit.
+        xp += 10;
         xpText.innerText = xp;
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        text.innerText = "";
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
         text.innerText = "You narrowly dodged the monster! try again...";
-        xp += 10; //additional xp given for not getitng hit.
+        xp += 10;
         xpText.innerText = xp;
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        text.innerText = "";
 
-
-    } else if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 2 ||  playerRollNum === randomizedRollNumOutCome - 2) {
-        text.innerText = "You completely missed the monster and it has attacked you!";
+    } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 2 ||  playerRollNum === randomizedRollNumOutCome - 2) {
         monsterHitPlayer();
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        text.innerText = "";
+        text.innerText = "You completely missed the monster and it has attacked you!";
+        
     }
-    text.innerText = "";
 }
 
 function playerHitMonster() {
@@ -455,11 +447,9 @@ function playerHitMonster() {
 
     if (currentMonster.health <= 0) {
         currentMonster.health = 0;
-        text.innerText = `You defeated the ${currentMonster.name}!`;
+        text.innerText = `You defeated the ${currentMonster.name}!`; //this works, what next?
         currentMonsterStats();
-        animateMonsterDefeat();
-    } else {
-        text.innerText = ""; 
+        beatBossScreen.style.visibility = "visible";
     }
 }
 
@@ -467,8 +457,7 @@ async function monsterHitPlayer() {
     const currentMonster = monsters[currentMonsterIndex];
     health -= monsterStrength;
 
-
-    currentMonster.strength -= health
+    currentMonster.strength -= health;
 
     if (health <= 0) {
         health = 0;
@@ -493,7 +482,6 @@ function currentMonsterStats() {
         monsterHealthText.innerText = "";
     }
 }
-
 
 currentMonsterStats();
 

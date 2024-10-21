@@ -367,7 +367,7 @@ body {
     }
 }
 
-#LoserScreen {
+#loserScreen {
     position: fixed;
     top: 0;
     left: 0;
@@ -381,14 +381,60 @@ body {
     visibility: hidden;
 }
 
-#LoserExplain {
+#loserExplain {
     margin: 10px;
     padding: 10px;
     text-align: center;
     color: rgb(153, 0, 0);
 }
 
-#Loser {
+#loser {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 26px;
+    color: red;
+
+}
+
+#beatBossScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+    visibility: hidden;
+    animation: opacityO 6s ease-out forwards;
+}
+
+@keyframes opacityO {
+    0%{
+        opacity: 0.6;
+    }
+    50%{
+        opacity: 0.6;
+    }
+    60%{
+        opacity: 0.3; 
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+#bossExplain {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    color: rgb(153, 0, 0);
+}
+
+#beatBoss {
     margin: 10px;
     padding: 10px;
     text-align: center;
