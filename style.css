@@ -60,7 +60,7 @@ body {
     text-align: center;
 }
 
-#textText {
+#lore {
     visibility: hidden;
     font-family: "Nexa";
     text-align: center;
@@ -223,7 +223,6 @@ body {
 }
 
 .buttonsForMonsters {
-    display: none;
     max-width: 30em;
     width: 20em;
     justify-content: center;
@@ -279,7 +278,7 @@ body {
     background-color: rgb(160, 160, 160);
     color: rgb(255, 255, 255);
 }
-#button4:hover {
+#buttonBack:hover {
     background-color: #0a416e;
     color: whitesmoke;
 } 
@@ -299,7 +298,9 @@ body {
     background-color: rgb(197, 40, 47);
     color: rgb(255, 255, 255);
 }
-
+#buttonGhoul #buttonBeast #buttonWereWolf #buttonDragon {
+    display: none;
+}
 
 #buttonAttack:hover {
     background-color: rgb(255, 0, 13);
@@ -318,8 +319,8 @@ body {
     visibility: hidden;
     height: 120px;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
+    justify-content: center;
+    align-items: center;    
     gap: 10px; 
     margin: 20px;
     border: 2px black solid;
