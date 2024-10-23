@@ -381,33 +381,62 @@ body {
 }
 
 .loserScreen {
+    font-family: "BOLD";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: aliceblue;
+    background-color: #f9f9f9;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 1;
-    visibility: hidden;
+    visibility: visible;
 }
 #loser {
+    font-size: 28px;
+    font-family: "BOLD";
+    text-align: center;
     margin: 10px;
     padding: 10px;
-    text-align: center;
     font-size: 26px;
-    color: red;
+    color: rgb(0, 0, 0);
 }
+
 #loserExplain {
-    margin: 10px;
+    margin: 20px;
     padding: 10px;
     text-align: center;
     color: rgb(153, 0, 0);
 }
 
+#loserExplainS {
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 26px;
+    color: red;
+}
 
+#restartButton {
+    font-size: 20px;
+    font-family: "BOLD";
+    margin: 20px;
+    padding: 5%;
+    border-radius: 20px 20px;
+    border: none;
+    background-color: #ffffff;
+    color:#000000;
+    align-content: center;
+    transition: box-shadow 0.3s ease;
+}
+#restartButton:hover {
+    box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.15),
+    -10px 10px 10px white;
+}
+
+/* boss element changes */
 .beatBossScreen {
     position: fixed;
     top: 0;
@@ -445,10 +474,4 @@ body {
     margin: 10px;
     padding: 10px;
     color: rgb(0, 0, 0);
-}
-
-#continueButton {
-    margin: 50px;
-    padding: 10px 12px;
-    border-radius: 20px;
 }
