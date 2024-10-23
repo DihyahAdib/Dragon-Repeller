@@ -6,10 +6,10 @@ let loreGreatHammer = "They say that they said, only when they say what they sai
 let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
 
 let score = 0;
-let level = 0;
+let level = 106;
 let xp = 0;
 let health = 100;
-let gold = 50;
+let gold = 550; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
 
@@ -19,11 +19,11 @@ const monsterMultipier = 2.5;
 const inventory = ["None"];
 
 const weapons = [
-    {name: "None", strength: 0}, 
-    {name: "Sword", strength: 25},
-    {name: "Scythe", strength: 50},
-    {name: "GreatHammer", strength: 75},
-    {name: "Excalibur", strength: 200}
+    {name: "None", strength: 0},         //0
+    {name: "Sword", strength: 25},       //1
+    {name: "Scythe", strength: 50},      //2
+    {name: "GreatHammer", strength: 75}, //3
+    {name: "Excalibur", strength: 200}   //4
 ];
 
 const monsters = [
@@ -48,7 +48,7 @@ const elements = {
     lore: document.querySelector("#lore"),
     buttonAttack: document.querySelector("#buttonAttack"),
     preloaderScreen: document.querySelector(".preloaderScreen"),
-    LoserScreen: document.querySelector(".LoserScreen"),
+    loserScreen: document.querySelector(".loserScreen"),
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain")
 };
@@ -261,20 +261,38 @@ async function fightMonster(index) {
     currentMonsterIndex = index;
     const monster = monsters[index];
 
-    if (currentWeaponIndex === 0) {
-        elements.text.innerText = "You need to buy a weapon or level up first!";
-        await delayUpdate(elements.text, "", 1000);
+    const requirements = {
+        0: { requiredWeaponIndex: 1, requiredLevel: 0 },  // Ghoul: Sword, no level requirement
+        1: { requiredWeaponIndex: 2, requiredLevel: 5 },  // Beast: Scythe, level 5
+        2: { requiredWeaponIndex: 3, requiredLevel: 10 }, // Werewolf: GreatHammer, level 10
+        3: { requiredWeaponIndex: 4, requiredLevel: 15 }  // Dragon: Excalibur, level 15
+    }
+
+    const { requiredWeaponIndex, requiredLevel } = requirements[index];
+
+    if (currentWeaponIndex < requiredWeaponIndex) {
+        elements.text.innerText = `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`;
+        await delayUpdate(elements.text, "", 2500);
         return;
     }
+    
+    if (level < requiredLevel) {
+        elements.text.innerText = `You need to be at least level ${requiredLevel} to fight the ${monster.name}.`;
+        await delayUpdate(elements.text, "", 2500);
+        return;
+    }
+
     buttons.monsterSelection.forEach((button, i) => {
         if (i !== index) {
             button.disabled = true;
+            buttons.navigation[0].disabled = true;
         }
     });
-    elements.buttonAttack.style.display = "block"; 
 
+    elements.buttonAttack.style.display = "block"; 
     elements.text.innerText = `You approach the ${monster.name}...`;
     await delayUpdate(elements.text," ", 800);
+
     elements.monsterStats.style.display = "flex";
     elements.monsterName.innerText = monster.name;
     elements.monsterHealth.innerText = monster.health;
@@ -335,7 +353,6 @@ function playerHitMonster() {
 
         elements.beatBossScreen.classList.add("visible");
         elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
-        elements.text.innerText = "";
         currentMonsterStats();
 
         setTimeout(() => {
@@ -353,10 +370,9 @@ async function monsterHitPlayer() {
     
     if (health <= 0) {
         health = 0;
+        elements.loserScreen.classList.add("visible");
+        elements.loserScreen.innerText = `You have been bested by ${currentMonster.name}!`;
         updateStats();
-        elements.text.innerText = "You have been defeated!";
-        await new Promise(elements.text, "", 2000)
-        elements.LoserScreen.style.visibility = "visible";
     }
     elements.healthText.innerText = health;
 }
@@ -372,6 +388,10 @@ function currentMonsterStats() {
         monsterHealth.innerText = "";
     }
 }
+
+document.getElementById('restartButton').addEventListener('click', function() {
+    location.reload(); // Reloads the current page
+});
 
 elements.text.innerText = instructions;
 currentMonsterStats();

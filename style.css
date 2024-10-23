@@ -54,7 +54,7 @@ body {
 }
 
 #text {
-    font-family: "Dreams";
+    font-family: "NORM";
     font-weight: 560;
     height: 6em;
     background-color: black;
@@ -380,6 +380,7 @@ body {
     color: rgb(0, 23, 153);
 }
 
+/* losing the game element changes */
 .loserScreen {
     font-family: "BOLD";
     position: fixed;
@@ -391,9 +392,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 1;
-    visibility: visible;
+    visibility: hidden;
 }
+
 #loser {
     font-size: 28px;
     font-family: "BOLD";
