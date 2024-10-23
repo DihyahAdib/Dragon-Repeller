@@ -6,10 +6,10 @@ let loreGreatHammer = "They say that they said, only when they say what they sai
 let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
 
 let score = 0;
-let level = 106;
+let level = 0;
 let xp = 0;
 let health = 100;
-let gold = 550; 
+let gold = 50; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
 
@@ -358,7 +358,7 @@ function playerHitMonster() {
 
         setTimeout(() => {
             elements.beatBossScreen.classList.remove("visible");
-        }, 15000);
+        }, 4000);
     }
 }
 
