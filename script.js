@@ -39,16 +39,20 @@ const elements = {
     xpText: document.querySelector("#xpText"),
     healthText: document.querySelector("#healthText"),
     goldText: document.querySelector("#goldText"),
+
     shopUI: document.querySelector("#shopUI"),
     inventoryUI: document.querySelector("#inventoryUI"),
+
     monsterStats: document.querySelector("#monsterStats"),
     monsterName: document.querySelector("#monsterName"),
     monsterHealth: document.querySelector("#monsterHealth"),
     controlsForMonsters: document.querySelector("#controlsForMonsters"),
+
     lore: document.querySelector("#lore"),
     buttonAttack: document.querySelector("#buttonAttack"),
+
     preloaderScreen: document.querySelector(".preloaderScreen"),
-    loserScreen: document.querySelector(".loserScreen"),
+    loserScreen: document.querySelector("#loserScreen"),
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain")
 };
@@ -132,7 +136,7 @@ function updateStats() {
 async function updateWeapon(newWeaponIndex) {
     currentWeaponIndex = newWeaponIndex;
     const currentWeapon = weapons[currentWeaponIndex];
-    const { name, strength } = currentWeapon; // Destructure the currentWeapon properties
+    const { name, strength } = currentWeapon;
     weaponName = name;
     weaponStrength = strength;
     await delayUpdate(text,`Equipped: ${name} with a strength of: ${strength}`, 500);
@@ -144,13 +148,13 @@ async function updateMonster(newMonsterIndex) {
     currentMonsterIndex = newMonsterIndex;
     const currentMonster = monsters[currentMonsterIndex];
     console.log("Fighting Monster:", currentMonster);
-    const { name, health, strength, worth } = currentMonster; // Destructure the currentMonster properties
-    monsterHealth = health;
+    const { name, health, strength, worth } = currentMonster;
+    elements.monsterHealth = health;
     monsterStrength = strength;
     monsterWorth = worth;
     
     monsterName.innerText = name;
-    monsterHealth.innerText = health;
+    elements.monsterHealth.innerText = health;
     await new Promise(resolve => setTimeout(resolve, 1500));
     text.innerText = "";
 }
@@ -158,7 +162,7 @@ async function updateMonster(newMonsterIndex) {
 function checkLevelUp() {
     if (xp >= 100) {
         xp -= 100;
-        level++;
+        level+= 1;
         updateStats();
     }
 }
@@ -263,10 +267,10 @@ async function fightMonster(index) {
     const monster = monsters[index];
 
     const requirements = {
-        0: { requiredWeaponIndex: 1, requiredLevel: 0 },  // Ghoul: Sword, no level requirement
-        1: { requiredWeaponIndex: 2, requiredLevel: 5 },  // Beast: Scythe, level 5
-        2: { requiredWeaponIndex: 3, requiredLevel: 10 }, // Werewolf: GreatHammer, level 10
-        3: { requiredWeaponIndex: 4, requiredLevel: 15 }  // Dragon: Excalibur, level 15
+        0: { requiredWeaponIndex: 1, requiredLevel: 0 },
+        1: { requiredWeaponIndex: 2, requiredLevel: 5 },  
+        2: { requiredWeaponIndex: 3, requiredLevel: 10 }, 
+        3: { requiredWeaponIndex: 4, requiredLevel: 15 } 
     }
 
     const { requiredWeaponIndex, requiredLevel } = requirements[index];
@@ -311,29 +315,34 @@ async function playerGuess() {
         await delayUpdate(text, "Please enter a valid number between 1 and 3.", 1500);
         return;
     } 
+
+    currentMonsterStats();
     if (playerRollNum === randomizedRollNumOutCome) {
-        playerHitMonster();
         elements.text.innerText = "You hit the monster!";
+        await delayUpdate(elements.text, "", 1700);
+        playerHitMonster();
+        
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
         text.innerText = "You over swung and missed the monster! try again...";
-        await delayUpdate(elements.text, "", 1000);
+        await delayUpdate(elements.text, "", 1700);
         xp += 10;
         updateStats();
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
         text.innerText = "You narrowly dodged the monster! try again...";
-        await delayUpdate(elements.text, "", 1000);
+        await delayUpdate(elements.text, "", 1700);
         xp += 10;
         updateStats();
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 2 ||  playerRollNum === randomizedRollNumOutCome - 2) {
         text.innerText = "You completely missed the monster and it has attacked you!";
-        await delayUpdate(elements.text, "", 1000);
+        await delayUpdate(elements.text, "", 1700);
         monsterHitPlayer();
     }
     console.log("player number: ",playerRollNum)
     console.log("random number: ",randomizedRollNumOutCome)
+    currentMonsterStats();
 }
 
 function playerHitMonster() {
@@ -347,18 +356,25 @@ function playerHitMonster() {
     checkLevelUp();
     updateStats();
     currentMonster.health -= currentWeapon.strength;
-    monsterHealth.innerText = currentMonster.health;
+    elements.monsterHealth.innerText = currentMonster.health;
 
     if (currentMonster.health <= 0) {
         currentMonster.health = 0;
 
         elements.beatBossScreen.classList.add("visible");
         elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
-        currentMonsterStats();
 
         setTimeout(() => {
             elements.beatBossScreen.classList.remove("visible");
+            buttons.monsterSelection.forEach(button => {
+                button.disabled = false;
+            });
+            buttons.navigation.forEach(button => {
+                button.disabled = false;
+            })
         }, 4000);
+        elements.monsterStats.style.display = "none";
+        resetMonsterHealth(currentMonsterIndex);
     }
 }
 
@@ -373,20 +389,30 @@ async function monsterHitPlayer() {
         health = 0;
         elements.loserScreen.classList.add("visible");
         elements.loserScreen.innerText = `You have been bested by ${currentMonster.name}!`;
+        
         updateStats();
     }
     elements.healthText.innerText = health;
+}
+
+function resetMonsterHealth(currentMonsterIndex) {
+    const currentMonster = monsters[currentMonsterIndex];
+    
+    elements.monsterName.innerText = currentMonster.name;
+    elements.monsterHealth.innerText = currentMonster.health;
+
+    console.log("Reset monster health for:", monsters[currentMonsterIndex].name);
 }
 
 function currentMonsterStats() {
     const currentMonster = monsters[currentMonsterIndex];
 
     if (currentMonster) {
-        monsterName.innerText = currentMonster.name;
-        monsterHealth.innerText = currentMonster.health;
+        elements.monsterName.innerText = currentMonster.name;
+        elements.monsterHealth.innerText = currentMonster.health;
     } else {
         monsterName.innerText = "No monster selected";
-        monsterHealth.innerText = "";
+        elements.monsterHealth.innerText = "";
     }
 }
 
@@ -395,6 +421,5 @@ document.getElementById('restartButton').addEventListener('click', function() {
 });
 
 elements.text.innerText = instructions;
-currentMonsterStats();
-
+checkLevelUp();
 updateStats();

@@ -360,7 +360,7 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 1;
-    animation: fadeOut 3.8s ease-out forwards 5s;
+    animation: fadeOut 3.35s ease-out forwards 5s;
     visibility: visible;
 }
 
@@ -447,7 +447,7 @@ body {
 }
 
 /* losing the game element changes */
-.loserScreen {
+#loserScreen {
     font-family: "BOLD";
     position: fixed;
     top: 0;
