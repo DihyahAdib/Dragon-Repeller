@@ -52,7 +52,7 @@ const elements = {
     buttonAttack: document.querySelector("#buttonAttack"),
 
     preloaderScreen: document.querySelector(".preloaderScreen"),
-    loserScreen: document.querySelector("#loserScreen"),
+    loserScreen: document.querySelector(".loserScreen"),
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain")
 };
@@ -231,6 +231,7 @@ async function goStore() {
     await delayUpdate(elements.text, "Going To Store...", 100);
     await delayUpdate(elements.text, "", 100);
     elements.shopUI.style.visibility = "visible";
+    elements.controlsForMonsters.style.visibility = "hidden";
     elements.text.innerText = "";
     buttons.navigation[1].disabled = true;
 }
@@ -350,7 +351,7 @@ function playerHitMonster() {
     const currentWeapon = weapons[currentWeaponIndex];
     const monsterWorth = currentMonster.worth;
     let reward = 2 * monsterWorth;
-    xp += 20;
+    xp += 45;
     gold += reward;
 
     checkLevelUp();

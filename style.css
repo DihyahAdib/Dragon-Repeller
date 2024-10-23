@@ -349,6 +349,37 @@ body {
     margin: 5px 10px;
 }
 
+:root {
+    --font-michroma: "Michroma", sans-serif;
+    --font-nexa: "Nexa", sans-serif;
+    --font-bold: "BOLD", sans-serif;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-red: #ff0101;
+    --color-dark-red: #990000;
+    --color-aliceblue: aliceblue;
+    --transition-standard: 0.3s ease;
+}
+
+/* Utility classes */
+.centered {
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Preloader styles */
 .preloaderScreen {
     position: fixed;
     top: 0;
@@ -391,12 +422,6 @@ body {
     0% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
-}
-
-.centered {
-    position: relative;
-    text-align: center;
-    width: 100%;
 }
 
 #preloaderName {
