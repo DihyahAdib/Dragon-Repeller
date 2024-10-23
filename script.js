@@ -338,9 +338,9 @@ function playerHitMonster() {
         elements.text.innerText = "";
         currentMonsterStats();
 
-        // setTimeout(() => {
-        //     elements.beatBossScreen.classList.remove("visible");
-        // }, 15000); uncomment this for fade affect.
+        setTimeout(() => {
+            elements.beatBossScreen.classList.remove("visible");
+        }, 15000);
     }
 }
 
