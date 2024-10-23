@@ -332,10 +332,15 @@ function playerHitMonster() {
 
     if (currentMonster.health <= 0) {
         currentMonster.health = 0;
-        elements.beatBossScreen.style.visibility = "visible";
+
+        elements.beatBossScreen.classList.add("visible");
         elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
         elements.text.innerText = "";
         currentMonsterStats();
+
+        // setTimeout(() => {
+        //     elements.beatBossScreen.classList.remove("visible");
+        // }, 15000); uncomment this for fade affect.
     }
 }
 
