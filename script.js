@@ -87,7 +87,7 @@ const buttons = {
         document.querySelector("#continueButton"),
     ]
 };
-//amount, and required level
+//amount, and required level.
 buttons.buyHealth[0].onclick = () => buyHealth(10, 0); 
 buttons.buyHealth[1].onclick = () => buyHealth(50, 10);
 buttons.buyHealth[2].onclick = () => buyHealth(100, 15);
@@ -97,7 +97,7 @@ buttons.navigation[1].onclick = () => goStore();
 buttons.navigation[2].onclick = () => goCave();
 buttons.navigation[3].onclick = () => openInventory();
 
-//currentWeaponIndex, cost, required Level
+//currentWeaponIndex, cost, required Level.
 buttons.weaponPurchase[0].onclick = () => buyWeapon(1, 30);
 buttons.weaponPurchase[1].onclick = () => buyWeapon(2, 50, 5);
 buttons.weaponPurchase[2].onclick = () => buyWeapon(3, 150, 10);
@@ -109,6 +109,7 @@ buttons.monsterSelection[1].onclick = () => fightMonster(1);
 buttons.monsterSelection[2].onclick = () => fightMonster(2);
 buttons.monsterSelection[3].onclick = () => fightMonster(3);
 
+//current lore panels.
 buttons.loreSelection[0].onclick = () => showLore1();
 buttons.loreSelection[1].onclick = () => showLore2();
 buttons.loreSelection[2].onclick = () => showLore3();
