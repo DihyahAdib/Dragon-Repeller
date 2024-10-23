@@ -318,27 +318,27 @@ async function playerGuess() {
 
     currentMonsterStats();
     if (playerRollNum === randomizedRollNumOutCome) {
-        elements.text.innerText = "You hit the monster!";
-        await delayUpdate(elements.text, "", 1700);
         playerHitMonster();
+        elements.text.innerText = "You hit the monster!";
+        await delayUpdate(elements.text, "", 1500);
         
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
-        text.innerText = "You over swung and missed the monster! try again...";
-        await delayUpdate(elements.text, "", 1700);
-        xp += 10;
         updateStats();
+        text.innerText = "You over swung and missed the monster! try again...";
+        await delayUpdate(elements.text, "", 1500);
+        xp += 10;
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
-        text.innerText = "You narrowly dodged the monster! try again...";
-        await delayUpdate(elements.text, "", 1700);
-        xp += 10;
         updateStats();
+        text.innerText = "You narrowly dodged the monster! try again...";
+        await delayUpdate(elements.text, "", 1500);
+        xp += 10;
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 2 ||  playerRollNum === randomizedRollNumOutCome - 2) {
-        text.innerText = "You completely missed the monster and it has attacked you!";
-        await delayUpdate(elements.text, "", 1700);
         monsterHitPlayer();
+        text.innerText = "You completely missed the monster and it has attacked you!";
+        await delayUpdate(elements.text, "", 1500);
     }
     console.log("player number: ",playerRollNum)
     console.log("random number: ",randomizedRollNumOutCome)
@@ -359,13 +359,15 @@ function playerHitMonster() {
     elements.monsterHealth.innerText = currentMonster.health;
 
     if (currentMonster.health <= 0) {
-        currentMonster.health = 0;
-
         elements.beatBossScreen.classList.add("visible");
         elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
+        elements.buttonAttack.style.display = "none";
+        elements.monsterStats.style.display = "none";
 
         setTimeout(() => {
             elements.beatBossScreen.classList.remove("visible");
+            elements.buttonAttack.style.display = "block";
+            resetMonsterHealth(currentMonsterIndex);
             buttons.monsterSelection.forEach(button => {
                 button.disabled = false;
             });
@@ -373,8 +375,6 @@ function playerHitMonster() {
                 button.disabled = false;
             })
         }, 4000);
-        elements.monsterStats.style.display = "none";
-        resetMonsterHealth(currentMonsterIndex);
     }
 }
 
@@ -383,25 +383,36 @@ async function monsterHitPlayer() {
     const monsterStrength = currentMonster.strength;
 
     health -= monsterStrength;
+    updateStats();
 
-    
     if (health <= 0) {
         health = 0;
+        updateStats();
+        elements.buttonAttack.style.display = "none";
+        elements.monsterStats.style.display = "none";
+        elements.loserScreen.style.display = "flex";
         elements.loserScreen.classList.add("visible");
         elements.loserScreen.innerText = `You have been bested by ${currentMonster.name}!`;
         
-        updateStats();
+        buttons.navigation.forEach(button => {
+            button.disabled = false;
+        });
     }
-    elements.healthText.innerText = health;
 }
 
-function resetMonsterHealth(currentMonsterIndex) {
-    const currentMonster = monsters[currentMonsterIndex];
-    
-    elements.monsterName.innerText = currentMonster.name;
-    elements.monsterHealth.innerText = currentMonster.health;
+function resetMonsterHealth(monsterIndex) {
+    const initialHealth = {
+        0: 50,  // Ghoul
+        1: 100, // Beast
+        2: 200, // WereWolf
+        3: 500  // Dragon
+    };
 
-    console.log("Reset monster health for:", monsters[currentMonsterIndex].name);
+    monsters[monsterIndex].health = initialHealth[monsterIndex];
+
+    elements.monsterName.innerText = monsters[monsterIndex].name;
+    elements.monsterHealth.innerText = monsters[monsterIndex].health;
+    console.log("Reset monster health for:", monsters[monsterIndex].name, "to", monsters[monsterIndex].health);
 }
 
 function currentMonsterStats() {
