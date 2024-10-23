@@ -11,6 +11,10 @@
     src: url(./Fonts/CaviarDreams.ttf);
 }
 @font-face {
+    font-family: "Michroma";
+    src: url(./Fonts/Michroma-Regular.ttf);
+}
+@font-face {
     font-family: "NORM";
     src: url(./Fonts/LEMONMILK-Regular.otf);
 }
@@ -414,8 +418,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
     transition: opacity 7s ease, visibility 0s 2s;
     pointer-events: none;
 }
@@ -426,23 +430,25 @@ body {
     pointer-events: none;
 }
 #beatBoss {
+    font-size: 28px;
+    font-family: "BOLD";
+    text-align: center;
     margin: 10px;
     padding: 10px;
-    text-align: center;
     font-size: 26px;
-    color: red;
+    color: rgb(0, 0, 0);
 }
 
+#bossExplain {
+    font-size: 30px;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+}
 
 #continueButton {
     margin: 50px;
     padding: 10px 12px;
     border-radius: 20px;
-}
-
-#bossExplain {
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(153, 0, 0);
 }
