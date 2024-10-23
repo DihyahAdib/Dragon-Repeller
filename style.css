@@ -454,22 +454,50 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0.6;
+    opacity: 1;
     visibility: hidden;
-    animation: opacityO 6s ease-out forwards;
+    animation: opacityQ 25s ease-out forwards;
 }
-#preloaderExplain {
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(153, 0, 0);
-}
-
 #preloader {
     margin: 10px;
     padding: 10px;
     text-align: center;
     font-size: 26px;
-    color: red;
+    opacity: 0;
+    animation: opacityW 3s ease-out forwards;
+    color: rgb(0, 132, 255);
+}
+#preloaderExplain {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    animation: opacityW 3s ease-out forwards;
+    color: rgb(0, 23, 153);
+}
 
+@keyframes opacityQ {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 1;
+    }
+    60%{
+        opacity: 0.3; 
+    }
+    100%{
+        opacity: 0;
+    }
+}
+@keyframes opacityW {
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }
