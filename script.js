@@ -47,8 +47,10 @@ const elements = {
     controlsForMonsters: document.querySelector("#controlsForMonsters"),
     lore: document.querySelector("#lore"),
     buttonAttack: document.querySelector("#buttonAttack"),
-    LoserScreen: document.querySelector("#LoserScreen"),
-    beatMonsterScreen: document.querySelector("#beatMonsterScreen")
+    preloaderScreen: document.querySelector(".preloaderScreen"),
+    LoserScreen: document.querySelector(".LoserScreen"),
+    beatBossScreen: document.querySelector(".beatBossScreen"),
+    bossExplain: document.querySelector("#bossExplain")
 };
 
 const buttons = {
@@ -81,6 +83,9 @@ const buttons = {
         document.querySelector("#buttonGreatHammerText"),
         document.querySelector("#buttonExcaliburText")
     ],
+    screenEndings: [
+        document.querySelector("#continueButton"),
+    ]
 };
 //amount, and required level
 buttons.buyHealth[0].onclick = () => buyHealth(10, 0); 
@@ -327,9 +332,10 @@ function playerHitMonster() {
 
     if (currentMonster.health <= 0) {
         currentMonster.health = 0;
-        text.innerText = `You defeated the ${currentMonster.name}!`; //this works, what next?
+        elements.beatBossScreen.style.visibility = "visible";
+        elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
+        elements.text.innerText = "";
         currentMonsterStats();
-        elements.beatMonsterScreen.style.visibility = "visible";
     }
 }
 
@@ -339,11 +345,12 @@ async function monsterHitPlayer() {
 
     health -= monsterStrength;
 
+    
     if (health <= 0) {
         health = 0;
+        updateStats();
         elements.text.innerText = "You have been defeated!";
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        text.innerText = "";
+        await new Promise(elements.text, "", 2000)
         elements.LoserScreen.style.visibility = "visible";
     }
     elements.healthText.innerText = health;
@@ -353,15 +360,14 @@ function currentMonsterStats() {
     const currentMonster = monsters[currentMonsterIndex];
 
     if (currentMonster) {
-        // Update the monster name and health text elements
         monsterName.innerText = currentMonster.name;
         monsterHealth.innerText = currentMonster.health;
     } else {
-        // If no current monster is selected, clear the text
         monsterName.innerText = "No monster selected";
         monsterHealth.innerText = "";
     }
 }
+
 elements.text.innerText = instructions;
 currentMonsterStats();
 

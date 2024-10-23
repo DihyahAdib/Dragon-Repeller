@@ -345,30 +345,7 @@ body {
     margin: 5px 10px;
 }
 
-.fadeInAndOut {
-    height: 110vh;
-    width: 100%;
-    background-size: 200% 200%;
-    background-color: white;
-    animation: fadeIn_Out 6s infinite;
-}
-
-@keyframes fadeIn_Out {
-    0%{
-        opacity: 0;
-    }
-    50%{
-        opacity: 1;
-    }
-    60%{
-        opacity: 0.6; 
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
-#loserScreen {
+.preloaderScreen {
     position: fixed;
     top: 0;
     left: 0;
@@ -382,82 +359,6 @@ body {
     visibility: hidden;
 }
 
-#loserExplain {
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(153, 0, 0);
-}
-
-#loser {
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    font-size: 26px;
-    color: red;
-
-}
-
-#beatBossScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: aliceblue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.6;
-    visibility: hidden;
-    animation: opacityO 6s ease-out forwards;
-}
-
-@keyframes opacityO {
-    0%{
-        opacity: 0.6;
-    }
-    50%{
-        opacity: 0.6;
-    }
-    60%{
-        opacity: 0.3; 
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
-#bossExplain {
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(153, 0, 0);
-}
-
-#beatBoss {
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    font-size: 26px;
-    color: red;
-
-}
-
-#preloaderScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: aliceblue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    visibility: hidden;
-    animation: opacityQ 25s ease-out forwards;
-}
 #preloader {
     margin: 10px;
     padding: 10px;
@@ -472,32 +373,67 @@ body {
     padding: 10px;
     text-align: center;
     opacity: 0;
-    animation: opacityW 3s ease-out forwards;
     color: rgb(0, 23, 153);
 }
 
-@keyframes opacityQ {
-    0%{
-        opacity: 1;
-    }
-    50%{
-        opacity: 1;
-    }
-    60%{
-        opacity: 0.3; 
-    }
-    100%{
-        opacity: 0;
-    }
+.loserScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: hidden;
 }
-@keyframes opacityW {
-    0%{
-        opacity: 0;
-    }
-    50%{
-        opacity: 1;
-    }
-    100%{
-        opacity: 0;
-    }
+#loser {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 26px;
+    color: red;
+}
+#loserExplain {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    color: rgb(153, 0, 0);
+}
+
+.beatBossScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+    visibility: visible;
+}
+
+#beatBoss {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 26px;
+    color: red;
+}
+
+#continueButton {
+    margin: 50px;
+    padding: 10px 12px;
+    border-radius: 20px;
+}
+
+#bossExplain {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    color: rgb(153, 0, 0);
 }
