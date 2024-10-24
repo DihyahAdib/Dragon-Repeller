@@ -8,7 +8,7 @@ let loreExcalibur = "Legend has it, only the mightest hero could pull the sword 
 let score = 0;
 let level = 0;
 let xp = 0;
-let health = 100;
+let health = 25;
 let gold = 50; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
@@ -52,7 +52,10 @@ const elements = {
     buttonAttack: document.querySelector("#buttonAttack"),
 
     preloaderScreen: document.querySelector(".preloaderScreen"),
+
     loserScreen: document.querySelector(".loserScreen"),
+    loserExplain: document.getElementById("loserExplain"),
+
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain")
 };
@@ -389,12 +392,11 @@ async function monsterHitPlayer() {
     if (health <= 0) {
         health = 0;
         updateStats();
+        elements.loserScreen.classList.add("visible");
+        elements.loserExplain.innerText = `${currentMonster.name} has bested you...`
         elements.buttonAttack.style.display = "none";
         elements.monsterStats.style.display = "none";
-        elements.loserScreen.style.display = "flex";
-        elements.loserScreen.classList.add("visible");
-        elements.loserScreen.innerText = `You have been bested by ${currentMonster.name}!`;
-        
+
         buttons.navigation.forEach(button => {
             button.disabled = false;
         });

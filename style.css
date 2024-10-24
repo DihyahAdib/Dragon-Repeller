@@ -472,21 +472,22 @@ body {
 }
 
 /* losing the game element changes */
-#loserScreen {
-    font-family: "BOLD";
+.loserScreen {
     position: fixed;
+    font-family: "BOLD";
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: #f9f9f9;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     visibility: hidden;
 }
+
 .loserScreen.visible {
-    display: flex;
+    visibility: visible;
 }
 
 #loser {
@@ -499,19 +500,19 @@ body {
     color: rgb(0, 0, 0);
 }
 
-#loserExplain {
-    margin: 20px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(153, 0, 0);
-}
-
 #loserExplainS {
     margin: 20px;
     padding: 10px;
     text-align: center;
     font-size: 26px;
     color: red;
+}
+
+#loserExplain {
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    color: rgb(153, 0, 0);
 }
 
 #restartButton {
@@ -545,13 +546,11 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 2s ease, visibility 0s 2s;
-    pointer-events: none;
 }
 .beatBossScreen.visible {
     opacity: 1;
     visibility: visible;
     transition: opacity 2s ease, visibility 0s;
-    pointer-events: none;
 }
 #beatBoss {
     font-size: 28px;
@@ -569,4 +568,48 @@ body {
     margin: 10px;
     padding: 10px;
     color: rgb(0, 0, 0);
+}
+
+#game a svg {
+    width: 40px;
+    height: 40px;
+
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 150px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
