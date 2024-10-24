@@ -354,7 +354,7 @@ function playerHitMonster() {
     const currentWeapon = weapons[currentWeaponIndex];
     const monsterWorth = currentMonster.worth;
     let reward = 2 * monsterWorth;
-    xp += 45;
+    xp += 90;
     gold += reward;
 
     checkLevelUp();
