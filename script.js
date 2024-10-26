@@ -1,7 +1,7 @@
 // Inspired by FreeCodeCamp, Developed by Dihyah Adib.
 let instructions = "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!";
 let loreSword = "Wait you thought this weapon had importance? hahaha your crazy!";
-let loreScythe = "They say the grim reaper his weapon from the sight of the mightiest hero.";
+let loreScythe = "They say the grim reaper dropped his weapon from the sight of the mightiest hero.";
 let loreGreatHammer = "They say that they said, only when they say what they said they'd say.";
 let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
 
@@ -19,11 +19,11 @@ const monsterMultipier = 2.5;
 const inventory = ["None"];
 
 const weapons = [
-    {name: "None", strength: 0},         //0
-    {name: "Sword", strength: 25},       //1
-    {name: "Scythe", strength: 50},      //2
-    {name: "GreatHammer", strength: 75}, //3
-    {name: "Excalibur", strength: 200}   //4
+    {name: "None", strength: 0},         
+    {name: "Sword", strength: 25},       
+    {name: "Scythe", strength: 50},      
+    {name: "GreatHammer", strength: 75}, 
+    {name: "Excalibur", strength: 200}  
 ];
 
 const monsters = [
@@ -62,15 +62,15 @@ const elements = {
 
 const buttons = {
     buyHealth: [
-        document.querySelector("#button10HP"),       //0
-        document.querySelector("#button50HP"),       //1
-        document.querySelector("#button100HP")       //2
+        document.querySelector("#button10HP"),      
+        document.querySelector("#button50HP"),      
+        document.querySelector("#button100HP")       
     ],
     navigation: [
-        document.querySelector("#buttonBack"),       //0
-        document.querySelector("#buttonStore"),      //1
-        document.querySelector("#buttonCave"),       //2
-        document.querySelector("#buttonInventory")   //3
+        document.querySelector("#buttonBack"),     
+        document.querySelector("#buttonStore"),     
+        document.querySelector("#buttonCave"),       
+        document.querySelector("#buttonInventory")  
     ],
     weaponPurchase: [
         document.querySelector("#buttonSword"),
@@ -328,14 +328,14 @@ async function playerGuess() {
         
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
-        updateStats();
         xp += 10;
+        updateStats();
         text.innerText = "You over swung and missed the monster! try again...";
         await delayUpdate(elements.text, "", 1500);
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
-        updateStats();
         xp += 10;
+        updateStats();
         text.innerText = "You narrowly dodged the monster! try again...";
         await delayUpdate(elements.text, "", 1500);
 
