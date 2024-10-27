@@ -1,3 +1,5 @@
+
+
 @font-face {
     font-family: "Comforta";
     src: url(./Fonts/Comfortaa-Light.ttf);
@@ -22,14 +24,17 @@
     font-family: "BOLD";
     src: url(./Fonts/LEMONMILK-Bold.otf);
 }
-
 body {
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
-    background-size: 200% 200%;
-    animation: colorC 35s ease-in-out infinite;
-    overflow: hidden;
+    background-size: 150% 150%;
+    animation: colorC 60s ease-in-out infinite;
 }
-
+.containerBody {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
 @keyframes colorC{
     0%{
         background-position: 0 50%;
@@ -42,15 +47,74 @@ body {
     }
 }
 
+#containerMain { /*fullcontainer*/
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+#container1MainMenu {
+    color: white;
+    background-color: lightgray;
+    border: 5px black solid;
+    border-radius: 10px 10px;
+}
+
 #nameGame {
     align-content: center;
-    margin-top: 0px;
-    margin-bottom:  0.3em;
+    margin-top: 0.25em;  
+    margin-bottom:  0.25em;
     padding: 8px;
     font-family: "Dreams";
-    font-size: 40px;
+    font-size: 3em;
     text-align: center;
     color: rgb(0, 0, 0);
+}
+
+#stats {
+    overflow: auto;
+    border: 1px black solid;
+    border-radius: 24px 12px;
+    color: black;
+    padding: 5px;
+    text-align: left;
+}
+
+.stat {
+    font-family: "Nexa";
+    font-size: 20px;
+    display: inline-flex; 
+    justify-content:space-between;
+    padding-right: 10px;
+    margin: 5px 10px;
+}
+
+#controls {
+    display: flex;
+    margin: 13px;
+    flex-direction: column;
+    border: 2px black solid;
+    border-radius: 20px 12px;
+    padding: 5px;
+}
+
+.buttons {
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
+}
+
+#monsterStats {
+    display: none;
+    border: 1px black solid;
+    color: white;
+    padding: 5px;
+    background-color: red;
 }
 
 #text {
@@ -64,80 +128,76 @@ body {
     text-align: center;
 }
 
+#controlsForMonsters {
+    visibility: hidden;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    gap: 10px; 
+    margin: 20px;
+    border: 2px black solid;
+    border-radius: 20px 12px;
+    padding: 2.8em;
+}
+
+.buttonsForMonsters {
+    max-width: 30em;
+    width: 20em;
+    justify-content: center;
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
+}
+
+.buttonForAttack {
+    display: none;
+    max-width: 30em;
+    width: 10em;
+    justify-content: center;
+    font-size: 27px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 28px 28px;
+}
+
 #lore {
     visibility: hidden;
     font-family: "Nexa";
     text-align: center;
 }
 
-#game {
-    max-width: 40%;
-    height: 85%;
-    overflow: hidden;
-    background-color: lightgray;
-    color: white;
-    margin: 0 inherit;
-    margin-left: auto;
-    margin-right: auto; /* CHANGE THESE WITH JS LATER  myDiv.style.margin-left = "20em"; myDiv.style.margin-right = "10em"; */
-    padding: 20px;
-    border: 4px black solid;
-    border-radius: 10px 10px;
-}
-#stats {
-    overflow: auto;
-    border: 1px black solid;
-    border-radius: 24px 12px;
-    color: black;
-    padding: 5px;
-    text-align: left;
-}
-
 #shopUI {
     visibility: hidden;
-    display: flex;
-    flex-direction: column;
     width: 21.8em;
     height: 40em;
     overflow: auto;
+    padding: 10px;
 
     background-color: rgb(131, 131, 131);
     color: white;
-
-    margin-top: -43%; /* Do NOT change this value perfect top section lol*/
-    margin-bottom: auto;
-    margin-left: 85em;
-    margin-right: 8.8em; 
-
-    padding: 10px;
-    border-radius: 12px 12px 24px 24px; /*Top-left, top-right, bottom-right, bottom-left*/
+    border-radius: 20px;
     border: 4px black solid;
-
-    scroll-behavior: smooth;
-    scrollbar-color: rgb(29, 29, 29);
 }
 
 #inventoryUI {
     visibility: hidden;
-    display: flex;
-    flex-direction: column;
     width: 21.8em;
     height: 40em;
     overflow: auto;
-
+    padding: 10px;
+    
     background-color: rgb(131, 131, 131);
     color: white;
-
-    margin-top: -35%; /* Do NOT change this value perfect top section lol*/
-    margin-bottom: auto;
-    margin-right: 72em;
-    margin-left: 8.8em; 
-
-    padding: 10px;
-    border-radius: 12px 12px 24px 24px; /*Top-left, top-right, bottom-right, bottom-left*/
+    border-radius: 24px; /*Top-left, top-right, bottom-right, bottom-left*/
     border: 4px black solid;
-
-    scroll-behavior: smooth;
-    scrollbar-color: rgb(29, 29, 29);
 }
 
 #weaponShop h1 { /* STYLE the title only*/
@@ -226,43 +286,6 @@ body {
     border-radius: 20px 20px;
 }
 
-.buttonsForMonsters {
-    max-width: 30em;
-    width: 20em;
-    justify-content: center;
-    font-size: 17px;
-    font-family: "Comforta";
-    font-weight: bolder;
-    padding: 10px 13px;
-    margin: 6px;
-    border: none;
-    border-radius: 20px 20px;
-}
-
-.buttonForAttack {
-    display: none;
-    max-width: 30em;
-    width: 10em;
-    justify-content: center;
-    font-size: 27px;
-    font-family: "Comforta";
-    font-weight: bolder;
-    padding: 10px 13px;
-    margin: 6px;
-    border: none;
-    border-radius: 28px 28px;
-}
-
-.buttons {
-    font-size: 17px;
-    font-family: "Comforta";
-    font-weight: bolder;
-    padding: 10px 13px;
-    margin: 6px;
-    border: none;
-    border-radius: 20px 20px;
-}
-
 #button4 {
     border: none;
 }
@@ -305,60 +328,9 @@ body {
 #buttonGhoul #buttonBeast #buttonWereWolf #buttonDragon {
     display: none;
 }
-
 #buttonAttack:hover {
     background-color: rgb(255, 0, 13);
     color: rgb(255, 255, 255);
-}
-#controls {
-    display: flex;
-    margin: 13px;
-    flex-direction: column;
-    border: 2px black solid;
-    border-radius: 20px 12px;
-    padding: 5px;
-}
-
-#controlsForMonsters {
-    visibility: hidden;
-    height: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-    gap: 10px; 
-    margin: 20px;
-    border: 2px black solid;
-    border-radius: 20px 12px;
-    padding: 2.8em;
-}
-
-#monsterStats {
-    display: none;
-    border: 1px black solid;
-    color: white;
-    padding: 5px;
-    background-color: red;
-}
-
-.stat {
-    font-family: "Nexa";
-    font-size: 20px;
-    display: inline-flex; 
-    justify-content:space-between;
-    padding-right: 10px;
-    margin: 5px 10px;
-}
-
-:root {
-    --font-michroma: "Michroma", sans-serif;
-    --font-nexa: "Nexa", sans-serif;
-    --font-bold: "BOLD", sans-serif;
-    --color-black: #000000;
-    --color-white: #ffffff;
-    --color-red: #ff0101;
-    --color-dark-red: #990000;
-    --color-aliceblue: aliceblue;
-    --transition-standard: 0.3s ease;
 }
 
 /* Utility classes */
