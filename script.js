@@ -94,6 +94,7 @@ const buttons = {
         document.querySelector("#continueButton"),
     ]
 };
+
 //amount, and required level.
 buttons.buyHealth[0].onclick = () => buyHealth(10, 0); 
 buttons.buyHealth[1].onclick = () => buyHealth(50, 10);
@@ -219,6 +220,7 @@ async function justBack() {
     await delayUpdate(elements.text, "Going Back To Main Menu..", 100);
     await delayUpdate(elements.text, "Going Back To Main Menu...", 100);
     await delayUpdate(elements.text, "", 100);
+    //should i swap this for classlist?
     elements.shopUI.style.visibility = "hidden";
     elements.inventoryUI.style.visibility = "hidden";
     elements.controlsForMonsters.style.visibility = "hidden";
