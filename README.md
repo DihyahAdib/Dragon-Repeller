@@ -37,6 +37,6 @@ It is currently a work in progress.
 Instructions:
 
 1. Navigate using buttons.
-2. You're not allowed to use shop and fight at the same time for obvious reasons.
-3. Buy gear to fight mobs and level up your hp and gear to fight stronger monsters!
+2. You're not allowed to use shop and fight at the same time.
+3. Buy Weapons & Potions to fight mobs and level up to become strong enough to slay the Dragon!
 
