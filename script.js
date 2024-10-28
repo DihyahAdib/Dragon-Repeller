@@ -94,6 +94,7 @@ const buttons = {
         document.querySelector("#continueButton"),
     ]
 };
+
 //amount, and required level.
 buttons.buyHealth[0].onclick = () => buyHealth(10, 0); 
 buttons.buyHealth[1].onclick = () => buyHealth(50, 10);
