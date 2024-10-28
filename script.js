@@ -220,6 +220,7 @@ async function justBack() {
     await delayUpdate(elements.text, "Going Back To Main Menu..", 100);
     await delayUpdate(elements.text, "Going Back To Main Menu...", 100);
     await delayUpdate(elements.text, "", 100);
+    //should i swap this for classlist?
     elements.shopUI.style.visibility = "hidden";
     elements.inventoryUI.style.visibility = "hidden";
     elements.controlsForMonsters.style.visibility = "hidden";
