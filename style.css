@@ -217,7 +217,7 @@ body {
     border-radius: 20px;
     border: 4px black solid;
 }
-.shopUI .buttonStore {
+.shopUI.shopUI-visible {
     visibility: visible;
 }
 

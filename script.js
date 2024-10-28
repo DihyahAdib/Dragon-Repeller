@@ -218,22 +218,41 @@ async function justBack() {
     await delayUpdate(elements.text, "Going Back To Main Menu...", 100);
     await delayUpdate(elements.text, "", 100);
     //should i swap this for classlist?
-    elements.shopUI.style.visibility = "hidden";
     elements.inventoryUI.style.visibility = "hidden";
     elements.controlsForMonsters.style.visibility = "hidden";
     buttons.navigation[0].disabled = false; buttons.navigation[1].disabled = false; buttons.navigation[2].disabled = false; buttons.navigation[3].disabled = false;
     elements.text.innerText = instructions;
     elements.lore.style.visibility = "hidden";
+    hideShop();
 }
 
 async function goStore() {
-    if (buttons.navigation[1].classList.contains("shopUI")) {
-        elements.shopUI.classList.remove("shopUI")
+
+    await delayUpdate(elements.text, "Going To Store", 100);
+    await delayUpdate(elements.text, "Going To Store.", 100);
+    await delayUpdate(elements.text, "Going To Store..", 100);
+    await delayUpdate(elements.text, "Going To Store...", 100);
+    await delayUpdate(elements.text, "", 100);
+
+   showShop();
+}
+
+function toggleShopVisibility(){
+    if (elements.shopUI.classList.contains("shopUI-visible")) {
+        hideShop();
     } else {
-        elements.shopUI.classList.add("shopUI")
+        showShop();
     }
 }
-elements.navigation[1].addEventListener("click", goStore)
+
+function hideShop() {
+    elements.shopUI.classList.remove("shopUI-visible")
+}
+
+function showShop() {
+    elements.shopUI.classList.add("shopUI-visible")
+}
+
 
 async function goCave() {
     await delayUpdate(elements.text, "Going To Cave", 100);
@@ -426,7 +445,7 @@ function currentMonsterStats() {
     }
 }
 
-document.getElementById('restartButton').addEventListener('click', function() {
+document.getElementById('restartButton')?.addEventListener('click', function() {
     location.reload(); // Reloads the current page
 });
 
