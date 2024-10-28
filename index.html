@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="loserScreen">
+        <!-- <div class="loserScreen">
             <div id="loser">
                 <p id="loserExplainS">You Lose!</p>
                 <p id="loserExplain"><br>
@@ -33,7 +33,7 @@
             <div id="beatBoss">
                 <p id="bossExplain">Onto the next beast to slay!</p>
             </div>
-        </div>
+        </div> -->
         <div id="containerMain"> 
             <!--items in main container, containerInventoryMenu/container3-->
             <div class="grid-items" id="container3InventoryMenu">
@@ -57,25 +57,25 @@
 
                 <h1 id="nameGame">Dragon Repeller</h1> 
                 <div id="stats">
-                    <span class="stat">Level: <strong><span id="levelText">0</span></strong></span>
-                    <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
-                    <span class="stat">Health: <strong><span id="healthText">0</span></strong></span>
-                    <span class="stat">Gold: <strong><span id="goldText">0</span></strong></span>
+                    <span class="playerStat">Level: <strong><span id="levelText">0</span></strong></span>
+                    <span class="playerStat">XP: <strong><span id="xpText">0</span></strong></span>
+                    <span class="playerStat">Health: <strong><span id="healthText">0</span></strong></span>
+                    <span class="playerStat">Gold: <strong><span id="goldText">0</span></strong></span>
                 </div>
                 <div id="controls">
-                    <button class="buttons" id="buttonStore">Store</button>
-                    <button class="buttons" id="buttonCave">Go to cave</button>
-                    <button class="buttons" id="buttonInventory">Inventory</button>
-                    <button class="buttons" id="buttonBack">Back</button>
+                    <button class="buttons" class="buttonStore">Store</button>
+                    <button class="buttons" class="buttonCave">Go to cave</button>
+                    <button class="buttons" class="buttonInventory">Inventory</button>
+                    <button class="buttons" class="buttonBack">Back</button>
                 </div>
                 <div id="monsterStats">
-                    <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
-                    <span class="stat">Health: <strong><span id="monsterHealth"></span></strong></span>
+                    <span class="playerStat">Monster Name: <strong><span id="monsterName"></span></strong></span>
+                    <span class="playerStat">Health: <strong><span id="monsterHealth"></span></strong></span>
                 </div>
                 <div id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
                     You are in the town square. Where do you want to go? Use the buttons above.
                 </div>
-                <div id="controlsForMonsters">
+                <div class="controlsForMonsters">
                     <div>
                         <button class="buttonsForMonsters" id="buttonGhoul">Fight The Ghoul</button>
                         <button class="buttonsForMonsters" id="buttonBeast">Fight The Beast</button>
@@ -89,7 +89,7 @@
             </div>
             <!--items in main container, containerShopMenu/container2-->
             <div class="grid-items" id="container2ShopMenu">
-                <div id="shopUI"> 
+                <div class="shopUI"> 
                     <div id="weaponShop">
                         <hr><h1>Weapon Shop</h1><hr>
                         <p>Hover over buttons to display price.</p>
@@ -101,9 +101,9 @@
                         </ul>
                         <hr><h1>Potion Shop</h1><hr>
                         <ul>
-                            <button title="This Cost 10g" class="buttonsForPotions" id="button10HP">10 HP</button>
-                            <button title="This Cost 50g" class="buttonsForPotions" id="button50HP">50 HP</button>
-                            <button title="This Cost 100g" class="buttonsForPotions" id="button100HP">100 HP</button>
+                            <button title="This Cost 10g" class="buttonsForPotions" class="button10HP">10 HP</button>
+                            <button title="This Cost 50g" class="buttonsForPotions" class="button50HP">50 HP</button>
+                            <button title="This Cost 100g" class="buttonsForPotions" class="button100HP">100 HP</button>
                         </ul>
                     </div>
                 </div>

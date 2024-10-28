@@ -40,22 +40,19 @@ const elements = {
     healthText: document.querySelector("#healthText"),
     goldText: document.querySelector("#goldText"),
 
-    shopUI: document.querySelector("#shopUI"),
+    shopUI: document.querySelector(".shopUI"),
     inventoryUI: document.querySelector("#inventoryUI"),
 
     monsterStats: document.querySelector("#monsterStats"),
     monsterName: document.querySelector("#monsterName"),
     monsterHealth: document.querySelector("#monsterHealth"),
-    controlsForMonsters: document.querySelector("#controlsForMonsters"),
+    controlsForMonsters: document.querySelector(".controlsForMonsters"),
 
     lore: document.querySelector("#lore"),
     buttonAttack: document.querySelector("#buttonAttack"),
-
     preloaderScreen: document.querySelector(".preloaderScreen"),
-
     loserScreen: document.querySelector(".loserScreen"),
     loserExplain: document.getElementById("loserExplain"),
-
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain")
 };
@@ -67,10 +64,10 @@ const buttons = {
         document.querySelector("#button100HP")       
     ],
     navigation: [
-        document.querySelector("#buttonBack"),     
-        document.querySelector("#buttonStore"),     
-        document.querySelector("#buttonCave"),       
-        document.querySelector("#buttonInventory")  
+        document.querySelector(".buttonBack"),     
+        document.querySelector(".buttonStore"),     
+        document.querySelector(".buttonCave"),       
+        document.querySelector(".buttonInventory")  
     ],
     weaponPurchase: [
         document.querySelector("#buttonSword"),
@@ -230,16 +227,13 @@ async function justBack() {
 }
 
 async function goStore() {
-    await delayUpdate(elements.text, "Going To Store", 100);
-    await delayUpdate(elements.text, "Going To Store.", 100);
-    await delayUpdate(elements.text, "Going To Store..", 100);
-    await delayUpdate(elements.text, "Going To Store...", 100);
-    await delayUpdate(elements.text, "", 100);
-    elements.shopUI.style.visibility = "visible";
-    elements.controlsForMonsters.style.visibility = "hidden";
-    elements.text.innerText = "";
-    buttons.navigation[1].disabled = true;
+    if (buttons.navigation[1].classList.contains("shopUI")) {
+        elements.shopUI.classList.remove("shopUI")
+    } else {
+        elements.shopUI.classList.add("shopUI")
+    }
 }
+elements.navigation[1].addEventListener("click", goStore)
 
 async function goCave() {
     await delayUpdate(elements.text, "Going To Cave", 100);
