@@ -1,7 +1,7 @@
 // Inspired by FreeCodeCamp, Developed by Dihyah Adib.
 let instructions = "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!";
 let loreSword = "Wait you thought this weapon had importance? hahaha your crazy!";
-let loreScythe = "They say the grim reaper his weapon from the sight of the mightiest hero.";
+let loreScythe = "They say the grim reaper dropped his weapon from the sight of the mightiest hero.";
 let loreGreatHammer = "They say that they said, only when they say what they said they'd say.";
 let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
 
@@ -19,11 +19,11 @@ const monsterMultipier = 2.5;
 const inventory = ["None"];
 
 const weapons = [
-    {name: "None", strength: 0},         //0
-    {name: "Sword", strength: 25},       //1
-    {name: "Scythe", strength: 50},      //2
-    {name: "GreatHammer", strength: 75}, //3
-    {name: "Excalibur", strength: 200}   //4
+    {name: "None", strength: 0},         
+    {name: "Sword", strength: 25},       
+    {name: "Scythe", strength: 50},      
+    {name: "GreatHammer", strength: 75}, 
+    {name: "Excalibur", strength: 200}  
 ];
 
 const monsters = [
@@ -40,37 +40,34 @@ const elements = {
     healthText: document.querySelector("#healthText"),
     goldText: document.querySelector("#goldText"),
 
-    shopUI: document.querySelector("#shopUI"),
+    shopUI: document.querySelector(".shopUI"),
     inventoryUI: document.querySelector("#inventoryUI"),
 
     monsterStats: document.querySelector("#monsterStats"),
     monsterName: document.querySelector("#monsterName"),
     monsterHealth: document.querySelector("#monsterHealth"),
-    controlsForMonsters: document.querySelector("#controlsForMonsters"),
+    controlsForMonsters: document.querySelector(".controlsForMonsters"),
 
     lore: document.querySelector("#lore"),
     buttonAttack: document.querySelector("#buttonAttack"),
-
     preloaderScreen: document.querySelector(".preloaderScreen"),
-
     loserScreen: document.querySelector(".loserScreen"),
     loserExplain: document.getElementById("loserExplain"),
-
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain")
 };
 
 const buttons = {
     buyHealth: [
-        document.querySelector("#button10HP"),       //0
-        document.querySelector("#button50HP"),       //1
-        document.querySelector("#button100HP")       //2
+        document.querySelector("#button10HP"),      
+        document.querySelector("#button50HP"),      
+        document.querySelector("#button100HP")       
     ],
     navigation: [
-        document.querySelector("#buttonBack"),       //0
-        document.querySelector("#buttonStore"),      //1
-        document.querySelector("#buttonCave"),       //2
-        document.querySelector("#buttonInventory")   //3
+        document.querySelector(".buttonBack"),     
+        document.querySelector(".buttonStore"),     
+        document.querySelector(".buttonCave"),       
+        document.querySelector(".buttonInventory")  
     ],
     weaponPurchase: [
         document.querySelector("#buttonSword"),
@@ -230,16 +227,13 @@ async function justBack() {
 }
 
 async function goStore() {
-    await delayUpdate(elements.text, "Going To Store", 100);
-    await delayUpdate(elements.text, "Going To Store.", 100);
-    await delayUpdate(elements.text, "Going To Store..", 100);
-    await delayUpdate(elements.text, "Going To Store...", 100);
-    await delayUpdate(elements.text, "", 100);
-    elements.shopUI.style.visibility = "visible";
-    elements.controlsForMonsters.style.visibility = "hidden";
-    elements.text.innerText = "";
-    buttons.navigation[1].disabled = true;
+    if (buttons.navigation[1].classList.contains("shopUI")) {
+        elements.shopUI.classList.remove("shopUI")
+    } else {
+        elements.shopUI.classList.add("shopUI")
+    }
 }
+elements.navigation[1].addEventListener("click", goStore)
 
 async function goCave() {
     await delayUpdate(elements.text, "Going To Cave", 100);
@@ -330,14 +324,14 @@ async function playerGuess() {
         
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome + 1) {
-        updateStats();
         xp += 10;
+        updateStats();
         text.innerText = "You over swung and missed the monster! try again...";
         await delayUpdate(elements.text, "", 1500);
 
     } if (playerRollNum !== randomizedRollNumOutCome && playerRollNum === randomizedRollNumOutCome - 1) {
-        updateStats();
         xp += 10;
+        updateStats();
         text.innerText = "You narrowly dodged the monster! try again...";
         await delayUpdate(elements.text, "", 1500);
 
