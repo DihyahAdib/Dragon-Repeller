@@ -35,6 +35,7 @@ body {
     margin-right: 0;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+
 }
 @keyframes colorC{
     0%{
@@ -48,11 +49,20 @@ body {
     }
 }
 
+.containerBody {
+    overflow: hidden;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
 #containerMain { /*fullcontainer*/
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
-    gap: 0px 20px;
+    gap: 0px 10px;
 }
+
 .grid-items {
     justify-content: center;
     align-items: center;
@@ -60,11 +70,21 @@ body {
     border-radius: 5px;
 }
 
+#container3InventoryMenu {
+    align-content: center;
+    align-items: center;
+}
+
 #container1MainMenu {
     color: white;
     background-color: lightgray;
     border: 5px black solid;
     border-radius: 10px 10px;
+}
+
+#container2ShopMenu {
+    align-content: center;
+    align-items: center;
 }
 
 #nameGame {
@@ -80,14 +100,14 @@ body {
 
 #stats {
     overflow: auto;
-    border: 1px black solid;
+    border: 2px black solid;
     border-radius: 24px 12px;
     color: black;
     padding: 5px;
     text-align: left;
 }
 
-.stat {
+.playerStat {
     font-family: "Nexa";
     font-size: 20px;
     display: inline-flex; 
@@ -134,7 +154,7 @@ body {
     text-align: center;
 }
 
-#controlsForMonsters {
+.controlsForMonsters {
     visibility: hidden;
     height: 120px;
     display: flex;
@@ -180,17 +200,25 @@ body {
     text-align: center;
 }
 
-#shopUI {
+#lore {
+    visibility: hidden;
+    font-family: "Nexa";
+    text-align: center;
+}
+
+.shopUI {
     visibility: hidden;
     width: 21.8em;
     height: 40em;
     overflow: auto;
     padding: 10px;
-
     background-color: rgb(131, 131, 131);
     color: white;
     border-radius: 20px;
     border: 4px black solid;
+}
+.shopUI .buttonStore {
+    visibility: visible;
 }
 
 #inventoryUI {
