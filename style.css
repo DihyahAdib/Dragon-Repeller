@@ -1,5 +1,4 @@
 
-
 @font-face {
     font-family: "Comforta";
     src: url(./Fonts/Comfortaa-Light.ttf);
@@ -24,12 +23,14 @@
     font-family: "BOLD";
     src: url(./Fonts/LEMONMILK-Bold.otf);
 }
+
 body {
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
     background-size: 150% 150%;
     animation: colorC 60s ease-in-out infinite;
 }
 .containerBody {
+    overflow: hidden;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0.5rem;
@@ -48,10 +49,15 @@ body {
 }
 
 #containerMain { /*fullcontainer*/
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 0px 20px;
+}
+.grid-items {
+    justify-content: center;
     align-items: center;
-
+    padding: 10px;
+    border-radius: 5px;
 }
 
 #container1MainMenu {
@@ -193,10 +199,10 @@ body {
     height: 40em;
     overflow: auto;
     padding: 10px;
-    
+
     background-color: rgb(131, 131, 131);
     color: white;
-    border-radius: 24px; /*Top-left, top-right, bottom-right, bottom-left*/
+    border-radius: 24px;
     border: 4px black solid;
 }
 
@@ -585,3 +591,4 @@ body {
     visibility: visible;
     opacity: 1;
 }
+@media (min-width: 1024px) {}
