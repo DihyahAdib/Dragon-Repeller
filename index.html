@@ -21,9 +21,8 @@
                 </div>
             </div>
         </div> -->
-        <!-- <div class="loserScreen">
 
-        <div class="loserScreen">
+        <!-- <div class="loserScreen">
 
             <div id="loser">
                 <p id="loserExplainS">You Lose!</p>
@@ -31,14 +30,13 @@
                     <br>Press Restart to try again</p>
                 <button id="restartButton">Restart</button>
             </div>
-        </div>
-        <div class="beatBossScreen">
+        </div> -->
+
+        <!-- <div class="beatBossScreen">
             <div id="beatBoss">
                 <p id="bossExplain">Onto the next beast to slay!</p>
             </div>
         </div> -->
-
-        </div>
 
         <div id="containerMain"> 
             <!--items in main container, containerInventoryMenu/container3-->
@@ -47,12 +45,12 @@
                     <div id="inventory">
                         <hr><h1>Inventory</h1><hr>
                         <p>Click the buttons to display their Lore</p>
-                        <p id="smallestext">Currently owned weapons:</p>
+                        <p>Currently owned weapons:</p>
                         <ul>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">Sword</button>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">Scythe</button>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
+                            <button class="buttonsForWeaponsText" id="buttonSwordText">Sword</button>
+                            <button class="buttonsForWeaponsText" id="buttonScytheText">Scythe</button>
+                            <button class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
+                            <button class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
                         </ul>
                         <div id="lore"></div>
                     </div>
@@ -60,7 +58,6 @@
             </div>
             <!--items in main container, containerMainMenu/container1-->
             <div class="grid-items" id="container1MainMenu"> 
-
                 <h1 id="nameGame">Dragon Repeller</h1> 
                 <div id="stats">
                     <span class="playerStat">Level: <strong><span id="levelText">0</span></strong></span>
@@ -69,10 +66,10 @@
                     <span class="playerStat">Gold: <strong><span id="goldText">0</span></strong></span>
                 </div>
                 <div id="controls">
-                    <button class="buttons" class="buttonStore">Store</button>
-                    <button class="buttons" class="buttonCave">Go to cave</button>
-                    <button class="buttons" class="buttonInventory">Inventory</button>
-                    <button class="buttons" class="buttonBack">Back</button>
+                    <button class="buttons" id="buttonStore">Store</button>
+                    <button class="buttons" id="buttonCave">Go to cave</button>
+                    <button class="buttons" id="buttonInventory">Inventory</button>
+                    <button class="buttons" id="buttonBack" id="buttonB">Back</button>
                 </div>
                 <div id="monsterStats">
                     <span class="playerStat">Monster Name: <strong><span id="monsterName"></span></strong></span>
@@ -81,7 +78,7 @@
                 <div id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
                     You are in the town square. Where do you want to go? Use the buttons above.
                 </div>
-                <div class="controlsForMonsters">
+                <div id="controlsForMonsters">
                     <div>
                         <button class="buttonsForMonsters" id="buttonGhoul">Fight The Ghoul</button>
                         <button class="buttonsForMonsters" id="buttonBeast">Fight The Beast</button>
@@ -95,7 +92,7 @@
             </div>
             <!--items in main container, containerShopMenu/container2-->
             <div class="grid-items" id="container2ShopMenu">
-                <div class="shopUI"> 
+                <div id="shopUI"> 
                     <div id="weaponShop">
                         <hr><h1>Weapon Shop</h1><hr>
                         <p>Hover over buttons to display price.</p>
@@ -114,7 +111,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </body>
     <script src="script.js"></script>

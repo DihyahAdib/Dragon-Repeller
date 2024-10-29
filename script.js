@@ -1,10 +1,4 @@
 // Inspired by FreeCodeCamp, Developed by Dihyah Adib.
-let instructions = "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!";
-let loreSword = "Wait you thought this weapon had importance? hahaha your crazy!";
-let loreScythe = "They say the grim reaper dropped his weapon from the sight of the mightiest hero.";
-let loreGreatHammer = "They say that they said, only when they say what they said they'd say.";
-let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
-
 let score = 0;
 let level = 0;
 let xp = 0;
@@ -17,6 +11,14 @@ const xpMultiplier = 1.5;
 const monsterMultipier = 2.5;
 
 const inventory = ["None"];
+
+const Lore = {
+    instructions: "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!",
+    loreSword: "Wait you thought this weapon had importance? hahaha your crazy!",
+    loreScythe: "They say the grim reaper dropped his weapon from the sight of the mightiest hero.",
+    loreGreatHammer: "They say that they said, only when they say what they said they'd say.",
+    loreExcalibur: "Legend has it, only the mightest hero could pull the sword from the stone."
+};
 
 const weapons = [
     {name: "None", strength: 0},         
@@ -34,40 +36,38 @@ const monsters = [
 ];
 
 const elements = {
-    levelText: document.querySelector("#levelText"),
-    text: document.querySelector("#text"),
-    xpText: document.querySelector("#xpText"),
-    healthText: document.querySelector("#healthText"),
-    goldText: document.querySelector("#goldText"),
-
-    shopUI: document.querySelector(".shopUI"),
+    levelText: document.querySelector("#levelText"), //id
+    text: document.querySelector("#text"), //id
+    xpText: document.querySelector("#xpText"), //id
+    healthText: document.querySelector("#healthText"), //id
+    goldText: document.querySelector("#goldText"), //id
+    shopUI: document.querySelector("#shopUI"),
     inventoryUI: document.querySelector("#inventoryUI"),
-
-    monsterStats: document.querySelector("#monsterStats"),
-    monsterName: document.querySelector("#monsterName"),
-    monsterHealth: document.querySelector("#monsterHealth"),
-    controlsForMonsters: document.querySelector(".controlsForMonsters"),
-
+    monsterStats: document.querySelector("#monsterStats"), //id
+    monsterName: document.querySelector("#monsterName"),   //id
+    monsterHealth: document.querySelector("#monsterHealth"), //id
+    monsterControls: document.querySelector("#controlsForMonsters"),
     lore: document.querySelector("#lore"),
-    buttonAttack: document.querySelector("#buttonAttack"),
-    preloaderScreen: document.querySelector(".preloaderScreen"),
-    loserScreen: document.querySelector(".loserScreen"),
-    loserExplain: document.getElementById("loserExplain"),
-    beatBossScreen: document.querySelector(".beatBossScreen"),
-    bossExplain: document.querySelector("#bossExplain")
+    buttonAttack: document.querySelector("#buttonAttack"), //id
+
+    preloaderScreen: document.querySelector(".preloaderScreen"), //class
+    loserScreen: document.querySelector(".loserScreen"), //class
+    loserExplain: document.getElementById("loserExplain"), //id
+    beatBossScreen: document.querySelector(".beatBossScreen"), //class
+    bossExplain: document.querySelector("#bossExplain") //id
 };
 
 const buttons = {
     buyHealth: [
-        document.querySelector("#button10HP"),      
-        document.querySelector("#button50HP"),      
-        document.querySelector("#button100HP")       
+        document.querySelector("#button10HP"),       //0
+        document.querySelector("#button50HP"),       //1
+        document.querySelector("#button100HP")       //2
     ],
     navigation: [
-        document.querySelector(".buttonBack"),     
-        document.querySelector(".buttonStore"),     
-        document.querySelector(".buttonCave"),       
-        document.querySelector(".buttonInventory")  
+        document.querySelector("#buttonBack"),       //0
+        document.querySelector("#buttonStore"),      //1
+        document.querySelector("#buttonCave"),       //2
+        document.querySelector("#buttonInventory")   //3
     ],
     weaponPurchase: [
         document.querySelector("#buttonSword"),
@@ -115,10 +115,10 @@ buttons.monsterSelection[2].onclick = () => fightMonster(2);
 buttons.monsterSelection[3].onclick = () => fightMonster(3);
 
 //current lore panels.
-buttons.loreSelection[0].onclick = () => showLore1();
-buttons.loreSelection[1].onclick = () => showLore2();
-buttons.loreSelection[2].onclick = () => showLore3();
-buttons.loreSelection[3].onclick = () => showLore4();
+buttons.loreSelection[0].onclick = () => showLore();
+buttons.loreSelection[1].onclick = () => showLore();
+buttons.loreSelection[2].onclick = () => showLore();
+buttons.loreSelection[3].onclick = () => showLore();
 elements.buttonAttack.onclick = playerGuess;
 
 
@@ -198,17 +198,19 @@ async function buyWeapon(index, cost, requiredLevel = 0) {
     await delayUpdate(elements.text, "", 1000);
 }
 
-function showLore1() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreSword;
-} 
-function showLore2() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreScythe;
-} 
-function showLore3() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreGreatHammer;
-} 
-function showLore4() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreExcalibur;
+function showLore() { 
+    if (elements.loreSelection[0].style.visibility = "visible") {
+        elements.lore.innerText = Lore[1];
+    }
+    if (elements.loreSelection[1].style.visibility = "visible") {
+        elements.lore.innerText = Lore[2];
+    }
+    if (elements.loreSelection[2].style.visibility = "visible") {
+        elements.lore.innerText = Lore[3];
+    }
+    if (elements.loreSelection[3].style.visibility = "visible") {
+    elements.lore.innerText = Lore[4];
+    } 
 }
 
 async function justBack() {
@@ -217,7 +219,6 @@ async function justBack() {
     await delayUpdate(elements.text, "Going Back To Main Menu..", 100);
     await delayUpdate(elements.text, "Going Back To Main Menu...", 100);
     await delayUpdate(elements.text, "", 100);
-    //should i swap this for classlist?
     elements.shopUI.style.visibility = "hidden";
     elements.inventoryUI.style.visibility = "hidden";
     elements.controlsForMonsters.style.visibility = "hidden";
@@ -225,15 +226,17 @@ async function justBack() {
     elements.text.innerText = instructions;
     elements.lore.style.visibility = "hidden";
 }
-
 async function goStore() {
-    if (buttons.navigation[1].classList.contains("shopUI")) {
-        elements.shopUI.classList.remove("shopUI")
-    } else {
-        elements.shopUI.classList.add("shopUI")
-    }
+    await delayUpdate(elements.text, "Going To Store", 100);
+    await delayUpdate(elements.text, "Going To Store.", 100);
+    await delayUpdate(elements.text, "Going To Store..", 100);
+    await delayUpdate(elements.text, "Going To Store...", 100);
+    await delayUpdate(elements.text, "", 100);
+    elements.shopUI.style.visibility = "visible";
+    elements.controlsForMonsters.style.visibility = "hidden";
+    elements.text.innerText = "";
+    buttons.navigation[1].disabled = true;
 }
-elements.navigation[1].addEventListener("click", goStore)
 
 async function goCave() {
     await delayUpdate(elements.text, "Going To Cave", 100);
@@ -250,7 +253,6 @@ async function goCave() {
 
     text.innerText = ""
 }
-
 async function openInventory() {
     await delayUpdate(elements.text, "Going To Inventory", 100);
     await delayUpdate(elements.text, "Going To Inventory.", 100);
@@ -261,6 +263,7 @@ async function openInventory() {
     elements.text.innerText = "";
     buttons.navigation[3].disabled = true;
 }
+console.log(buttons.navigation);
 
 async function fightMonster(index) {
     currentMonsterIndex = index;
@@ -272,36 +275,29 @@ async function fightMonster(index) {
         2: { requiredWeaponIndex: 3, requiredLevel: 10 }, 
         3: { requiredWeaponIndex: 4, requiredLevel: 15 } 
     }
-
     const { requiredWeaponIndex, requiredLevel } = requirements[index];
-
     if (currentWeaponIndex < requiredWeaponIndex) {
         elements.text.innerText = `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`;
         await delayUpdate(elements.text, "", 2500);
         return;
     }
-    
     if (level < requiredLevel) {
         elements.text.innerText = `You need to be at least level ${requiredLevel} to fight the ${monster.name}.`;
         await delayUpdate(elements.text, "", 2500);
         return;
     }
-
     buttons.monsterSelection.forEach((button, i) => {
         if (i !== index) {
             button.disabled = true;
             buttons.navigation[0].disabled = true;
         }
     });
-
     elements.buttonAttack.style.display = "block"; 
     elements.text.innerText = `You approach the ${monster.name}...`;
     await delayUpdate(elements.text," ", 800);
-
     elements.monsterStats.style.display = "flex";
     elements.monsterName.innerText = monster.name;
     elements.monsterHealth.innerText = monster.health;
-
     elements.shopUI.style.visibility = "hidden";
     elements.inventoryUI.style.visibility = "hidden";
     elements.lore.style.visibility = "hidden";
@@ -310,12 +306,10 @@ async function fightMonster(index) {
 async function playerGuess() {
     const randomizedRollNumOutCome = Math.floor(Math.random() * 3) + 1;
     const playerRollNum = parseInt(prompt("Guess the correct number to Attack, 1 - 3: "));
-
     if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
         await delayUpdate(text, "Please enter a valid number between 1 and 3.", 1500);
         return;
-    } 
-
+    }
     currentMonsterStats();
     if (playerRollNum === randomizedRollNumOutCome) {
         playerHitMonster();
@@ -352,12 +346,10 @@ function playerHitMonster() {
     let reward = 2 * monsterWorth;
     xp += 90;
     gold += reward;
-
     checkLevelUp();
     updateStats();
     currentMonster.health -= currentWeapon.strength;
     elements.monsterHealth.innerText = currentMonster.health;
-
     if (currentMonster.health <= 0) {
         elements.beatBossScreen.classList.add("visible");
         elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
@@ -381,10 +373,8 @@ function playerHitMonster() {
 async function monsterHitPlayer() {
     const currentMonster = monsters[currentMonsterIndex];
     const monsterStrength = currentMonster.strength;
-
     health -= monsterStrength;
     updateStats();
-
     if (health <= 0) {
         health = 0;
         updateStats();
@@ -416,7 +406,6 @@ function resetMonsterHealth(monsterIndex) {
 
 function currentMonsterStats() {
     const currentMonster = monsters[currentMonsterIndex];
-
     if (currentMonster) {
         elements.monsterName.innerText = currentMonster.name;
         elements.monsterHealth.innerText = currentMonster.health;
@@ -427,9 +416,8 @@ function currentMonsterStats() {
 }
 
 document.getElementById('restartButton').addEventListener('click', function() {
-    location.reload(); // Reloads the current page
+    location.reload(); 
 });
-
 elements.text.innerText = instructions;
 checkLevelUp();
 updateStats();

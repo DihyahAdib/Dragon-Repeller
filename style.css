@@ -1,4 +1,4 @@
-
+/* Font families */
 @font-face {
     font-family: "Comforta";
     src: url(./Fonts/Comfortaa-Light.ttf);
@@ -23,19 +23,13 @@
     font-family: "BOLD";
     src: url(./Fonts/LEMONMILK-Bold.otf);
 }
+/* End of Font families */
 
+/* main bodies styles */
 body {
     background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
     background-size: 150% 150%;
     animation: colorC 60s ease-in-out infinite;
-}
-.containerBody {
-    overflow: hidden;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-
 }
 @keyframes colorC{
     0%{
@@ -48,20 +42,19 @@ body {
         background-position: 0 50%;
     }
 }
-
 .containerBody {
     overflow: hidden;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0.5rem;
-    padding-right: 0.5rem;
 }
 
 #containerMain { /*fullcontainer*/
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
-    gap: 0px 10px;
+    gap: 0px 15px;
 }
+/* End of main bodies styles */
 
 .grid-items {
     justify-content: center;
@@ -76,6 +69,8 @@ body {
 }
 
 #container1MainMenu {
+    align-content: center;
+    align-items: center;
     color: white;
     background-color: lightgray;
     border: 5px black solid;
@@ -146,11 +141,11 @@ body {
 #text {
     font-family: "NORM";
     font-weight: 560;
-    height: 6em;
+    height: 5.9em;
     background-color: black;
     color: white;
     padding: 2em;
-    font-size: 25px;
+    font-size: 23px;
     text-align: center;
 }
 
@@ -217,9 +212,6 @@ body {
     border-radius: 20px;
     border: 4px black solid;
 }
-.shopUI .buttonStore {
-    visibility: visible;
-}
 
 #inventoryUI {
     visibility: hidden;
@@ -227,21 +219,23 @@ body {
     height: 40em;
     overflow: auto;
     padding: 10px;
-
     background-color: rgb(131, 131, 131);
     color: white;
     border-radius: 24px;
     border: 4px black solid;
 }
+.visible {
+    visibility: visible !important;
+}
 
-#weaponShop h1 { /* STYLE the title only*/
+#weaponShop h1 {
     font-family: "Nexa";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
 
-#weaponShop p { /* STYLE the title only*/
+#weaponShop p {
     font-family: "Dreams";
     text-align: center;
     padding: 5px;
@@ -260,14 +254,14 @@ body {
     margin-right: 0%;
 }
 
-#inventory h1 { /* STYLE the title only*/
+#inventory h1 {
     font-family: "Nexa";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
 
-#inventory p { /* STYLE the title only*/
+#inventory p {
     font-family: "Dreams";
     text-align: center;
     padding: 5px;
@@ -286,6 +280,7 @@ body {
     margin-right: 0%;
 }
 
+/* weapon button styles */
 .buttonsForWeapons {
     width: 88%;
     font-size: 17px;
@@ -296,8 +291,10 @@ body {
     border: none;
     border-radius: 20px 20px;
 }
+
 .buttonsForWeaponsText {
-    justify-content: center; /* Center horizontally */
+    display: none;
+    justify-content: center;
     align-items: center; 
     width: 88%;
     font-size: 17px;
@@ -309,6 +306,7 @@ body {
     border-radius: 20px 20px;
 }
 
+/* potion button styles */
 .buttonsForPotions {
     width: 88%;
     font-size: 17px;
@@ -320,9 +318,7 @@ body {
     border-radius: 20px 20px;
 }
 
-#button4 {
-    border: none;
-}
+/* button/hover styles */
 .buttonsForPotions:hover {
     background-color: rgb(180, 87, 223);
     color: rgb(255, 255, 255);
@@ -339,7 +335,7 @@ body {
     background-color: rgb(160, 160, 160);
     color: rgb(255, 255, 255);
 }
-#buttonBack:hover {
+#buttonB:hover {
     background-color: #0a416e;
     color: whitesmoke;
 } 
@@ -400,12 +396,10 @@ body {
     animation: fadeOut 3.35s ease-out forwards 5s;
     visibility: visible;
 }
-
 @keyframes fadeOut {
     0% { opacity: 1; }
     100% { opacity: 0; visibility: hidden; }
 }
-
 #preloader {
     position: relative;
     display: flex;
@@ -414,7 +408,6 @@ body {
     align-items: center;
     width: 100%;
 }
-
 #preloaderStudioName {
     font-family: "Nexa";
     text-align: center;
@@ -423,13 +416,11 @@ body {
     opacity: 0;
     animation: fadeInW 3s ease forwards;
 }
-
 @keyframes fadeInW {
     0% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
-
 #preloaderName {
     top: 50%; 
     left: 50%;
@@ -445,13 +436,11 @@ body {
     z-index: 2;
     animation: fadeInN 3s ease forwards 2.5s;
 }
-
 @keyframes fadeInN {
     0% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
-
 #preloaderLogo {
     position: absolute;
     top: 50%; 
@@ -463,7 +452,6 @@ body {
     opacity: 0;
     animation: fadeInLogo 3s ease forwards 2.5s;
 }
-
 @keyframes fadeInLogo {
     0% { opacity: 0; color: red; }
     50% { opacity: 0.2; }
@@ -476,8 +464,9 @@ body {
     58% { opacity: 0.18; }
     100% { opacity: 0; color: rgb(255, 1, 1); }
 }
+/* End of Preloader styles */
 
-/* losing the game element changes */
+/* Losing Screen styles */
 .loserScreen {
     position: fixed;
     font-family: "BOLD";
@@ -491,11 +480,9 @@ body {
     align-items: center;
     visibility: hidden;
 }
-
 .loserScreen.visible {
     visibility: visible;
 }
-
 #loser {
     font-size: 28px;
     font-family: "BOLD";
@@ -505,7 +492,6 @@ body {
     font-size: 26px;
     color: rgb(0, 0, 0);
 }
-
 #loserExplainS {
     margin: 20px;
     padding: 10px;
@@ -513,14 +499,15 @@ body {
     font-size: 26px;
     color: red;
 }
-
 #loserExplain {
     margin: 20px;
     padding: 10px;
     text-align: center;
     color: rgb(153, 0, 0);
 }
+/* End of Losing Screen styles */
 
+/* Restart button styles */
 #restartButton {
     font-size: 20px;
     font-family: "BOLD";
@@ -537,8 +524,9 @@ body {
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.15),
     -10px 10px 10px white;
 }
+/* End of Restart button styles */
 
-/* boss element changes */
+/* boss element styles */
 .beatBossScreen {
     position: fixed;
     top: 0;
@@ -567,7 +555,6 @@ body {
     font-size: 26px;
     color: rgb(0, 0, 0);
 }
-
 #bossExplain {
     font-size: 30px;
     text-align: center;
@@ -575,12 +562,15 @@ body {
     padding: 10px;
     color: rgb(0, 0, 0);
 }
+/* End of boss element styles */
 
+/* svg, and link styles */
 #game a svg {
     width: 40px;
     height: 40px;
-
 }
+
+/* tooltip styles */
 .tooltip {
     position: relative;
     display: inline-block;
@@ -619,3 +609,4 @@ body {
     visibility: visible;
     opacity: 1;
 }
+/* End of tooptip styles */
