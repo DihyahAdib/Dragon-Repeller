@@ -609,15 +609,11 @@ body {
 
 }
 
-abbr {
-    font-style: italic;
+/* abbr {
+    font-style:normal;
     position: relative;
     text-decoration: none;
 }
-abbr {
-    font-style:normal;
-    position: relative
-  }
   
 abbr:hover::after {
     background: #add8e6b0;
@@ -629,4 +625,29 @@ abbr:hover::after {
     position: absolute;    
     width: 280px;
     z-index: 1;
+} */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px;
+    background-color: #2c2c2c;
+    color: #fff;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.tooltip.show::after {
+    opacity: 1;
 }

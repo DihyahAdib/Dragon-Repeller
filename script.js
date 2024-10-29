@@ -47,6 +47,9 @@ const elements = {
     inventoryUI: document.querySelector(".inventoryUI"),
     lore: document.querySelector("#lore"),
 
+    //tooltip
+    tooltip: document.querySelector(".tooltip"),
+
     //Monster Controls.
     monsterStats: document.querySelector("#monsterStats"),
     monsterName: document.querySelector("#monsterName"),
@@ -128,6 +131,16 @@ buttons.loreSelection[2].onclick = () => showLore3();
 buttons.loreSelection[3].onclick = () => showLore4();
 elements.buttonAttack.onclick = playerGuess;
 
+
+function toolTips() {
+    elements.tooltip.classList.add("show");
+}
+function hideTooltip() {
+    elements.tooltip.classList.remove("show");
+}
+
+elements.tooltip.addEventListener("mouseover", toolTips);
+elements.tooltip.addEventListener("mouseout", hideTooltip);
 
 async function delayUpdate(element, message, delay) {   
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -434,6 +447,7 @@ function currentMonsterStats() {
 document.getElementById('restartButton')?.addEventListener('click', function() {
     location.reload(); // Reloads the current page
 });
+
 
 checkLevelUp();
 
