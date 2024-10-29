@@ -1,9 +1,5 @@
 // Inspired by FreeCodeCamp, Developed by Dihyah Adib.
 let instructions = "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!";
-let loreSword = "Wait you thought this weapon had importance? hahaha your crazy!";
-let loreScythe = "They say the grim reaper dropped his weapon from the sight of the mightiest hero.";
-let loreGreatHammer = "They say that they said, only when they say what they said they'd say.";
-let loreExcalibur = "Legend has it, only the mightest hero could pull the sword from the stone.";
 
 let score = 0;
 let level = 0;
@@ -17,6 +13,13 @@ const xpMultiplier = 1.5;
 const monsterMultipier = 2.5;
 
 const inventory = ["None"];
+
+let lore = [
+    "Wait you thought this weapon had importance? hahaha you're crazy!",
+    "They say the grim reaper dropped his weapon from the sight of the mightiest hero.",
+    "They say that they said, only when they say what they said they'd say.",
+    "Legend has it, only the mightiest hero could pull the sword from the stone."
+];
 
 const weapons = [
     {name: "None", strength: 0},         
@@ -34,27 +37,31 @@ const monsters = [
 ];
 
 const elements = {
+    //Text & UI elements.
     levelText: document.querySelector("#levelText"),
     text: document.querySelector("#text"),
     xpText: document.querySelector("#xpText"),
     healthText: document.querySelector("#healthText"),
     goldText: document.querySelector("#goldText"),
-
     shopUI: document.querySelector(".shopUI"),
-    inventoryUI: document.querySelector("#inventoryUI"),
+    inventoryUI: document.querySelector(".inventoryUI"),
+    lore: document.querySelector("#lore"),
 
+    //Monster Controls.
     monsterStats: document.querySelector("#monsterStats"),
     monsterName: document.querySelector("#monsterName"),
     monsterHealth: document.querySelector("#monsterHealth"),
     controlsForMonsters: document.querySelector(".controlsForMonsters"),
-
-    lore: document.querySelector("#lore"),
     buttonAttack: document.querySelector("#buttonAttack"),
+    
+    //Screens and Scenes.
     preloaderScreen: document.querySelector(".preloaderScreen"),
     loserScreen: document.querySelector(".loserScreen"),
     loserExplain: document.getElementById("loserExplain"),
     beatBossScreen: document.querySelector(".beatBossScreen"),
-    bossExplain: document.querySelector("#bossExplain")
+    bossExplain: document.querySelector("#bossExplain"),
+    winnerScreen: document.querySelector(".winnerScreen"),
+    winnerExplain: document.querySelector("#winnerExplain")
 };
 
 const buttons = {
@@ -125,6 +132,13 @@ elements.buttonAttack.onclick = playerGuess;
 async function delayUpdate(element, message, delay) {   
     await new Promise(resolve => setTimeout(resolve, delay));
     element.innerText = message;
+}
+
+async function displayLoadingText(text) {
+    for (let i = 0; i < 5; i++) {
+        await delayUpdate(elements.text, text + ".".repeat(i), 100);
+    }
+    await delayUpdate(elements.text, "", 100);
 }
 
 function updateStats() {
@@ -198,87 +212,55 @@ async function buyWeapon(index, cost, requiredLevel = 0) {
     await delayUpdate(elements.text, "", 1000);
 }
 
-function showLore1() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreSword;
-} 
-function showLore2() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreScythe;
-} 
-function showLore3() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreGreatHammer;
-} 
-function showLore4() { elements.lore.style.visibility = "visible";
-    elements.lore.innerText = loreExcalibur;
+function showLore(index) {
+    elements.lore.style.visibility = "visible";
+    elements.lore.innerText = lore[index];
 }
+buttons.loreSelection.forEach((button, index) => {
+    button.onclick = () => showLore(index);
+});
 
 async function justBack() {
-    await delayUpdate(elements.text, "Going Back To Main Menu", 100);
-    await delayUpdate(elements.text, "Going Back To Main Menu.", 100);
-    await delayUpdate(elements.text, "Going Back To Main Menu..", 100);
-    await delayUpdate(elements.text, "Going Back To Main Menu...", 100);
-    await delayUpdate(elements.text, "", 100);
-    //should i swap this for classlist?
-    elements.inventoryUI.style.visibility = "hidden";
+    displayLoadingText("Going Back To Main")
+    await delayUpdate(elements.text, "", 500);
     elements.controlsForMonsters.style.visibility = "hidden";
-    buttons.navigation[0].disabled = false; buttons.navigation[1].disabled = false; buttons.navigation[2].disabled = false; buttons.navigation[3].disabled = false;
-    elements.text.innerText = instructions;
     elements.lore.style.visibility = "hidden";
-    hideShop();
 }
 
 async function goStore() {
-
-    await delayUpdate(elements.text, "Going To Store", 100);
-    await delayUpdate(elements.text, "Going To Store.", 100);
-    await delayUpdate(elements.text, "Going To Store..", 100);
-    await delayUpdate(elements.text, "Going To Store...", 100);
-    await delayUpdate(elements.text, "", 100);
-
-   showShop();
-}
-
-function toggleShopVisibility(){
-    if (elements.shopUI.classList.contains("shopUI-visible")) {
-        hideShop();
-    } else {
-        showShop();
-    }
-}
-
-function hideShop() {
-    elements.shopUI.classList.remove("shopUI-visible")
-}
-
-function showShop() {
-    elements.shopUI.classList.add("shopUI-visible")
-}
-
-
-async function goCave() {
-    await delayUpdate(elements.text, "Going To Cave", 100);
-    await delayUpdate(elements.text, "Going To Cave.", 100);
-    await delayUpdate(elements.text, "Going To Cave..", 100);
-    await delayUpdate(elements.text, "Going To Cave...", 100);
-    await delayUpdate(elements.text, "", 100);
-    elements.controlsForMonsters.style.visibility = "visible";
-
-    buttons.monsterSelection[0].style.display = "flex"; 
-    buttons.monsterSelection[1].style.display = "flex"; 
-    buttons.monsterSelection[2].style.display = "flex"; 
-    buttons.monsterSelection[3].style.display = "flex";
-
-    text.innerText = ""
+    displayLoadingText("Going To Store")
+    await delayUpdate(elements.text, "", 500);
+    toggleStoreVisibility();
 }
 
 async function openInventory() {
-    await delayUpdate(elements.text, "Going To Inventory", 100);
-    await delayUpdate(elements.text, "Going To Inventory.", 100);
-    await delayUpdate(elements.text, "Going To Inventory..", 100);
-    await delayUpdate(elements.text, "Going To Inventory...", 100);
-    await delayUpdate(elements.text, "", 100);
-    elements.inventoryUI.style.visibility = "visible";
-    elements.text.innerText = "";
-    buttons.navigation[3].disabled = true;
+    displayLoadingText("Going To Inventory")
+    await delayUpdate(elements.text, "", 500);
+    toggleInventoryVisibility();
+}
+
+async function goCave() {
+    displayLoadingText("Going To Cave")
+    await delayUpdate(elements.text, "", 500);
+    elements.controlsForMonsters.style.visibility = "visible";
+    buttons.monsterSelection.forEach(button => {
+        button.style.display = "flex";
+    });
+}
+
+function toggleStoreVisibility() {
+    if (elements.shopUI.classList.contains("shopUI-visible")) {
+        elements.shopUI.classList.remove("shopUI-visible")
+    } else {
+        elements.shopUI.classList.add("shopUI-visible")
+    }
+}
+function toggleInventoryVisibility() {
+    if (elements.inventoryUI.classList.contains("inventoryUI-visible")) {
+        elements.inventoryUI.classList.remove("inventoryUI-visible")
+    } else {
+        elements.inventoryUI.classList.add("inventoryUI-visible")
+    }
 }
 
 async function fightMonster(index) {
@@ -395,6 +377,10 @@ function playerHitMonster() {
             })
         }, 4000);
     }
+    if (currentMonster.name = currentMonsterIndex[3] && currentMonster.health <= 0) {
+        elements.winnerScreen.classList.add("visible");
+        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
+    }
 }
 
 async function monsterHitPlayer() {
@@ -449,6 +435,6 @@ document.getElementById('restartButton')?.addEventListener('click', function() {
     location.reload(); // Reloads the current page
 });
 
-elements.text.innerText = instructions;
 checkLevelUp();
+
 updateStats();
