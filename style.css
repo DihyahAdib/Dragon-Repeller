@@ -330,6 +330,7 @@ body {
     border: none;
 }
 .buttonsForPotions:hover {
+    cursor: pointer;
     background-color: rgb(180, 87, 223);
     color: rgb(255, 255, 255);
 }
@@ -338,30 +339,37 @@ body {
     color: rgb(255, 255, 255);
 }
 .buttonsForWeaponsText:hover {
+    cursor: pointer;
     background-color: rgb(87, 223, 189);
     color: rgb(255, 255, 255);
 }
 .buttons:hover {
+    cursor: pointer;
     background-color: rgb(160, 160, 160);
     color: rgb(255, 255, 255);
 }
 #buttonBack:hover {
+    cursor: pointer;
     background-color: #0a416e;
     color: whitesmoke;
 } 
 #buttonGhoul:hover {
+    cursor: pointer;
     background-color: rgb(197, 170, 47);
     color: rgb(255, 255, 255);
 }
 #buttonBeast:hover {
+    cursor: pointer;
     background-color: rgb(197, 110, 47);
     color: rgb(255, 255, 255);
 }
 #buttonWereWolf:hover {
+    cursor: pointer;
     background-color: rgb(197, 70, 47);
     color: rgb(255, 255, 255);
 }
 #buttonDragon:hover {
+    cursor: pointer;
     background-color: rgb(197, 40, 47);
     color: rgb(255, 255, 255);
 }
@@ -369,6 +377,7 @@ body {
     display: none;
 }
 #buttonAttack:hover {
+    cursor: pointer;
     background-color: rgb(255, 0, 13);
     color: rgb(255, 255, 255);
 }
@@ -608,24 +617,6 @@ body {
     height: 40px;
 
 }
-
-/* abbr {
-    font-style:normal;
-    position: relative;
-    text-decoration: none;
-}
-  
-abbr:hover::after {
-    background: #add8e6b0;
-    border-radius: 4px;
-    content: attr(title);
-    display: block;
-    bottom: 100%;
-    padding: 0.7em;
-    position: absolute;    
-    width: 280px;
-    z-index: 1;
-} */
 
 .tooltip {
     position: relative;

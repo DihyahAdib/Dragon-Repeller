@@ -236,11 +236,20 @@ async function justBack() {
     await delayUpdate(elements.text, "", 500);
     elements.controlsForMonsters.style.visibility = "hidden";
     elements.lore.style.visibility = "hidden";
+    elements.monsterStats.style.display = "none";
+    elements.shopUI.classList.remove("shopUI-visible");
+    elements.inventoryUI.classList.remove("inventoryUI-visible");
+    
+    buttons.navigation.forEach(button => {
+        button.disabled = false;
+    });
 }
 
 async function goStore() {
     displayLoadingText("Going To Store")
     await delayUpdate(elements.text, "", 500);
+    elements.controlsForMonsters.style.visibility = "hidden";
+    elements.monsterStats.style.display = "none";
     toggleStoreVisibility();
 }
 
@@ -386,12 +395,15 @@ function playerHitMonster() {
             buttons.navigation.forEach(button => {
                 button.disabled = false;
             })
+            elements.controlsForMonsters.style.visibility = "visible";
+
+            elements.shopUI.classList.remove("shopUI-visible");
         }, 4000);
     }
-    if (currentMonster.name = currentMonsterIndex[3] && currentMonster.health <= 0) {
-        elements.winnerScreen.classList.add("visible");
-        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
-    }
+    // if (currentMonster === currentMonsterIndex[3] && currentMonster.health <= 0) {
+    //     elements.winnerScreen.classList.add("visible");
+    //     elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
+    // }
 }
 
 async function monsterHitPlayer() {
