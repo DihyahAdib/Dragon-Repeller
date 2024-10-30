@@ -131,16 +131,14 @@ buttons.loreSelection[2].onclick = () => showLore3();
 buttons.loreSelection[3].onclick = () => showLore4();
 elements.buttonAttack.onclick = playerGuess;
 
-
-function toolTips() {
-    elements.tooltip.classList.add("show");
-}
-function hideTooltip() {
-    elements.tooltip.classList.remove("show");
-}
-
-elements.tooltip.addEventListener("mouseover", toolTips);
-elements.tooltip.addEventListener("mouseout", hideTooltip);
+buttons.weaponPurchase.forEach(button => {
+    button.addEventListener("mouseover", () => {
+        button.querySelector("abbr").classList.add("show");
+    });
+    button.addEventListener("mouseout", () => {
+        button.querySelector("abbr").classList.remove("show");
+    });
+})
 
 async function delayUpdate(element, message, delay) {   
     await new Promise(resolve => setTimeout(resolve, delay));
