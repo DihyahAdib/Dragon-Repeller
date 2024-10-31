@@ -48,6 +48,7 @@ body {
 
 /*Chilren items*/
 .shopUI {
+    width: 24em;
     height: 53em;
     overflow-y: auto;
     overflow-x: hidden;
@@ -58,13 +59,16 @@ body {
     color: white;
     border-radius: 20px;
     border: 4px black solid;
-}
-.shopUI, .inventoryUI {
     visibility: hidden;
-    padding: 10px;
-    width: 24em;
 }
-.shopUI.shopUI-visible, .inventoryUI.inventoryUI-visible {
+
+.inventoryUI {
+    width: 20em;
+    padding: 20px;
+    margin: 10px;
+}
+
+.shopUI.shopUI-visible {
     visibility: visible;
 }
 
@@ -283,12 +287,6 @@ body {
     opacity: 0.9;
 }
 
-#buttonForInventory:hover {
-    cursor: pointer;
-    background-color: rgb(223, 87, 110);
-    color: rgb(196, 196, 196);
-    opacity: 0.9;
-}
 
 .buttonsForWeapons:hover {
     cursor: pointer;
@@ -616,5 +614,31 @@ body {
 }
 
 .tooltip.show::after {
+    opacity: 1;
+}
+/*LLOOOOOOOOOOOOOOOOOOORRRRRRRRRREEEEEEEEEEEE*/
+.tooltipLore {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltipLore::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px;
+    background-color: #000000;
+    color: #fff;
+    border-radius: 5px;
+    white-space: wrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.tooltipLore.show::after {
     opacity: 1;
 }

@@ -32,7 +32,7 @@
         </div>
         <div class="beatBossScreen">
             <div id="beatBoss">
-                <p id="bossExplain">Onto the next beast to slay!</p>
+                <p id="bossExplain"></p>
             </div>
         </div>
         <div class="winnerScreen">
@@ -87,7 +87,7 @@
                         <p>Hover over anything to display their descriptions.</p>
                         <ul>
                             <button class="buttonsForWeapons" id="buttonSword">
-                                <abbr class="tooltip" data-tooltip = "Cost: 30G | Power: 10 | Level: 0 ">Sword</abbr>
+                                <abbr class="tooltip" data-tooltip = "Cost: 30G | Power: 10 ">Sword</abbr>
                             </button>
 
                             <button class="buttonsForWeapons" id="buttonScythe">
@@ -95,22 +95,24 @@
                             </button>
 
                             <button class="buttonsForWeapons" id="buttonGreatHammer">
-                                <abbr class="tooltip" data-tooltip = "Cost: 100G | Power: 100 | Level: 10  ">Great Hammer</abbr>
+                                <abbr class="tooltip" data-tooltip = "Cost: 100G | Power: 150 | Level: 10  ">Great Hammer</abbr>
                             </button>
 
                             <button class="buttonsForWeapons" id="buttonExcalibur">
-                                <abbr class="tooltip" data-tooltip = "Cost: 150G | Power: 200 | Level: 15  ">Excalibur</abbr>
+                                <abbr class="tooltip" data-tooltip = "Cost: 150G | Power: 250 | Level: 15  ">Excalibur</abbr>
                             </button>
                         </ul>
                         <hr><h2>Potion Shop</h2><hr>
                         <ul >
-                            <button class="buttonsForPotions" id="button10HP">10 HP</button>
-                            <button class="buttonsForPotions" id="button50HP">50 HP</button>
-                            <button class="buttonsForPotions" id="button100HP">100 HP</button>
-                            
-                        </ul>
-                        <ul id="goofyspecificid">
-                            <button class="buttonsForPotions buttonInventory" id="buttonForInventory">Inventory</button>
+                            <button class="buttonsForPotions" id="button10HP">
+                                <abbr class="tooltip" data-tooltip = "Cost: 10G | HP: 10 ">10 HP</abbr>
+                            </button>
+                            <button class="buttonsForPotions" id="button50HP">
+                                <abbr class="tooltip" data-tooltip = "Cost: 50G | HP: 50 | Level: 10 ">50 HP</abbr>
+                            </button>
+                            <button class="buttonsForPotions" id="button100HP">
+                                <abbr class="tooltip" data-tooltip = "Cost: 100G | HP: 100 | Level: 15 ">100 HP</abbr>
+                            </button>
                         </ul>
 
                         <div class="inventoryUI"> 
@@ -119,12 +121,19 @@
                                 <p>Click the buttons to display their Lore</p>
                                 <p id="smallestext">Currently owned weapons:</p>
                                 <ul>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">Sword</button>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">Scythe</button>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">
+                                        <abbr class="tooltipLore" data-tooltip = "Wait you thought this weapon had importance? hahaha you're crazy!">Sword</abbr>
+                                    </button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">
+                                        <abbr class="tooltipLore" data-tooltip = "Cost: 30G | Power: 10 | Level: 0 ">Scythe</abbr>
+                                    </button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">
+                                        <abbr class="tooltipLore" data-tooltip = "Cost: 30G | Power: 10 | Level: 0 ">Great Hammer</abbr>
+                                    </button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">
+                                        <abbr class="tooltipLore" data-tooltip = "Cost: 30G | Power: 10 | Level: 0 ">Excalibur</abbr>
+                                    </button>
                                 </ul>
-                                <div id="lore"></div>
                             </div>
                         </div>
                     </div>

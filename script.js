@@ -8,6 +8,7 @@ let health = 100;
 let gold = 50; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
+let currentMonsterDeath = 0;
 
 const xpMultiplier = 1.5;
 const monsterMultipier = 2.5;
@@ -44,7 +45,6 @@ const elements = {
     healthText: document.querySelector("#healthText"),
     goldText: document.querySelector("#goldText"),
     shopUI: document.querySelector(".shopUI"),
-    inventoryUI: document.querySelector(".inventoryUI"),
     lore: document.querySelector("#lore"),
 
     //tooltip
@@ -76,8 +76,7 @@ const buttons = {
     navigation: [
         document.querySelector(".buttonBack"),     
         document.querySelector(".buttonStore"),     
-        document.querySelector(".buttonCave"),       
-        document.querySelector(".buttonInventory")  
+        document.querySelector(".buttonCave"),
     ],
     weaponPurchase: [
         document.querySelector("#buttonSword"),
@@ -110,7 +109,6 @@ buttons.buyHealth[2].onclick = () => buyHealth(100, 15);
 buttons.navigation[0].onclick = () => justBack();
 buttons.navigation[1].onclick = () => goStore();
 buttons.navigation[2].onclick = () => goCave();
-buttons.navigation[3].onclick = () => openInventory();
 
 //currentWeaponIndex, cost, required Level.
 buttons.weaponPurchase[0].onclick = () => buyWeapon(1, 30);
@@ -124,14 +122,27 @@ buttons.monsterSelection[1].onclick = () => fightMonster(1);
 buttons.monsterSelection[2].onclick = () => fightMonster(2);
 buttons.monsterSelection[3].onclick = () => fightMonster(3);
 
-//current lore panels.
-buttons.loreSelection[0].onclick = () => showLore1();
-buttons.loreSelection[1].onclick = () => showLore2();
-buttons.loreSelection[2].onclick = () => showLore3();
-buttons.loreSelection[3].onclick = () => showLore4();
 elements.buttonAttack.onclick = playerGuess;
 
+buttons.buyHealth.forEach(button => {
+    button.addEventListener("mouseover", () => {
+        button.querySelector("abbr").classList.add("show");
+    });
+    button.addEventListener("mouseout", () => {
+        button.querySelector("abbr").classList.remove("show");
+    });
+})
+
 buttons.weaponPurchase.forEach(button => {
+    button.addEventListener("mouseover", () => {
+        button.querySelector("abbr").classList.add("show");
+    });
+    button.addEventListener("mouseout", () => {
+        button.querySelector("abbr").classList.remove("show");
+    });
+})
+
+buttons.loreSelection.forEach(button => {
     button.addEventListener("mouseover", () => {
         button.querySelector("abbr").classList.add("show");
     });
@@ -223,21 +234,12 @@ async function buyWeapon(index, cost, requiredLevel = 0) {
     await delayUpdate(elements.text, "", 1000);
 }
 
-function showLore(index) {
-    elements.lore.style.visibility = "visible";
-    elements.lore.innerText = lore[index];
-}
-buttons.loreSelection.forEach((button, index) => {
-    button.onclick = () => showLore(index);
-});
-
 async function justBack() {
     displayLoadingText("Going Back To Main")
     await delayUpdate(elements.text, "", 500);
     elements.controlsForMonsters.style.visibility = "hidden";
-    elements.lore.style.visibility = "hidden";
     elements.monsterStats.style.display = "none";
-    toggleStoreVisibility();
+    elements.shopUI.classList.remove("shopUI-visible")
     buttons.navigation.forEach(button => {
         button.disabled = false;
     });
@@ -249,10 +251,6 @@ async function goStore() {
     elements.controlsForMonsters.style.visibility = "hidden";
     elements.monsterStats.style.display = "none";
     toggleStoreVisibility();
-}
-
-async function openInventory() {
-    toggleInventoryVisibility();
 }
 
 async function goCave() {
@@ -269,13 +267,6 @@ function toggleStoreVisibility() {
         elements.shopUI.classList.remove("shopUI-visible")
     } else {
         elements.shopUI.classList.add("shopUI-visible")
-    }
-}
-function toggleInventoryVisibility() {
-    if (elements.inventoryUI.classList.contains("inventoryUI-visible")) {
-        elements.inventoryUI.classList.remove("inventoryUI-visible")
-    } else {
-        elements.inventoryUI.classList.add("inventoryUI-visible")
     }
 }
 
@@ -318,10 +309,7 @@ async function fightMonster(index) {
     elements.monsterStats.style.display = "flex";
     elements.monsterName.innerText = monster.name;
     elements.monsterHealth.innerText = monster.health;
-
-    elements.shopUI.style.visibility = "hidden";
-    elements.inventoryUI.style.visibility = "hidden";
-    elements.lore.style.visibility = "hidden";
+    elements.shopUI.classList.remove("shopUI-visible");
 }
 
 async function playerGuess() {
@@ -381,6 +369,8 @@ function playerHitMonster() {
         elements.buttonAttack.style.display = "none";
         elements.monsterStats.style.display = "none";
 
+        currentMonsterDeath++; //once this is more than 5 and the monsters name is Dragon show winner screen to insure that ppl dont cheat it has to be more than 5.
+        console.log(`current total of monster deaths ${currentMonsterDeath}`);
         setTimeout(() => {
             elements.beatBossScreen.classList.remove("visible");
             elements.buttonAttack.style.display = "block";
@@ -396,10 +386,10 @@ function playerHitMonster() {
             elements.shopUI.classList.remove("shopUI-visible");
         }, 4000);
     }
-    // if (currentMonster === currentMonsterIndex[3] && currentMonster.health <= 0) {
-    //     elements.winnerScreen.classList.add("visible");
-    //     elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
-    // }
+    if (currentMonster.name === "Dragon" && currentMonster.health <= 0 && currentMonsterDeath > 15) {
+        elements.winnerScreen.classList.add("visible");
+        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
+    }
 }
 
 async function monsterHitPlayer() {
