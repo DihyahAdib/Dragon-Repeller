@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="./style.css">
         <title >Dragon Repeller</title>
     </head>
-    <body class="containerBody">
+    <body>
         <!-- <div class="preloaderScreen">
             <div id="preloader">
                 <div>
@@ -40,67 +40,51 @@
                 <p id="winnerExplain">You have slayed all monsters in your path and saved the town!</p>
             </div>
         </div>
-        <div id="containerMain"> 
+        <div id="container"> 
 
-            <div class="grid-items" id="container3InventoryMenu">
-                <div class="inventoryUI"> 
-                    <div id="inventory">
-                        <hr><h1>Inventory</h1><hr>
-                        <p>Click the buttons to display their Lore</p>
-                        <p id="smallestext">Currently owned weapons:</p>
-                        <ul>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">Sword</button>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">Scythe</button>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
-                            <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
-                        </ul>
-                        <div id="lore"></div>
+            <div class="item"> 
+                <main id="mainGame">
+                    <h1 id="nameGame">Dragon Repeller</h1> 
+
+                    <div id="stats">
+                        <span class="playerStat">Level: <strong><span id="levelText">0</span></strong></span>
+                        <span class="playerStat">XP: <strong><span id="xpText">0</span></strong></span>
+                        <span class="playerStat">Health: <strong><span id="healthText">0</span></strong></span>
+                        <span class="playerStat">Gold: <strong><span id="goldText">0</span></strong></span>
                     </div>
-                </div>
+                    <div id="controls">
+                        <button class="buttons buttonStore">Town Square</button>
+                        <button class="buttons buttonCave">Go to cave</button>
+                        <button class="buttons buttonBack">Back</button>
+                    </div>
+                    <div id="monsterStats">
+                        <span class="playerStat"> Monster Name: <strong><span id="monsterName"></span></strong></span>
+                        <span class="playerStat"> Health: <strong><span id="monsterHealth"></span></strong></span>
+                    </div>
+                    <div id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
+                        You are in the town square. Where do you want to go? Use the buttons above.
+                    </div>
+                    <div class="controlsForMonsters">
+                        <div>
+                            <button class="buttonsForMonsters" id="buttonGhoul">Fight The Ghoul</button>
+                            <button class="buttonsForMonsters" id="buttonBeast">Fight The Beast</button>
+                            <button class="buttonsForMonsters" id="buttonWereWolf">Fight The WereWolf</button>
+                            <button class="buttonsForMonsters" id="buttonDragon">Fight The Dragon</button>
+                        </div>
+
+                        <div>
+                            <button class="buttonForAttack" id="buttonAttack">Attack!</button>
+                        </div>
+                    </div>
+                </main>
             </div>
 
-
-            <div class="grid-items" id="container1MainMenu"> 
-
-                <h1 id="nameGame">Dragon Repeller</h1> 
-                <div id="stats">
-                    <span class="playerStat">Level: <strong><span id="levelText">0</span></strong></span>
-                    <span class="playerStat">XP: <strong><span id="xpText">0</span></strong></span>
-                    <span class="playerStat">Health: <strong><span id="healthText">0</span></strong></span>
-                    <span class="playerStat">Gold: <strong><span id="goldText">0</span></strong></span>
-                </div>
-                <div id="controls">
-                    <button class="buttons buttonStore">Store</button>
-                    <button class="buttons buttonCave">Go to cave</button>
-                    <button class="buttons buttonInventory">Inventory</button>
-                    <button class="buttons buttonBack">Back</button>
-                </div>
-                <div id="monsterStats">
-                    <span class="playerStat">Monster Name: <strong><span id="monsterName"></span></strong></span>
-                    <span class="playerStat">Health: <strong><span id="monsterHealth"></span></strong></span>
-                </div>
-                <div id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. 
-                    You are in the town square. Where do you want to go? Use the buttons above.
-                </div>
-                <div class="controlsForMonsters">
-                    <div>
-                        <button class="buttonsForMonsters" id="buttonGhoul">Fight The Ghoul</button>
-                        <button class="buttonsForMonsters" id="buttonBeast">Fight The Beast</button>
-                        <button class="buttonsForMonsters" id="buttonWereWolf">Fight The WereWolf</button>
-                        <button class="buttonsForMonsters" id="buttonDragon">Fight The Dragon</button>
-                    </div>
-                    <div>
-                        <button class="buttonForAttack" id="buttonAttack">Attack!</button>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="grid-items" id="container2ShopMenu">
+            <div class="item1">
                 <div class="shopUI"> 
-                    <div id="weaponShop">
-                        <hr><h1>Weapon Shop</h1><hr>
-                        <p>Hover over The name of the weapon to display price, power, and required level</p>
+                    <div id="Shop">
+                        <hr><h1>Town square</h1><hr>
+                        <h2>Weapon Shop</h2><hr>
+                        <p>Hover over anything to display their descriptions.</p>
                         <ul>
                             <button class="buttonsForWeapons" id="buttonSword">
                                 <abbr class="tooltip" data-tooltip = "Cost: 30G | Power: 10 | Level: 0 ">Sword</abbr>
@@ -118,16 +102,34 @@
                                 <abbr class="tooltip" data-tooltip = "Cost: 150G | Power: 200 | Level: 15  ">Excalibur</abbr>
                             </button>
                         </ul>
-                        <hr><h1>Potion Shop</h1><hr>
-                        <ul>
+                        <hr><h2>Potion Shop</h2><hr>
+                        <ul >
                             <button class="buttonsForPotions" id="button10HP">10 HP</button>
                             <button class="buttonsForPotions" id="button50HP">50 HP</button>
                             <button class="buttonsForPotions" id="button100HP">100 HP</button>
+                            
                         </ul>
+                        <ul id="goofyspecificid">
+                            <button class="buttonsForPotions buttonInventory" id="buttonForInventory">Inventory</button>
+                        </ul>
+
+                        <div class="inventoryUI"> 
+                            <div id="inventory">
+                                <hr><h1>Inventory</h1><hr>
+                                <p>Click the buttons to display their Lore</p>
+                                <p id="smallestext">Currently owned weapons:</p>
+                                <ul>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">Sword</button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">Scythe</button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">Great Hammer</button>
+                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">Excalibur</button>
+                                </ul>
+                                <div id="lore"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </body>
     <script src="script.js"></script>

@@ -237,9 +237,7 @@ async function justBack() {
     elements.controlsForMonsters.style.visibility = "hidden";
     elements.lore.style.visibility = "hidden";
     elements.monsterStats.style.display = "none";
-    elements.shopUI.classList.remove("shopUI-visible");
-    elements.inventoryUI.classList.remove("inventoryUI-visible");
-    
+    toggleStoreVisibility();
     buttons.navigation.forEach(button => {
         button.disabled = false;
     });
@@ -254,8 +252,6 @@ async function goStore() {
 }
 
 async function openInventory() {
-    displayLoadingText("Going To Inventory")
-    await delayUpdate(elements.text, "", 500);
     toggleInventoryVisibility();
 }
 

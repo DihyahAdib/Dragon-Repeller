@@ -24,117 +24,107 @@
 }
 
 body {
-    background: linear-gradient(90deg, #2a6db9,#1c4a70, #0a416e,#0a416e,#1c4a70, #2a6db9);
-    background-size: 200% 200%;
-    animation: colorC 60s ease-in-out infinite;
-}
-@keyframes colorC{
-    0%{
-        background-position: 0 50%;
-    }
-    50%{
-        background-position: 100% 50%;
-    }
-    100%{
-        background-position: 0 50%;
-    }
-}
-
-.containerBody {
     overflow: hidden;
-    margin: 1px;
-    padding: 1px;
+    background: linear-gradient(79deg, #7f9bbb, #0a416e,#1c4a70, #2a6db9);
+    background-size: 200% 200%;
+    animation: colorColor 60s ease-in-out infinite;
 }
 
-#containerMain { /*fullcontainer*/
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 20px;
-    justify-items: center;
+@keyframes colorColor{
+    0%{ background-position: 0 50%; }
+    50%{ background-position: 100% 50%; }
+    100%{ background-position: 0 50%; }
 }
 
-.grid-items {
+/*Main container*/
+#container {
+    display: flex;
+    flex-direction:row;
+    flex-grow: 1;
+    align-content: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+/*Chilren items*/
+.shopUI {
+    height: 53em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    background-color: rgb(131, 131, 131);
+    color: white;
+    border-radius: 20px;
+    border: 4px black solid;
+}
+.shopUI, .inventoryUI {
+    visibility: hidden;
     padding: 10px;
-    border-radius: 5px;
-    display: flex; /* Enables Flexbox */
-    flex-direction: column; /* Aligns children vertically */
-    justify-content: center; /* Centers children vertically */
-    align-items: center; /* Centers children horizontally */
+    width: 24em;
+}
+.shopUI.shopUI-visible, .inventoryUI.inventoryUI-visible {
+    visibility: visible;
 }
 
-#container3InventoryMenu {
-    align-content: center;
-    align-items: center;
-    width: 78%;
+.item, .item1 {
+    margin-left: 1.35em;
+    margin-right: 1.35em;
 }
 
-#container2ShopMenu {
-    align-content: center;
-    align-items: center;
-    width: 80%;
-}
-
-#container1MainMenu {
+#mainGame {
     color: white;
     background-color: lightgray;
     border: 5px black solid;
     border-radius: 10px 10px;
-    width: 120%;
+    width: 47em;
+    height: 97vh;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
 }
 
-#nameGame {
+#nameGame { /**/
     align-content: center;
-    margin-top: 0.25em;  
-    margin-bottom:  0.25em;
-    padding: 8px;
+    margin: 0.25em;
+    padding: 0.25em;
     font-family: "Dreams";
     font-size: 3em;
     text-align: center;
     color: rgb(0, 0, 0);
 }
 
-#stats {
-    overflow: hidden;
-    border: 2px black solid;
+#stats { /**/
+    border: 3px black solid;
     border-radius: 24px 12px;
     color: black;
-    width: 90%;
-    padding: 0px;
-    margin-left: 10%;
-    margin-right: 10%;
+    height: 40px;
+    margin: 1em;
     text-align: center;
+    width: 40em;
 }
 
-.playerStat {
+.playerStat { /**/
     font-family: "Nexa";
     font-size: 20px;
     display: inline-flex; 
-    justify-content:space-between;
-    padding-right: 10px;
-    margin: 5px 10px;
+    padding: 0.2em;
 }
 
 #controls {
-    display: flex;
-    margin: 13px;
-    flex-direction: column;
-    border: 2px black solid;
+    display: grid;
+    margin: 0.85em;
+    border: 3px black solid;
     border-radius: 20px 12px;
-    padding: 5px;
-    width: 80%;
+    padding: 8px;
+    min-width: 80%;
+    width: 85%;
 }
 
-.buttons {
-    font-size: 17px;
-    font-family: "Comforta";
-    font-weight: bolder;
-    padding: 10px 13px;
-    margin: 6px;
-    border: none;
-    border-radius: 20px 20px;
-}
 
-#monsterStats {
+#monsterStats { /**/
     display: none;
     border: 3px black solid;
     border-radius: 18px;
@@ -145,15 +135,15 @@ body {
     width: 70%;
 }
 
-#text {
+#text { /**/
     font-family: "NORM";
     font-weight: 560;
-    height: 179px;
+    height: 180px;
     width: 85%;
-    background-color: rgba(0, 0, 0, 0.722);
+    background-color: rgba(0, 0, 0, 0.822);
     color: white;
     padding: 5px;
-    font-size: 25px;
+    font-size: 22px;
     text-align: center;
     border-radius: 20px;
 }
@@ -171,7 +161,8 @@ body {
     padding: 2.8em;
 }
 
-.buttonsForMonsters {
+.buttonsForMonsters { /**/
+    display: flex;
     max-width: 30em;
     width: 20em;
     justify-content: center;
@@ -200,92 +191,28 @@ body {
 
 #lore {
     visibility: hidden;
-    font-family: "Nexa";
-    text-align: center;
 }
-
-#lore {
-    visibility: hidden;
-    font-family: "Nexa";
-    text-align: center;
-}
-
-.shopUI {
-    visibility: hidden;
-    width: 80%;
-    height: 40em;
-    overflow: auto;
-    padding: 10px;
-    background-color: rgb(131, 131, 131);
-    color: white;
-    border-radius: 20px;
-    border: 4px black solid;
-}
-.shopUI.shopUI-visible {
-    visibility: visible;
-}
-
-.inventoryUI {
-    visibility: hidden;
-    width: 80%;
-    height: 40em;
-    overflow: auto;
-    padding: 10px;
-    background-color: rgb(131, 131, 131);
-    color: white;
-    border-radius: 24px;
-    border: 4px black solid;
-}
-.inventoryUI.inventoryUI-visible {
-    visibility: visible;
-}
-
-#weaponShop h1 { /* STYLE the title only*/
+#Shop h1,#Shop h2, #inventory h2, #lore  { /* STYLE the title only*/
     font-family: "Nexa";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
-
-#weaponShop p { /* STYLE the title only*/
+#Shop p, #inventory p {
     font-family: "Dreams";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
-
-#weaponShop hr {
+#inventory hr, #Shop hr{
     width: 72%;
     align-content: center;
 }
-
-#weaponShop {
-    margin-top: 0%;
-    margin-bottom: 0%;
-    margin-left: 0%;
-    margin-right: 0%;
+#goofyspecificid hr {
+    padding-top: 5px;
 }
 
-#inventory h1 { /* STYLE the title only*/
-    font-family: "Nexa";
-    text-align: center;
-    padding: 5px;
-    margin: 0%;
-}
-
-#inventory p { /* STYLE the title only*/
-    font-family: "Dreams";
-    text-align: center;
-    padding: 5px;
-    margin: 0%;
-}
-
-#inventory hr {
-    width: 72%;
-    align-content: center;
-}
-
-#inventory {
+#Shop {
     margin-top: 0%;
     margin-bottom: 0%;
     margin-left: 0%;
@@ -301,9 +228,23 @@ body {
     margin: 6px;
     border: none;
     border-radius: 20px 20px;
+    transition: color 0.2s ease, opacity 0.2s ease;
 }
+
+#buttonFoDescription {
+    width: 80%;
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px 20px;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
 .buttonsForWeaponsText {
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     align-items: center; 
     width: 88%;
     font-size: 17px;
@@ -313,6 +254,7 @@ body {
     margin: 6px;
     border: none;
     border-radius: 20px 20px;
+    transition: color 0.2s ease, opacity 0.2s ease;
 }
 
 .buttonsForPotions {
@@ -324,34 +266,67 @@ body {
     margin: 6px;
     border: none;
     border-radius: 20px 20px;
+    transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-#button4 {
-    border: none;
+#buttonFoDescription:hover {
+    cursor: pointer;
+    background-color: rgb(160, 160, 160);
+    color: rgb(255, 255, 255);
+    opacity: 0.9;
 }
+
 .buttonsForPotions:hover {
     cursor: pointer;
     background-color: rgb(180, 87, 223);
     color: rgb(255, 255, 255);
+    opacity: 0.9;
 }
+
+#buttonForInventory:hover {
+    cursor: pointer;
+    background-color: rgb(223, 87, 110);
+    color: rgb(196, 196, 196);
+    opacity: 0.9;
+}
+
 .buttonsForWeapons:hover {
+    cursor: pointer;
     background-color: rgb(148, 223, 87);
     color: rgb(255, 255, 255);
+    opacity: 0.9;
 }
+
 .buttonsForWeaponsText:hover {
     cursor: pointer;
     background-color: rgb(87, 223, 189);
     color: rgb(255, 255, 255);
+    opacity: 0.9;
 }
-.buttons:hover {
+
+.buttons {
+    font-size: 17px;
+    font-family: "Comforta";
+    font-weight: bolder;
+    padding: 10px 13px;
+    margin: 6px;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.buttonCave:hover, .buttonStore:hover {
     cursor: pointer;
     background-color: rgb(160, 160, 160);
     color: rgb(255, 255, 255);
+    opacity: 0.9;
 }
-#buttonBack:hover {
+
+.buttonBack:hover {
     cursor: pointer;
     background-color: #0a416e;
     color: whitesmoke;
+    opacity: 0.9;
 } 
 #buttonGhoul:hover {
     cursor: pointer;
@@ -623,6 +598,7 @@ body {
     display: inline-block;
     cursor: pointer;
 }
+
 .tooltip::after {
     content: attr(data-tooltip);
     position: absolute;
