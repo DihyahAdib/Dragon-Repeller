@@ -8,6 +8,7 @@ let health = 100;
 let gold = 50; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
+let currentMonsterDeath = 0;
 
 const xpMultiplier = 1.5;
 const monsterMultipier = 2.5;
@@ -308,8 +309,7 @@ async function fightMonster(index) {
     elements.monsterStats.style.display = "flex";
     elements.monsterName.innerText = monster.name;
     elements.monsterHealth.innerText = monster.health;
-
-    toggleStoreVisibility();
+    elements.shopUI.classList.remove("shopUI-visible");
 }
 
 async function playerGuess() {
@@ -369,6 +369,8 @@ function playerHitMonster() {
         elements.buttonAttack.style.display = "none";
         elements.monsterStats.style.display = "none";
 
+        currentMonsterDeath++; //once this is more than 5 and the monsters name is Dragon show winner screen to insure that ppl dont cheat it has to be more than 5.
+        console.log(`current total of monster deaths ${currentMonsterDeath}`);
         setTimeout(() => {
             elements.beatBossScreen.classList.remove("visible");
             elements.buttonAttack.style.display = "block";
@@ -384,10 +386,10 @@ function playerHitMonster() {
             elements.shopUI.classList.remove("shopUI-visible");
         }, 4000);
     }
-    // if (currentMonster === currentMonsterIndex[3] && currentMonster.health <= 0) {
-    //     elements.winnerScreen.classList.add("visible");
-    //     elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
-    // }
+    if (currentMonster.name === "Dragon" && currentMonster.health <= 0 && currentMonsterDeath > 15) {
+        elements.winnerScreen.classList.add("visible");
+        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
+    }
 }
 
 async function monsterHitPlayer() {
