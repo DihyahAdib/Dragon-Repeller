@@ -2,10 +2,10 @@
 let instructions = "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!";
 
 let score = 0;
-let level = 100;
+let level = 0;
 let xp = 0;
-let health = 1100;
-let gold = 1050; 
+let health = 100;
+let gold = 50; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
 let currentMonsterDeath = 0;
