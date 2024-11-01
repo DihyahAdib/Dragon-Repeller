@@ -581,7 +581,7 @@ body {
     color: rgb(0, 0, 0);
 }
 
-#bossExplain, #winnerExplain {
+#bossExplain, #winnerExplain, #winnerExplainS {
     font-family: "Nexa";
     font-size: 40px;
     text-align: center;
