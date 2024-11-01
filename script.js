@@ -2,10 +2,10 @@
 let instructions = "Use the buttons to navigate, buy weapons and potions to up your game and defeat the dragon!";
 
 let score = 0;
-let level = 0;
+let level = 100;
 let xp = 0;
-let health = 100;
-let gold = 50; 
+let health = 1100;
+let gold = 1050; 
 let currentWeaponIndex = 0;
 let currentMonsterIndex = 0;
 let currentMonsterDeath = 0;
@@ -14,13 +14,6 @@ const xpMultiplier = 1.5;
 const monsterMultipier = 2.5;
 
 const inventory = ["None"];
-
-let lore = [
-    "Wait you thought this weapon had importance? hahaha you're crazy!",
-    "They say the grim reaper dropped his weapon from the sight of the mightiest hero.",
-    "They say that they said, only when they say what they said they'd say.",
-    "Legend has it, only the mightiest hero could pull the sword from the stone."
-];
 
 const weapons = [
     {name: "None", strength: 0},         
@@ -46,7 +39,7 @@ const elements = {
     goldText: document.querySelector("#goldText"),
     shopUI: document.querySelector(".shopUI"),
     lore: document.querySelector("#lore"),
-
+    mainGame: document.querySelector("#mainGame"),
     //tooltip
     tooltip: document.querySelector(".tooltip"),
 
@@ -247,10 +240,10 @@ async function justBack() {
 
 async function goStore() {
     displayLoadingText("Going To Store")
+    toggleStoreVisibility();
     await delayUpdate(elements.text, "", 500);
     elements.controlsForMonsters.style.visibility = "hidden";
     elements.monsterStats.style.display = "none";
-    toggleStoreVisibility();
 }
 
 async function goCave() {
@@ -262,11 +255,15 @@ async function goCave() {
     });
 }
 
-function toggleStoreVisibility() {
+async function toggleStoreVisibility() {
     if (elements.shopUI.classList.contains("shopUI-visible")) {
-        elements.shopUI.classList.remove("shopUI-visible")
+        elements.mainGame.style.transform = "translateX(25%)";
+        await delayUpdate(elements.text, "", 300);
+        elements.shopUI.classList.remove("shopUI-visible");
     } else {
-        elements.shopUI.classList.add("shopUI-visible")
+        elements.mainGame.style.transform = "translateX(0)";
+        await delayUpdate(elements.text, "", 250);
+        elements.shopUI.classList.add("shopUI-visible");
     }
 }
 
@@ -298,10 +295,16 @@ async function fightMonster(index) {
     buttons.monsterSelection.forEach((button, i) => {
         if (i !== index) {
             button.disabled = true;
-            buttons.navigation[0].disabled = true;
+            buttons.navigation.forEach(button => {
+                button.disabled = true;
+            });
         }
     });
 
+    elements.mainGame.style.transform = "translateX(25%)";
+    await delayUpdate(elements.text, "", 300);
+    elements.shopUI.classList.remove("shopUI-visible");
+    
     elements.buttonAttack.style.display = "block"; 
     elements.text.innerText = `You approach the ${monster.name}...`;
     await delayUpdate(elements.text," ", 800);
@@ -309,7 +312,7 @@ async function fightMonster(index) {
     elements.monsterStats.style.display = "flex";
     elements.monsterName.innerText = monster.name;
     elements.monsterHealth.innerText = monster.health;
-    elements.shopUI.classList.remove("shopUI-visible");
+    
 }
 
 async function playerGuess() {
@@ -386,9 +389,9 @@ function playerHitMonster() {
             elements.shopUI.classList.remove("shopUI-visible");
         }, 4000);
     }
-    if (currentMonster.name === "Dragon" && currentMonster.health <= 0 && currentMonsterDeath > 15) {
+    if (currentMonster.name === "Dragon" && currentMonster.health <= 0 && currentMonsterDeath > 0) {
         elements.winnerScreen.classList.add("visible");
-        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}!`;
+        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}! \n Press reset to play again`;
     }
 }
 
@@ -443,6 +446,7 @@ function currentMonsterStats() {
 document.getElementById('restartButton')?.addEventListener('click', function() {
     location.reload(); // Reloads the current page
 });
+
 
 
 checkLevelUp();
