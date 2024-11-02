@@ -144,8 +144,12 @@ buttons.loreSelection.forEach(button => {
     });
 })
 
+async function wait(milliseconds) {
+    await new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
 async function delayUpdate(element, message, delay) {   
-    await new Promise(resolve => setTimeout(resolve, delay));
+    await wait(delay);
     element.innerText = message;
 }
 
@@ -170,7 +174,7 @@ async function updateWeapon(newWeaponIndex) {
     weaponName = name;
     weaponStrength = strength;
     await delayUpdate(text,`Equipped: ${name} with a strength of: ${strength}`, 500);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await wait(1500);
     text.innerText = "";
 }
 
@@ -185,7 +189,7 @@ async function updateMonster(newMonsterIndex) {
     
     monsterName.innerText = name;
     elements.monsterHealth.innerText = health;
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await wait(1500);
     text.innerText = "";
 }
 
