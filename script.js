@@ -56,8 +56,6 @@ const elements = {
     loserExplain: document.getElementById("loserExplain"),
     beatBossScreen: document.querySelector(".beatBossScreen"),
     bossExplain: document.querySelector("#bossExplain"),
-    winnerScreen: document.querySelector(".winnerScreen"),
-    winnerExplain: document.querySelector("#winnerExplain")
 };
 
 const buttons = {
@@ -376,7 +374,7 @@ function playerHitMonster() {
         elements.buttonAttack.style.display = "none";
         elements.monsterStats.style.display = "none";
 
-        currentMonsterDeath++; //once this is more than 5 and the monsters name is Dragon show winner screen to insure that ppl dont cheat it has to be more than 5.
+        currentMonsterDeath++;
         console.log(`current total of monster deaths ${currentMonsterDeath}`);
         setTimeout(() => {
             elements.beatBossScreen.classList.remove("visible");
@@ -394,8 +392,8 @@ function playerHitMonster() {
         }, 4000);
     }
     if (currentMonster.name === "Dragon" && currentMonster.health <= 0 && currentMonsterDeath > 0) {
-        elements.winnerScreen.classList.add("visible");
-        elements.winnerExplain.innerText = `You defeated the ${currentMonster.name}! \n Press reset to play again`;
+        elements.beatBossScreen.classList.add("visible");
+        elements.bossExplain.innerText = `You defeated the ${currentMonster.name}! \n Press reset to play again`;
     }
 }
 
