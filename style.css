@@ -433,7 +433,7 @@ body {
     color: #ffffff;
     opacity: 0;
     position: relative;
-    z-index: 2;
+    z-index: 10;
     animation: fadeInN 3s ease forwards 2.5s;
 }
 
@@ -448,7 +448,7 @@ body {
     top: 50%; 
     left: 50%;
     transform: translate(-50%, -63%);
-    z-index: 1;
+    z-index: 10;
     width: 260px;
     height: 260px;
     opacity: 0;
