@@ -425,7 +425,7 @@ body {
     100% { opacity: 0; }
 }
 
-#preloaderName {
+#preloaderName  {
     top: 50%; 
     left: 50%;
     transform: translate(-50%, -50%);
@@ -433,12 +433,31 @@ body {
     font-weight: 600;
     font-size: 60px;
     font-family: "Michroma";
-    text-align: center;
     color: #ffffff;
     opacity: 0;
     position: relative;
     z-index: 100;
     animation: fadeInN 3s ease forwards 2.5s;
+}
+#preloaderSkip {
+    bottom: 0; 
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-weight: 400;
+    font-size: 30px;
+    font-family: "Michroma";
+    color: #ffffff;
+    opacity: 0.1;
+    position: fixed;
+    z-index: 99;
+    animation: fadeForSkip 5.8s ease forwards 0.2s;
+}
+
+@keyframes fadeForSkip {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0; }
 }
 
 @keyframes fadeInN {
