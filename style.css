@@ -541,6 +541,7 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 0;
+    z-index: 100;
     visibility: hidden;
     transition: opacity 2s ease, visibility 0s 2s;
 }
