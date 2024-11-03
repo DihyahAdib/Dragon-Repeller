@@ -391,6 +391,10 @@ body {
     animation: fadeOut 3.3s ease-out forwards 5s;
     visibility: visible;
 }
+.preloaderScreen.skipped {
+    opacity: 0;
+    visibility: hidden;
+}
 
 @keyframes fadeOut {
     0% { opacity: 1; }

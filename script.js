@@ -451,7 +451,13 @@ document.getElementById('restartButton')?.addEventListener('click', function() {
     location.reload(); // Reloads the current page
 });
 
-
+document.addEventListener("keydown", () => {
+    elements.preloaderScreen.classList.add("skipped");
+});
+  
+document.addEventListener("click", () => {
+    elements.preloaderScreen.classList.add("skipped");
+});
 
 checkLevelUp();
 
