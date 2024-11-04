@@ -52,6 +52,7 @@
                         <button class="buttons buttonStore">Town Square</button>
                         <button class="buttons buttonCave">Go to cave</button>
                         <button class="buttons buttonBack">Back</button>
+                        <button class="buttons buttonRestart">Restart</button>
                     </div>
                     <div id="monsterStats">
                         <span class="playerStat"> Monster Name: <strong><span id="monsterName"></span></strong></span>
@@ -117,16 +118,16 @@
                                 <p>Click the buttons to display their Lore</p>
                                 <p id="smallestext">Currently owned weapons:</p>
                                 <ul>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonSwordText">
+                                    <button class="buttonsForWeaponsText" id="buttonSwordText">
                                         <abbr class="tooltipLore" data-tooltip = "Wait you thought this weapon had importance? hahaha you're crazy!">Sword</abbr>
                                     </button>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonScytheText">
+                                    <button class="buttonsForWeaponsText" id="buttonScytheText">
                                         <abbr class="tooltipLore" data-tooltip = "They say the grim reaper dropped his weapon from the sight of the mightiest hero.">Scythe</abbr>
                                     </button>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonGreatHammerText">
+                                    <button class="buttonsForWeaponsText" id="buttonGreatHammerText">
                                         <abbr class="tooltipLore" data-tooltip = "They say that they said, only when they say what they said they'd say.">Great Hammer</abbr>
                                     </button>
-                                    <button style="display: none;" class="buttonsForWeaponsText" id="buttonExcaliburText">
+                                    <button class="buttonsForWeaponsText" id="buttonExcaliburText">
                                         <abbr class="tooltipLore" data-tooltip = "Legend has it, only the mightiest hero could pull the sword from the stone.">Excalibur</abbr>
                                     </button>
                                 </ul>
@@ -137,5 +138,8 @@
             </div>
         </div>
     </body>
-    <script src="script.js"></script>
+    <script src="scripts/constants.js" type="module"></script>
+    <script src="scripts/functions.js" type="module"></script>
+    <script src="scripts/events.js" type="module"></script>
+    <script src="scripts/script.js" type="module"></script>
 </html>
