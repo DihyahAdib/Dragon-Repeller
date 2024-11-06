@@ -1,11 +1,4 @@
-import {
-  weapons,
-  monsters,
-  elements,
-  buttons,
-} from "./constants.js";
-
-
+import { weapons, monsters, elements, buttons, startingState } from "./constants.js";
 
 export async function wait(milliseconds) {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -23,7 +16,7 @@ export async function displayLoadingText(text) {
   await delayUpdate(elements.text, "", 100);
 }
 
-export function updateStats() {
+export function updateUi() {
   elements.levelText.innerText = state.level;
   elements.xpText.innerText = state.xp;
   elements.healthText.innerText = state.health;
@@ -35,17 +28,13 @@ export function updateStats() {
 
 export function levelUpIfRequired() {
   if (state.xp >= 100) {
-    state.xp -= 100;
-    state.level += 1;
-    updateStats();
+    state.set({ xp: state.xp - 100, level: state.level + 1 });
   }
 }
 
 export async function buyHealth(amount, requiredLevel) {
   if (state.gold >= amount && state.level >= requiredLevel) {
-    state.gold -= amount;
-    state.health += amount;
-    updateStats();
+    state.set({ gold: state.gold - amount, health: state.health + amount });
     elements.text.innerText = `Health purchased, ${state.gold} gold left`;
   } else {
     elements.text.innerText = "Not enough gold or levels!";
@@ -56,10 +45,11 @@ export async function buyHealth(amount, requiredLevel) {
 export async function buyWeapon(index, cost, requiredLevel = 0) {
   if (state.gold >= cost && state.level >= requiredLevel) {
     if (!state.inventory.includes(weapons[index].name)) {
-      state.inventory.push(weapons[index].name);
-      state.currentWeaponIndex = index;
-      state.gold -= cost;
-      updateStats();
+      state.set({
+        gold: state.gold - cost,
+        currentWeaponIndex: state.currentWeaponIndex = index,
+        inventory: [...state.inventory, weapons[index].name]
+      });
       elements.text.innerText = `Equipped: ${weapons[index].name}`;
     } else {
       elements.text.innerText = `You already own the ${weapons[index].name}!`;
@@ -107,17 +97,10 @@ export async function toggleStoreVisibility() {
 }
 
 export async function fightMonster(index) {
-  state.currentMonsterIndex = index;
+  state.set({currentMonsterIndex: index});
   const monster = monsters[index];
 
-  const requirements = {
-    0: { requiredWeaponIndex: 1, requiredLevel: 0 },
-    1: { requiredWeaponIndex: 2, requiredLevel: 5 },
-    2: { requiredWeaponIndex: 3, requiredLevel: 10 },
-    3: { requiredWeaponIndex: 4, requiredLevel: 15 },
-  };
-
-  const { requiredWeaponIndex, requiredLevel } = requirements[index];
+  const { requiredWeaponIndex, requiredLevel } = monster;
 
   if (state.currentWeaponIndex < requiredWeaponIndex) {
     elements.text.innerText = `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`;
@@ -179,9 +162,8 @@ export async function playerGuess() {
     playerRollNum !== randomizedRollNumOutCome &&
     playerRollNum === randomizedRollNumOutCome + 1
   ) {
-    state.xp += 10;
+    state.set({xp: state.xp + 10})
     levelUpIfRequired();
-    updateStats();
     text.innerText = "You over swung and missed the monster! try again...";
     await delayUpdate(elements.text, "", 1500);
   }
@@ -189,9 +171,8 @@ export async function playerGuess() {
     playerRollNum !== randomizedRollNumOutCome &&
     playerRollNum === randomizedRollNumOutCome - 1
   ) {
-    state.xp += 10;
+    state.set({xp: state.xp + 10})
     levelUpIfRequired();
-    updateStats();
     text.innerText = "You narrowly dodged the monster! try again...";
     await delayUpdate(elements.text, "", 1500);
   }
@@ -215,10 +196,9 @@ export function playerHitMonster() {
   const currentWeapon = weapons[state.currentWeaponIndex];
   const monsterWorth = currentMonster.worth;
   let reward = 2 * monsterWorth;
-  state.xp += 90;
+  state.set({xp: state.xp + 90})
   levelUpIfRequired();
-  state.gold += reward;
-  updateStats();
+  state.set({gold: state.gold + reward})
   currentMonster.health -= currentWeapon.strength;
   elements.monsterHealth.innerText = currentMonster.health;
 
@@ -259,11 +239,9 @@ export async function monsterHitPlayer() {
   const monsterStrength = currentMonster.strength;
 
   health -= monsterStrength;
-  updateStats();
 
   if (health <= 0) {
     health = 0;
-    updateStats();
     elements.loserScreen.classList.add("visible");
     elements.loserExplain.innerText = `${currentMonster.name} has bested you...`;
     elements.buttonAttack.classList.remove("buttonAttack-visible");
@@ -273,7 +251,7 @@ export async function monsterHitPlayer() {
       button.disabled = false;
     });
 
-    state = startingState;
+    state.set(startingState);
   }
 }
 
