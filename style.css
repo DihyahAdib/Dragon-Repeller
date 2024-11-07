@@ -61,7 +61,7 @@ body {
     border: 4px black solid;
     visibility: hidden;
 }
-.shopUI.shopUI-visible {
+.shopUI.visible {
     visibility: visible;
 }
 
@@ -141,7 +141,7 @@ body {
     background-color: red;
     width: 70%;
 }
-#monsterStats.monsterStats-visible {
+#monsterStats.visible {
     display: flex;
 }
 
@@ -170,7 +170,7 @@ body {
     border-radius: 20px 12px;
     padding: 2.8em;
 }
-.controlsForMonsters.controlsForMonsters-visible {
+.controlsForMonsters.visible {
     visibility: visible;
 }
 
@@ -372,7 +372,7 @@ body {
 #buttonAttack {
     display: none;
 }
-#buttonAttack.buttonAttack-visible {
+#buttonAttack.visible {
     display: block;
 }
 
@@ -406,13 +406,14 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 100;
-    opacity: 1;
     animation: fadeOut 3.3s ease-out forwards 5s;
-    visibility: visible;
-}
-.preloaderScreen.skipped {
     opacity: 0;
     visibility: hidden;
+
+}
+.preloaderScreen.visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 @keyframes fadeOut {

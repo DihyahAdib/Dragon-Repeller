@@ -16,11 +16,11 @@ state.save = function() {
     xp: this.xp,
     health: this.health,
     gold: this.gold,
+    currentScreen: this.currentScreen,
     currentWeaponIndex: this.currentWeaponIndex,
     currentMonsterIndex: this.currentMonsterIndex,
     currentMonsterDeath: this.currentMonsterDeath,
     inventory: this.inventory,
-    
   }));
 };
 

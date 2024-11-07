@@ -17,11 +17,27 @@ export async function displayLoadingText(text) {
 }
 
 export function updateUi() {
-  elements.levelText.innerText = state.level;
-  elements.xpText.innerText = state.xp;
-  elements.healthText.innerText = state.health;
-  elements.goldText.innerText = state.gold;
-  buttons.loreSelection[state.currentWeaponIndex - 1]?.classList.add(
+  const {level, xp, health, gold, currentWeaponIndex, currentScreen} = state;
+  if (currentScreen === "preloader") {
+    elements.preloaderScreen.classList.add("visible");
+  } else {
+    elements.preloaderScreen.classList.remove("visible");
+  }
+  if (currentScreen === "beatBoss") {
+    elements.loserScreen.classList.add("visible");
+  } else {
+    elements.beatBossScreen.classList.remove("visible");
+  }
+  if (currentScreen === "loser") {
+    elements.loserScreen.classList.add("visible");
+  } else {
+    elements.loserScreen.classList.remove("visible");
+  }
+  elements.levelText.innerText = level;
+  elements.xpText.innerText = xp;
+  elements.healthText.innerText = health;
+  elements.goldText.innerText = gold;
+  buttons.loreSelection[currentWeaponIndex - 1]?.classList.add(
     "buttonsForWeaponsText-visible"
   );
 }
@@ -61,38 +77,39 @@ export async function buyWeapon(index, cost, requiredLevel = 0) {
 }
 
 export async function justBack() {
-  displayLoadingText("Going Back To Main");
+  await displayLoadingText("Going Back To Main");
   await delayUpdate(elements.text, "", 500);
-  elements.controlsForMonsters.classList.remove("controlsForMonsters-visible");
-  elements.shopUI.classList.remove("shopUI-visible");
+  elements.controlsForMonsters.classList.remove("visible");
+  elements.shopUI.classList.remove("visible");
+  elements.mainGame.style.transform = "translateX(25%)";
   buttons.navigation.forEach((button) => {
     button.disabled = false;
   });
 }
 
 export async function goStore() {
-  displayLoadingText("Going To Store");
+  await displayLoadingText("Going To Store");
   toggleStoreVisibility();
   await delayUpdate(elements.text, "", 500);
-  elements.controlsForMonsters.classList.remove("controlsForMonsters-visible");
-  elements.monsterStats.classList.remove("monsterStats-visible");
+  elements.controlsForMonsters.classList.remove("visible");
+  elements.monsterStats.classList.remove("visible");
 }
 
 export async function goCave() {
-  displayLoadingText("Going To Cave");
+  await displayLoadingText("Going To Cave");
   await delayUpdate(elements.text, "", 500);
-  elements.controlsForMonsters.classList.add("controlsForMonsters-visible");
+  elements.controlsForMonsters.classList.add("visible");
 }
 
 export async function toggleStoreVisibility() {
-  if (elements.shopUI.classList.contains("shopUI-visible")) {
+  if (elements.shopUI.classList.contains("visible")) {
     elements.mainGame.style.transform = "translateX(25%)";
     await delayUpdate(elements.text, "", 300);
-    elements.shopUI.classList.remove("shopUI-visible");
+    elements.shopUI.classList.remove("visible");
   } else {
     elements.mainGame.style.transform = "translateX(0)";
     await delayUpdate(elements.text, "", 250);
-    elements.shopUI.classList.add("shopUI-visible");
+    elements.shopUI.classList.add("visible");
   }
 }
 
@@ -125,14 +142,14 @@ export async function fightMonster(index) {
 
   elements.mainGame.style.transform = "translateX(25%)";
   await delayUpdate(elements.text, "", 300);
-  elements.shopUI.classList.remove("shopUI-visible");
+  elements.shopUI.classList.remove("visible");
 
-  elements.buttonAttack.classList.add("buttonAttack-visible");
+  elements.buttonAttack.classList.add("visible");
 
   elements.text.innerText = `You approach the ${monster.name}...`;
   await delayUpdate(elements.text, " ", 800);
 
-  elements.monsterStats.classList.add("monsterStats-visible");
+  elements.monsterStats.classList.add("visible");
   elements.monsterName.innerText = monster.name;
   elements.monsterHealth.innerText = monster.health;
 }
@@ -203,16 +220,16 @@ export function playerHitMonster() {
   elements.monsterHealth.innerText = currentMonster.health;
 
   if (currentMonster.health <= 0) {
-    elements.beatBossScreen.classList.add("visible");
+    state.set({currentScreen: "beatBoss"});
     elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
-    elements.buttonAttack.classList.remove("buttonAttack-visible");
-    elements.monsterStats.classList.remove("monsterStats-visible");
+    elements.buttonAttack.classList.remove("visible");
+    elements.monsterStats.classList.remove("visible");
 
     currentMonsterDeath++;
     console.log(`current total of monster deaths ${currentMonsterDeath}`);
     setTimeout(() => {
       elements.beatBossScreen.classList.remove("visible");
-      elements.buttonAttack.classList.add("buttonAttack-visible");
+      elements.buttonAttack.classList.add("visible");
       resetMonsterHealth(state.currentMonsterIndex);
       buttons.monsterSelection.forEach((button) => {
         button.disabled = false;
@@ -229,7 +246,7 @@ export function playerHitMonster() {
     currentMonster.health <= 0 &&
     currentMonsterDeath > 0
   ) {
-    elements.beatBossScreen.classList.add("visible");
+    state.set({currentScreen: "beatBoss"});
     elements.bossExplain.innerText = `You defeated the ${currentMonster.name}! \n Press reset to play again`;
   }
 }
@@ -242,15 +259,14 @@ export async function monsterHitPlayer() {
 
   if (health <= 0) {
     health = 0;
-    elements.loserScreen.classList.add("visible");
+    state.set({currentScreen: "loser"});
     elements.loserExplain.innerText = `${currentMonster.name} has bested you...`;
-    elements.buttonAttack.classList.remove("buttonAttack-visible");
-    elements.monsterStats.classList.remove("monsterStats-visible");
+    elements.buttonAttack.classList.remove("visible");
+    elements.monsterStats.classList.remove("visible");
 
     buttons.navigation.forEach((button) => {
       button.disabled = false;
     });
-
     state.set(startingState);
   }
 }

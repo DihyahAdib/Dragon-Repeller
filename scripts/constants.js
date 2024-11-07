@@ -110,6 +110,7 @@ export const startingState = {
   xp: 0,
   health: 100,
   gold: 50,
+  currentScreen: "preloader",
   currentWeaponIndex: 0,
   currentMonsterIndex: 0,
   currentMonsterDeath: 0,

@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { buttons, elements } from "./constants.js";
 import {
   playerGuess,
@@ -18,6 +19,7 @@ buttons.navigation[0].onclick = () => justBack();
 buttons.navigation[1].onclick = () => goStore();
 buttons.navigation[2].onclick = () => goCave();
 buttons.navigation[3].onclick = () => {
+  debugger
     localStorage.removeItem("state");
     window.location.href = "/";
 }
@@ -70,9 +72,13 @@ document
   });
 
 document.addEventListener("keydown", () => {
-  elements.preloaderScreen.classList.add("skipped");
+  if (state.currentScreen === "preloader") {
+    state.set({currentScreen: "main"})
+  }
 });
 
 document.addEventListener("click", () => {
-  elements.preloaderScreen.classList.add("skipped");
+  if (state.currentScreen === "preloader") {
+    state.set({currentScreen: "main"})
+  }
 });
