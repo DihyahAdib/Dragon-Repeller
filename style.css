@@ -37,7 +37,7 @@ body {
 }
 
 /*Main container*/
-#container {
+main-game-and-shop-wrapper {
     display: flex;
     flex-direction:row;
     flex-grow: 1;
@@ -47,7 +47,7 @@ body {
 }
 
 /*Chilren items*/
-.shopUI {
+shop-ui {
     width: 24em;
     height: 53em;
     overflow-y: auto;
@@ -60,12 +60,12 @@ body {
     border-radius: 20px;
     border: 4px black solid;
     visibility: hidden;
-}
-.shopUI.visible {
-    visibility: visible;
+    &.visible{
+        visibility: visible;
+    }
 }
 
-.inventoryUI {
+inventory-ui {
     width: 20em;
     padding: 20px;
     margin: 10px;
@@ -73,12 +73,12 @@ body {
 
 
 
-.item, .item1 {
+main-game-wrapper, shop-ui-wrapper {
     margin-left: 1.35em;
     margin-right: 1.35em;
 }
 
-#mainGame {
+main#mainGame {
     color: white;
     background-color: lightgray;
     border: 5px black solid;
@@ -93,7 +93,7 @@ body {
     transition: transform 1s ease;
 }
 
-#nameGame { /**/
+h1#nameGame {
     align-content: center;
     margin: 0.25em;
     padding: 0.25em;
@@ -103,7 +103,7 @@ body {
     color: rgb(0, 0, 0);
 }
 
-#stats { /**/
+stats {
     border: 3px black solid;
     border-radius: 24px 12px;
     color: black;
@@ -113,14 +113,14 @@ body {
     width: 40em;
 }
 
-.playerStat { /**/
+player-stat { /**/
     font-family: "Nexa";
     font-size: 20px;
     display: inline-flex; 
     padding: 0.2em;
 }
 
-#controls {
+controls {
     display: grid;
     margin: 0.85em;
     border: 3px black solid;
@@ -131,7 +131,7 @@ body {
 }
 
 
-#monsterStats { /**/
+monster-stats { /**/
     display: none;
     border: 3px black solid;
     border-radius: 18px;
@@ -141,11 +141,11 @@ body {
     background-color: red;
     width: 70%;
 }
-#monsterStats.visible {
+monster-stats.visible {
     display: flex;
 }
 
-#text { /**/
+text { /**/
     font-family: "NORM";
     font-weight: 560;
     height: 180px;
@@ -158,7 +158,7 @@ body {
     border-radius: 20px;
 }
 
-.controlsForMonsters {
+controls-for-monsters {
     visibility: hidden;
     height: 120px;
     display: flex;
@@ -169,12 +169,12 @@ body {
     border: 2px black solid;
     border-radius: 20px 12px;
     padding: 2.8em;
-}
-.controlsForMonsters.visible {
-    visibility: visible;
+    &.visible {
+        visibility: visible;
+    }
 }
 
-.buttonsForMonsters { /**/
+button.buttonsForMonsters { /**/
     display: flex;
     max-width: 30em;
     width: 20em;
@@ -188,7 +188,7 @@ body {
     border-radius: 20px 20px;
 }
 
-.buttonForAttack {
+button.buttonForAttack {
     display: none;
     max-width: 30em;
     width: 10em;
@@ -202,37 +202,31 @@ body {
     border-radius: 28px 28px;
 }
 
-#lore {
-    visibility: hidden;
-}
-#Shop h1,#Shop h2, #inventory h2, #lore  { /* STYLE the title only*/
+shop h1,shop h2, inventory h2, #lore  { /* STYLE the title only*/
     font-family: "Nexa";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
-#Shop p, #inventory p {
+shop p, inventory p {
     font-family: "Dreams";
     text-align: center;
     padding: 5px;
     margin: 0%;
 }
-#inventory hr, #Shop hr{
+inventory hr, shop hr{
     width: 72%;
     align-content: center;
 }
-#goofyspecificid hr {
-    padding-top: 5px;
-}
 
-#Shop {
+shop {
     margin-top: 0%;
     margin-bottom: 0%;
     margin-left: 0%;
     margin-right: 0%;
 }
 
-.buttonsForWeapons {
+button.buttonsForWeapons {
     width: 88%;
     font-size: 17px;
     font-family: "Comforta";
@@ -244,19 +238,8 @@ body {
     transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-#buttonFoDescription {
-    width: 80%;
-    font-size: 17px;
-    font-family: "Comforta";
-    font-weight: bolder;
-    padding: 10px 13px;
-    margin: 6px;
-    border: none;
-    border-radius: 20px 20px;
-    transition: color 0.2s ease, opacity 0.2s ease;
-}
 
-.buttonsForWeaponsText {
+button.buttonsForWeaponsText {
     justify-content: center;
     align-items: center; 
     width: 88%;
@@ -270,7 +253,7 @@ body {
     transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-.buttonsForPotions {
+button.buttonsForPotions {
     width: 88%;
     font-size: 17px;
     font-family: "Comforta";
@@ -282,14 +265,7 @@ body {
     transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-#buttonFoDescription:hover {
-    cursor: pointer;
-    background-color: rgb(160, 160, 160);
-    color: rgb(255, 255, 255);
-    opacity: 0.9;
-}
-
-.buttonsForPotions:hover {
+button.buttonsForPotions:hover {
     cursor: pointer;
     background-color: rgb(180, 87, 223);
     color: rgb(255, 255, 255);
@@ -297,21 +273,21 @@ body {
 }
 
 
-.buttonsForWeapons:hover {
+button.buttonsForWeapons:hover {
     cursor: pointer;
     background-color: rgb(148, 223, 87);
     color: rgb(255, 255, 255);
     opacity: 0.9;
 }
 
-.buttonsForWeaponsText:hover {
+button.buttonsForWeaponsText:hover {
     cursor: pointer;
     background-color: rgb(87, 223, 189);
     color: rgb(255, 255, 255);
     opacity: 0.9;
 }
 
-.buttons {
+button.buttons {
     font-size: 17px;
     font-family: "Comforta";
     font-weight: bolder;
@@ -322,80 +298,66 @@ body {
     transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
-.buttonCave:hover, .buttonStore:hover {
+button.buttonCave:hover, button.buttonStore:hover {
     cursor: pointer;
     background-color: rgb(160, 160, 160);
     color: rgb(255, 255, 255);
     opacity: 0.9;
 }
 
-.buttonBack:hover {
+button.buttonBack:hover {
     cursor: pointer;
     background-color: #0a416e;
     color: whitesmoke;
     opacity: 0.9;
 } 
-.buttonRestart:hover {
+button.buttonRestart:hover {
     cursor: pointer;
     background-color: #0a416e;
     color: whitesmoke;
     opacity: 0.9;
 } 
-#buttonGhoul:hover {
+button#buttonGhoul:hover {
     cursor: pointer;
     background-color: rgb(197, 170, 47);
     color: rgb(255, 255, 255);
 }
-#buttonBeast:hover {
+button#buttonBeast:hover {
     cursor: pointer;
     background-color: rgb(197, 110, 47);
     color: rgb(255, 255, 255);
 }
-#buttonWereWolf:hover {
+button#buttonWereWolf:hover {
     cursor: pointer;
     background-color: rgb(197, 70, 47);
     color: rgb(255, 255, 255);
 }
-#buttonDragon:hover {
+button#buttonDragon:hover {
     cursor: pointer;
     background-color: rgb(197, 40, 47);
     color: rgb(255, 255, 255);
 }
-#buttonGhoul #buttonBeast #buttonWereWolf #buttonDragon {
-    display: none;
-}
-#buttonAttack:hover {
+button#buttonAttack:hover {
     cursor: pointer;
     background-color: rgb(255, 0, 13);
     color: rgb(255, 255, 255);
 }
-#buttonAttack {
+button#buttonAttack {
     display: none;
 }
-#buttonAttack.visible {
+button#buttonAttack.visible {
     display: block;
 }
 
 /* Utility classes */
-.centered {
+preloader-centered {
     position: relative;
     text-align: center;
     width: 100%;
 }
 
-.screen-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* Preloader styles */
-.preloaderScreen {
+preloader-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -411,7 +373,7 @@ body {
     visibility: hidden;
 
 }
-.preloaderScreen.visible {
+preloader-screen.visible {
     opacity: 1;
     visibility: visible;
 }
@@ -421,7 +383,7 @@ body {
     100% { opacity: 0; visibility: hidden; }
 }
 
-#preloader {
+preloader {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -430,7 +392,7 @@ body {
     width: 100%;
 }
 
-#preloaderStudioName {
+p#preloaderStudioName {
     font-family: "Nexa";
     text-align: center;
     font-size: 35px;
@@ -445,7 +407,7 @@ body {
     100% { opacity: 0; }
 }
 
-#preloaderName  {
+p#preloaderName  {
     top: 50%; 
     left: 50%;
     transform: translate(-50%, -50%);
@@ -459,7 +421,7 @@ body {
     z-index: 100;
     animation: fadeInN 3s ease forwards 2.5s;
 }
-#preloaderSkip {
+p#preloaderSkip {
     bottom: 0; 
     left: 50%;
     transform: translateX(-50%);
@@ -552,7 +514,7 @@ white-screen {
     visibility: hidden;
     transition: opacity 2s ease, visibility 0s 2s;
     
-    & .textWrapper {
+    & white-screen-text-wrapper {
         margin: 10px;
         padding: 10px;
     }
@@ -563,7 +525,7 @@ white-screen.visible {
     transition: opacity 2s ease, visibility 0s;
 }
 
-#Explain {
+p#Explain {
     font-family: "Nexa";
     font-size: 40px;
     text-align: center;
@@ -572,19 +534,13 @@ white-screen.visible {
     color: rgb(0, 0, 0);
 }
 
-#game a svg {
-    width: 40px;
-    height: 40px;
-
-}
-
-.tooltip {
+abbr.tooltip {
     position: relative;
     display: inline-block;
     cursor: pointer;
 }
 
-.tooltip::after {
+abbr.tooltip::after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: 125%;
@@ -600,17 +556,17 @@ white-screen.visible {
     transition: opacity 0.3s ease;
 }
 
-.tooltip.show::after {
+abbr.tooltip.show::after {
     opacity: 1;
 }
 /*LLOOOOOOOOOOOOOOOOOOORRRRRRRRRREEEEEEEEEEEE*/
-.tooltipLore {
+abbr.tooltipLore {
     position: relative;
     display: inline-block;
     cursor: pointer;
 }
 
-.tooltipLore::after {
+abbr.tooltipLore::after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: 125%;
@@ -625,12 +581,16 @@ white-screen.visible {
     transition: opacity 0.3s ease;
 }
 
-.tooltipLore.show::after {
+abbr.tooltipLore.show::after {
     opacity: 1;
 }
-.buttonsForWeaponsText{
+button.buttonsForWeaponsText{
     display: none;
 }
-.buttonsForWeaponsText.visible {
+button.buttonsForWeaponsText.visible {
     display: flex;
+}
+
+shop-ui {
+    display: block;
 }

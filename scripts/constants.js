@@ -46,62 +46,61 @@ export const monsters = [
 
 export const elements = {
   //Text & UI elements.
-  levelText: document.querySelector("#levelText"),
-  text: document.querySelector("#text"),
-  xpText: document.querySelector("#xpText"),
-  healthText: document.querySelector("#healthText"),
-  goldText: document.querySelector("#goldText"),
-  shopUI: document.querySelector(".shopUI"),
-  lore: document.querySelector("#lore"),
-  mainGame: document.querySelector("#mainGame"),
+  levelText: document.querySelector("player-stat span#levelText"),
+  text: document.querySelector("text"),
+  xpText: document.querySelector("player-stat span#xpText"),
+  healthText: document.querySelector("player-stat span#healthText"),
+  goldText: document.querySelector("player-stat span#goldText"),
+  shopUI: document.querySelector("shop-ui"),
+  mainGame: document.querySelector("main#mainGame"),
   //tooltip
-  tooltip: document.querySelector(".tooltip"),
+  tooltip: document.querySelector("abbr.tooltip"),
 
   //Monster Controls.
-  monsterStats: document.querySelector("#monsterStats"),
-  monsterName: document.querySelector("#monsterName"),
-  monsterHealth: document.querySelector("#monsterHealth"),
-  controlsForMonsters: document.querySelector(".controlsForMonsters"),
-  buttonAttack: document.querySelector("#buttonAttack"),
+  monsterStats: document.querySelector("monster-stats"),
+  monsterName: document.querySelector("span#monsterName"),
+  monsterHealth: document.querySelector("span#monsterHealth"),
+  controlsForMonsters: document.querySelector("controls-for-monsters"),
+  buttonAttack: document.querySelector("button#buttonAttack"),
 
   //Screens and Scenes.
-  preloaderScreen: document.querySelector(".preloaderScreen"),
+  preloaderScreen: document.querySelector("preloader-screen"),
   whiteScreen: document.querySelector("white-screen"),
-  Explain: document.querySelector("#Explain"),
+  Explain: document.querySelector("p#Explain"),
 };
 
 export const buttons = {
   buyHealth: [
-    document.querySelector("#button10HP"),
-    document.querySelector("#button50HP"),
-    document.querySelector("#button100HP"),
+    document.querySelector("button#button10HP"),
+    document.querySelector("button#button50HP"),
+    document.querySelector("button#button100HP"),
   ],
   navigation: [
-    document.querySelector(".buttonBack"),
-    document.querySelector(".buttonStore"),
-    document.querySelector(".buttonCave"),
-    document.querySelector(".buttonRestart"),
+    document.querySelector("button.buttonBack"),
+    document.querySelector("button.buttonStore"),
+    document.querySelector("button.buttonCave"),
+    document.querySelector("button.buttonRestart"),
   ],
   weaponPurchase: [
-    document.querySelector("#buttonSword"),
-    document.querySelector("#buttonScythe"),
-    document.querySelector("#buttonGreatHammer"),
-    document.querySelector("#buttonExcalibur"),
+    document.querySelector("button#buttonSword"),
+    document.querySelector("button#buttonScythe"),
+    document.querySelector("button#buttonGreatHammer"),
+    document.querySelector("button#buttonExcalibur"),
   ],
   monsterSelection: [
-    document.querySelector("#buttonGhoul"),
-    document.querySelector("#buttonBeast"),
-    document.querySelector("#buttonWereWolf"),
-    document.querySelector("#buttonDragon"),
+    document.querySelector("button#buttonGhoul"),
+    document.querySelector("button#buttonBeast"),
+    document.querySelector("button#buttonWereWolf"),
+    document.querySelector("button#buttonDragon"),
   ],
   loreSelection: [
-    document.querySelector("#buttonSwordText"),
-    document.querySelector("#buttonScytheText"),
-    document.querySelector("#buttonGreatHammerText"),
-    document.querySelector("#buttonExcaliburText"),
+    document.querySelector("button#buttonSwordText"),
+    document.querySelector("button#buttonScytheText"),
+    document.querySelector("button#buttonGreatHammerText"),
+    document.querySelector("button#buttonExcaliburText"),
   ],
   whiteScreen: {
-    restart: document.querySelector("#restartButton")
+    restart: document.querySelector("button#restartButton")
   }
 };
 
