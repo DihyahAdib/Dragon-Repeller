@@ -66,13 +66,18 @@ buttons.loreSelection.forEach((button) => {
 document
   .getElementById("restartButton")
   ?.addEventListener("click", function () {
-    location.reload(); // Reloads the current page
+    localStorage.removeItem("state");
+    window.location.href = "/";
   });
 
 document.addEventListener("keydown", () => {
-  elements.preloaderScreen.classList.add("skipped");
+  if (state.currentScreen === "preloader") {
+    state.set({currentScreen: "main"})
+  }
 });
 
 document.addEventListener("click", () => {
-  elements.preloaderScreen.classList.add("skipped");
+  if (state.currentScreen === "preloader") {
+    state.set({currentScreen: "main"})
+  }
 });
