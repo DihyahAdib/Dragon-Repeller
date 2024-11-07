@@ -16,10 +16,8 @@ state.save = function() {
     xp: this.xp,
     health: this.health,
     gold: this.gold,
-    currentScreen: this.currentScreen,
     currentWeaponIndex: this.currentWeaponIndex,
     currentMonsterIndex: this.currentMonsterIndex,
-    currentMonsterDeath: this.currentMonsterDeath,
     inventory: this.inventory,
   }));
 };
@@ -30,6 +28,8 @@ state.set = function(changedValues) {
     const key = changedKeys[i];
     this[key] = changedValues[key];
   }
+
   this.save();
+
   updateUi();
 };

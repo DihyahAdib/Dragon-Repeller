@@ -511,50 +511,6 @@ body {
     100% { opacity: 0; color: rgb(255, 1, 1); }
 }
 
-/* losing the game element changes */
-.loserScreen {
-    position: fixed;
-    font-family: "BOLD";
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
-}
-
-.loserScreen.visible {
-    visibility: visible;
-}
-
-#loser {
-    font-size: 28px;
-    font-family: "BOLD";
-    text-align: center;
-    margin: 10px;
-    padding: 10px;
-    font-size: 26px;
-    color: rgb(0, 0, 0);
-}
-
-#loserExplainS {
-    margin: 20px;
-    padding: 10px;
-    text-align: center;
-    font-size: 26px;
-    color: red;
-}
-
-#loserExplain {
-    margin: 20px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(153, 0, 0);
-}
-
 #restartButton {
     font-size: 20px;
     font-family: "BOLD";
@@ -566,20 +522,28 @@ body {
     color:#000000;
     align-content: center;
     transition: box-shadow 0.3s ease;
+    visibility: hidden;
 }
 #restartButton:hover {
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.15),
     -10px 10px 10px white;
 }
+#restartButton.visible {
+    visibility: visible;
+}
 
 /* boss element changes */
-.beatBossScreen {
+white-screen {
+    font-size: 28px; 
+    color: rgb(0, 0, 0);
+    font-family: "BOLD";
+    text-align: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: aliceblue;
+    background-color: rgb(228, 243, 255);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -587,24 +551,19 @@ body {
     z-index: 100;
     visibility: hidden;
     transition: opacity 2s ease, visibility 0s 2s;
+    
+    & .textWrapper {
+        margin: 10px;
+        padding: 10px;
+    }
 }
-.beatBossScreen.visible {
+white-screen.visible {
     opacity: 1;
     visibility: visible;
     transition: opacity 2s ease, visibility 0s;
 }
 
-#beatBoss {
-    font-size: 28px;
-    font-family: "BOLD";
-    text-align: center;
-    margin: 10px;
-    padding: 10px;
-    font-size: 26px;
-    color: rgb(0, 0, 0);
-}
-
-#bossExplain {
+#Explain {
     font-family: "Nexa";
     font-size: 40px;
     text-align: center;
@@ -672,6 +631,6 @@ body {
 .buttonsForWeaponsText{
     display: none;
 }
-.buttonsForWeaponsText.buttonsForWeaponsText-visible {
+.buttonsForWeaponsText.visible {
     display: flex;
 }

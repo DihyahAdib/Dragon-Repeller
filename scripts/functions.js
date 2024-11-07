@@ -1,4 +1,10 @@
-import { weapons, monsters, elements, buttons, startingState } from "./constants.js";
+import {
+  weapons,
+  monsters,
+  elements,
+  buttons,
+  startingState,
+} from "./constants.js";
 
 export async function wait(milliseconds) {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -17,28 +23,40 @@ export async function displayLoadingText(text) {
 }
 
 export function updateUi() {
-  const {level, xp, health, gold, currentWeaponIndex, currentScreen} = state;
+  const {
+    level,
+    xp,
+    health,
+    gold,
+    currentWeaponIndex,
+    currentMonsterIndex,
+    currentScreen,
+    currentWhiteText,
+  } = state;
   if (currentScreen === "preloader") {
     elements.preloaderScreen.classList.add("visible");
   } else {
     elements.preloaderScreen.classList.remove("visible");
   }
-  if (currentScreen === "beatBoss") {
-    elements.loserScreen.classList.add("visible");
+  if (currentScreen === "whiteScreen") {
+    elements.whiteScreen.classList.add("visible");
   } else {
-    elements.beatBossScreen.classList.remove("visible");
+    elements.whiteScreen.classList.remove("visible");
   }
-  if (currentScreen === "loser") {
-    elements.loserScreen.classList.add("visible");
+  if (currentMonsterIndex === 3) {
+    buttons.whiteScreen.restart.classList.add("visible");
   } else {
-    elements.loserScreen.classList.remove("visible");
+    buttons.whiteScreen.restart.classList.remove("visible");
   }
+  elements.Explain.innerText = currentWhiteText;
+
   elements.levelText.innerText = level;
   elements.xpText.innerText = xp;
   elements.healthText.innerText = health;
   elements.goldText.innerText = gold;
+
   buttons.loreSelection[currentWeaponIndex - 1]?.classList.add(
-    "buttonsForWeaponsText-visible"
+    "visible"
   );
 }
 
@@ -63,8 +81,8 @@ export async function buyWeapon(index, cost, requiredLevel = 0) {
     if (!state.inventory.includes(weapons[index].name)) {
       state.set({
         gold: state.gold - cost,
-        currentWeaponIndex: state.currentWeaponIndex = index,
-        inventory: [...state.inventory, weapons[index].name]
+        currentWeaponIndex: (state.currentWeaponIndex = index),
+        inventory: [...state.inventory, weapons[index].name],
       });
       elements.text.innerText = `Equipped: ${weapons[index].name}`;
     } else {
@@ -114,7 +132,7 @@ export async function toggleStoreVisibility() {
 }
 
 export async function fightMonster(index) {
-  state.set({currentMonsterIndex: index});
+  state.set({ currentMonsterIndex: index });
   const monster = monsters[index];
 
   const { requiredWeaponIndex, requiredLevel } = monster;
@@ -179,7 +197,7 @@ export async function playerGuess() {
     playerRollNum !== randomizedRollNumOutCome &&
     playerRollNum === randomizedRollNumOutCome + 1
   ) {
-    state.set({xp: state.xp + 10})
+    state.set({ xp: state.xp + 10 });
     levelUpIfRequired();
     text.innerText = "You over swung and missed the monster! try again...";
     await delayUpdate(elements.text, "", 1500);
@@ -188,7 +206,7 @@ export async function playerGuess() {
     playerRollNum !== randomizedRollNumOutCome &&
     playerRollNum === randomizedRollNumOutCome - 1
   ) {
-    state.set({xp: state.xp + 10})
+    state.set({ xp: state.xp + 10 });
     levelUpIfRequired();
     text.innerText = "You narrowly dodged the monster! try again...";
     await delayUpdate(elements.text, "", 1500);
@@ -212,42 +230,50 @@ export function playerHitMonster() {
   const currentMonster = monsters[state.currentMonsterIndex];
   const currentWeapon = weapons[state.currentWeaponIndex];
   const monsterWorth = currentMonster.worth;
+
   let reward = 2 * monsterWorth;
-  state.set({xp: state.xp + 90})
+  state.set({ xp: state.xp + 90 });
+
   levelUpIfRequired();
-  state.set({gold: state.gold + reward})
+
+  state.set({ gold: state.gold + reward });
   currentMonster.health -= currentWeapon.strength;
   elements.monsterHealth.innerText = currentMonster.health;
 
   if (currentMonster.health <= 0) {
-    state.set({currentScreen: "beatBoss"});
-    elements.bossExplain.innerText = `You defeated the ${currentMonster.name}!`;
+    state.set({
+      currentScreen: "whiteScreen",
+      currentWhiteText: `You defeated the ${currentMonster.name}!`
+    });
+
     elements.buttonAttack.classList.remove("visible");
     elements.monsterStats.classList.remove("visible");
 
-    currentMonsterDeath++;
-    console.log(`current total of monster deaths ${currentMonsterDeath}`);
     setTimeout(() => {
-      elements.beatBossScreen.classList.remove("visible");
-      elements.buttonAttack.classList.add("visible");
-      resetMonsterHealth(state.currentMonsterIndex);
-      buttons.monsterSelection.forEach((button) => {
-        button.disabled = false;
-      });
-      buttons.navigation.forEach((button) => {
-        button.disabled = false;
-      });
-      elements.controlsForMonsters.classList.add("controlsForMonsters-visible");
-      elements.shopUI.classList.remove("shopUI-visible");
+      if (state.currentMonsterIndex !== 3) {
+        elements.buttonAttack.classList.add("visible");
+  
+        resetMonsterHealth(state.currentMonsterIndex);
+  
+        buttons.monsterSelection.forEach((button) => {
+          button.disabled = false;
+        });
+  
+        buttons.navigation.forEach((button) => {
+          button.disabled = false;
+        });
+  
+        elements.controlsForMonsters.classList.add("visible");
+        elements.shopUI.classList.remove("visible");
+        state.set({ currentScreen: "main" });
+      }
     }, 4000);
   }
-  if (
-    currentMonster.name === "Dragon" &&
-    currentMonster.health <= 0 &&
-    currentMonsterDeath > 0
-  ) {
-    state.set({currentScreen: "beatBoss"});
-    elements.bossExplain.innerText = `You defeated the ${currentMonster.name}! \n Press reset to play again`;
+  if (currentMonster.name === "Dragon" && currentMonster.health <= 0) {
+    state.set({
+      currentScreen: "whiteScreen",
+      currentWhiteText: `You defeated the ${currentMonster.name}! \n Press reset to play again`,
+    });
   }
 }
 
@@ -255,12 +281,15 @@ export async function monsterHitPlayer() {
   const currentMonster = monsters[state.currentMonsterIndex];
   const monsterStrength = currentMonster.strength;
 
-  health -= monsterStrength;
+  state.set({ health: state.health - monsterStrength });
 
-  if (health <= 0) {
-    health = 0;
-    state.set({currentScreen: "loser"});
-    elements.loserExplain.innerText = `${currentMonster.name} has bested you...`;
+  if (state.health <= 0) {
+    state.set({
+      currentScreen: "loser",
+      health: 0,
+      currentWhiteText: `${currentMonster.name} has bested you...`,
+    });
+
     elements.buttonAttack.classList.remove("visible");
     elements.monsterStats.classList.remove("visible");
 
@@ -283,12 +312,6 @@ export function resetMonsterHealth(monsterIndex) {
 
   elements.monsterName.innerText = monsters[monsterIndex].name;
   elements.monsterHealth.innerText = monsters[monsterIndex].health;
-  console.log(
-    "Reset monster health for:",
-    monsters[monsterIndex].name,
-    "to",
-    monsters[monsterIndex].health
-  );
 }
 
 export function currentMonsterStats() {

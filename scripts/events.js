@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import { buttons, elements } from "./constants.js";
 import {
   playerGuess,
@@ -19,7 +18,6 @@ buttons.navigation[0].onclick = () => justBack();
 buttons.navigation[1].onclick = () => goStore();
 buttons.navigation[2].onclick = () => goCave();
 buttons.navigation[3].onclick = () => {
-  debugger
     localStorage.removeItem("state");
     window.location.href = "/";
 }
@@ -68,7 +66,8 @@ buttons.loreSelection.forEach((button) => {
 document
   .getElementById("restartButton")
   ?.addEventListener("click", function () {
-    location.reload(); // Reloads the current page
+    localStorage.removeItem("state");
+    window.location.href = "/";
   });
 
 document.addEventListener("keydown", () => {

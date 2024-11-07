@@ -6,7 +6,7 @@ export const weapons = [
   { name: "Sword", strength: 25 },
   { name: "Scythe", strength: 50 },
   { name: "GreatHammer", strength: 75 },
-  { name: "Excalibur", strength: 200 },
+  { name: "Excalibur", strength: 500 },
 ];
 
 export const monsters = [
@@ -66,10 +66,8 @@ export const elements = {
 
   //Screens and Scenes.
   preloaderScreen: document.querySelector(".preloaderScreen"),
-  loserScreen: document.querySelector(".loserScreen"),
-  loserExplain: document.getElementById("loserExplain"),
-  beatBossScreen: document.querySelector(".beatBossScreen"),
-  bossExplain: document.querySelector("#bossExplain"),
+  whiteScreen: document.querySelector("white-screen"),
+  Explain: document.querySelector("#Explain"),
 };
 
 export const buttons = {
@@ -102,8 +100,12 @@ export const buttons = {
     document.querySelector("#buttonGreatHammerText"),
     document.querySelector("#buttonExcaliburText"),
   ],
-  screenEndings: [document.querySelector("#continueButton")],
+  whiteScreen: {
+    restart: document.querySelector("#restartButton")
+  }
 };
+
+
 
 export const startingState = {
   level: 0,
@@ -113,6 +115,5 @@ export const startingState = {
   currentScreen: "preloader",
   currentWeaponIndex: 0,
   currentMonsterIndex: 0,
-  currentMonsterDeath: 0,
   inventory: ["None"],
 };
