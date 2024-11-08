@@ -25,7 +25,7 @@
         <white-screen>
             <white-screen-text-wrapper>
                 <p id="Explain"></p>
-                <button id="restartButton">Restart</button>
+                <button id="white-screen-restart-button">Restart</button>
             </white-screen-text-wrapper>
         </white-screen>
         <main-game-and-shop-wrapper> 
@@ -73,7 +73,7 @@
                         <hr><h1>Town square</h1><hr>
                         <h2>Weapon Shop</h2><hr>
                         <p>Hover over anything to display their descriptions.</p>
-                        <ul>
+                        <weapon-buttons>
                             <button class="buttonsForWeapons" id="buttonSword">
                                 <abbr class="tooltip" data-tooltip = "Cost: 30G | Power: 10 ">Sword</abbr>
                             </button>
@@ -89,9 +89,9 @@
                             <button class="buttonsForWeapons" id="buttonExcalibur">
                                 <abbr class="tooltip" data-tooltip = "Cost: 150G | Power: 250 | Level: 15  ">Excalibur</abbr>
                             </button>
-                        </ul>
+                        </weapon-buttons>
                         <hr><h2>Potion Shop</h2><hr>
-                        <ul >
+                        <hp-buttons>
                             <button class="buttonsForPotions" id="button10HP">
                                 <abbr class="tooltip" data-tooltip = "Cost: 10G | HP: 10 ">10 HP</abbr>
                             </button>
@@ -101,14 +101,14 @@
                             <button class="buttonsForPotions" id="button100HP">
                                 <abbr class="tooltip" data-tooltip = "Cost: 100G | HP: 100 | Level: 15 ">100 HP</abbr>
                             </button>
-                        </ul>
+                        </hp-buttons>
 
                         <inventory-ui> 
                             <inventory>
                                 <hr><h1>Inventory</h1><hr>
                                 <p>Click the buttons to display their Lore</p>
                                 <p id="smallestext">Currently owned weapons:</p>
-                                <ul>
+                                <inventory-buttons>
                                     <button class="buttonsForWeaponsText" id="buttonSwordText">
                                         <abbr class="tooltipLore" data-tooltip = "Wait you thought this weapon had importance? hahaha you're crazy!">Sword</abbr>
                                     </button>
@@ -121,7 +121,7 @@
                                     <button class="buttonsForWeaponsText" id="buttonExcaliburText">
                                         <abbr class="tooltipLore" data-tooltip = "Legend has it, only the mightiest hero could pull the sword from the stone.">Excalibur</abbr>
                                     </button>
-                                </ul>
+                                </inventory-buttons>
                             </inventory>
                         </inventory-ui>
                     </shop>
