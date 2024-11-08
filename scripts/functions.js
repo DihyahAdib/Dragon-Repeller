@@ -1,17 +1,24 @@
-import { weapons, monsters, startingState } from "./constants.js";
-import { textEffect, $, $$ } from "./util.js";
+import {
+  weapons,
+  monsters,
+  INITIAL_GOUL_HEALTH,
+  INITIAL_BEAST_HEALTH,
+  INITIAL_WEREWOLF_HEALTH,
+  INITIAL_DRAGON_HEALTH,
+  NARROW_DODGE_MONSTER_XP_REWARD,
+  PLAYER_HIT_MONSTER_XP_REWARD
+} from "./constants.js";
+import { textEffect, $, $$, getLastIndex, replaceAtIndex, isWithinTwo, wait } from "./util.js";
 
-export function levelUpIfRequired() {
-  if (state.xp >= 100) {
-    state.set({ xp: state.xp - 100, level: state.level + 1 });
-  }
-}
 
 export async function buyHealth(amount, requiredLevel) {
-  if (state.gold >= amount && state.level >= requiredLevel) {
-    state.set({ gold: state.gold - amount, health: state.health + amount });
+  if (state.currentGold >= amount && state.currentLevel >= requiredLevel) {
+    state.set({
+      currentGold: state.currentGold - amount,
+      currentHealth: state.currentHealth + amount,
+    });
     await textEffect({
-      text: `Health purchased, ${state.gold} gold left`,
+      text: `Health purchased, ${state.currentGold} gold left`,
       clearAfterMilliseconds: 1500,
     });
   } else {
@@ -23,12 +30,15 @@ export async function buyHealth(amount, requiredLevel) {
 }
 
 export async function buyWeapon(index, cost, requiredLevel = 0) {
-  if (state.gold >= cost && state.level >= requiredLevel) {
-    if (!state.inventory.includes(weapons[index].name)) {
+  if (state.currentGold >= cost && state.currentLevel >= requiredLevel) {
+    if (!state.currentInventoryArray.includes(weapons[index].name)) {
       state.set({
-        gold: state.gold - cost,
+        currentGold: state.currentGold - cost,
         currentWeaponIndex: (state.currentWeaponIndex = index),
-        inventory: [...state.inventory, weapons[index].name],
+        currentInventoryArray: [
+          ...state.currentInventoryArray,
+          weapons[index].name,
+        ],
       });
       await textEffect({
         text: `Equipped: ${weapons[index].name}`,
@@ -54,12 +64,7 @@ export async function justBack() {
     isLoadingText: true,
     clearAfterMilliseconds: 100,
   });
-  $("controls-for-monsters").classList.remove("visible");
-  $("shop-ui").classList.remove("visible");
-  $("main#mainGame").style.transform = "translateX(25%)";
-  $$("controls button").forEach((button) => {
-    button.disabled = false;
-  });
+  state.set({ currentLocation: "main" });
 }
 
 export async function goStore() {
@@ -68,9 +73,7 @@ export async function goStore() {
     isLoadingText: true,
     clearAfterMilliseconds: 100,
   });
-  toggleStoreVisibility();
-  $("controls-for-monsters").classList.remove("visible");
-  $("monster-stats").classList.remove("visible");
+  state.set({ currentLocation: "store" });
 }
 
 export async function goCave() {
@@ -79,63 +82,41 @@ export async function goCave() {
     isLoadingText: true,
     clearAfterMilliseconds: 100,
   });
-  $("controls-for-monsters").classList.add("visible");
+  state.set({ currentLocation: "cave" });
 }
 
-export async function toggleStoreVisibility() {
-  if ($("shop-ui").classList.contains("visible")) {
-    $("main#mainGame").style.transform = "translateX(25%)";
-    $("shop-ui").classList.remove("visible");
-  } else {
-    $("main#mainGame").style.transform = "translateX(0)";
-    $("shop-ui").classList.add("visible");
-  }
-}
+export async function fightMonster(currentMonsterIndex) {
+  const {
+    requiredWeaponIndex,
+    requiredLevel, 
+    name: monsterName,
+  } = monsters[currentMonsterIndex];
+  const { name: weaponName } = weapons[requiredWeaponIndex];
 
-export async function fightMonster(index) {
-  state.set({ currentMonsterIndex: index });
-  const monster = monsters[index];
-
-  const { requiredWeaponIndex, requiredLevel } = monster;
-
-  if (state.currentWeaponIndex < requiredWeaponIndex) {
+  if (state.currentWeaponIndex === null || state.currentWeaponIndex < requiredWeaponIndex) {
     await textEffect({
-      text: `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`,
+      text: `Your weapon is too weak to fight the ${monsterName}! You need ${weaponName}.`,
       clearAfterMilliseconds: 2500,
     });
     return;
   }
 
-  if (state.level < requiredLevel) {
+  if (state.currentLevel < requiredLevel) {
     await textEffect({
-      text: `You need to be at least level ${requiredLevel} to fight the ${monster.name}.`,
+      text: `You need to be at least level ${requiredLevel} to fight the ${monsterName}.`,
       clearAfterMilliseconds: 2500,
     });
     return;
   }
 
-  $$("buttons-for-monsters button").forEach((button, i) => {
-    if (i !== index) {
-      button.disabled = true;
-      $$("controls button").forEach((button) => {
-        button.disabled = true;
-      });
-    }
-  });
+  state.set({ currentMonsterIndex });
 
-  $("main#mainGame").style.transform = "translateX(25%)";
-  $("shop-ui").classList.remove("visible");
-
-  $("button#buttonAttack").classList.add("visible");
 
   await textEffect({
-    text: `You approach the ${monster.name}...`,
+    text: `You approach the ${monsterName}...`,
     clearAfterMilliseconds: 800,
   });
 
-  $("monster-stats").classList.add("visible");
-  $("span#monsterName").innerText = monster.name;
-  $("span#monsterHealth").innerText = monster.health;
 }
 
 export async function playerGuess() {
@@ -152,149 +133,111 @@ export async function playerGuess() {
     return;
   }
 
-  currentMonsterStats();
   if (playerRollNum === randomizedRollNumOutCome) {
-    playerHitMonster();
-    await textEffect({
-      text: "You hit the monster!",
-      clearAfterMilliseconds: 1500,
-    });
+    await playerHitMonster();
   }
-  if (
-    playerRollNum !== randomizedRollNumOutCome &&
-    playerRollNum === randomizedRollNumOutCome + 1
-  ) {
-    state.set({ xp: state.xp + 10 });
-    levelUpIfRequired();
-    await textEffect({
-      text: "You over swung and missed the monster! try again...",
-      clearAfterMilliseconds: 1500,
-    });
+  else if (playerRollNum === randomizedRollNumOutCome + 1) {
+    await overSwungMonster();
   }
-  if (
-    playerRollNum !== randomizedRollNumOutCome &&
-    playerRollNum === randomizedRollNumOutCome - 1
-  ) {
-    state.set({ xp: state.xp + 10 });
-    levelUpIfRequired();
-    await textEffect({
-      text: "You narrowly dodged the monster! try again...",
-      clearAfterMilliseconds: 1500,
-    });
+  else if (playerRollNum === randomizedRollNumOutCome - 1) {
+    await narrowlyDodgedMonster();
   }
-  if (
-    (playerRollNum !== randomizedRollNumOutCome &&
-      playerRollNum === randomizedRollNumOutCome + 2) ||
-    playerRollNum === randomizedRollNumOutCome - 2
-  ) {
-    monsterHitPlayer();
-
-    await textEffect({
-      text: "You completely missed the monster and it has attacked you!",
-      clearAfterMilliseconds: 1500,
-    });
+  else if (isWithinTwo(playerRollNum, randomizedRollNumOutCome)) {
+    await monsterHitPlayer();
   }
   console.log("player number: ", playerRollNum);
   console.log("random number: ", randomizedRollNumOutCome);
-  currentMonsterStats();
 }
 
-export function playerHitMonster() {
-  const currentMonster = monsters[state.currentMonsterIndex];
-  const currentWeapon = weapons[state.currentWeaponIndex];
-  const monsterWorth = currentMonster.worth;
+export async function narrowlyDodgedMonster() {
+  state.set({ currentXP: state.currentXP + NARROW_DODGE_MONSTER_XP_REWARD });
+  await textEffect({
+    text: "You narrowly dodged the monster! try again...",
+    clearAfterMilliseconds: 1500,
+  });
+}
 
-  let reward = 2 * monsterWorth;
-  state.set({ xp: state.xp + 90 });
+export async function overSwungMonster() {
+  state.set({ currentXP: state.currentXP + OVER_SWUNG_MONSTER_XP_REWARD });
+  await textEffect({
+    text: "You over swung and missed the monster! try again...",
+    clearAfterMilliseconds: 1500,
+  });
+}
 
-  levelUpIfRequired();
+export async function playerHitMonster() {
+  await textEffect({
+    text: "You hit the monster!",
+    clearAfterMilliseconds: 1500,
+  });
 
-  state.set({ gold: state.gold + reward });
-  currentMonster.health -= currentWeapon.strength;
-  $("span#monsterHealth").innerText = currentMonster.health;
+  const { strength: weaponStrength } = weapons[state.currentWeaponIndex];
+  const { worth: monsterWorth, name: monsterName } =
+    monsters[state.currentMonsterIndex];
+  const currentMonsterHealth =
+    state.currentMonsterHealth[state.currentMonsterIndex];
 
-  if (currentMonster.health <= 0) {
+  state.set({ currentXP: state.currentXP + PLAYER_HIT_MONSTER_XP_REWARD });
+
+
+  const newMonsterHealth = currentMonsterHealth - weaponStrength;
+  const reward = 2 * monsterWorth;
+  state.set({
+    currentGold: state.currentGold + reward,
+    currentMonsterHealth: replaceAtIndex(
+      state.currentMonsterHealth,
+      state.currentMonsterIndex,
+      newMonsterHealth
+    ),
+  });
+
+  if (newMonsterHealth <= 0) {
     state.set({
       currentScreen: "whiteScreen",
-      currentWhiteText: `You defeated the ${currentMonster.name}!`,
+      currentWhiteText: `You defeated the ${monsterName}!`
     });
 
-    $("button#buttonAttack").classList.remove("visible");
-    $("monster-stats").classList.remove("visible");
-
-    setTimeout(() => {
-      if (state.currentMonsterIndex !== 3) {
-        $("button#buttonAttack").classList.add("visible");
-
-        resetMonsterHealth(state.currentMonsterIndex);
-
-        $$("buttons-for-monsters button").forEach((button) => {
-          button.disabled = false;
-        });
-
-        $$("controls button").forEach((button) => {
-          button.disabled = false;
-        });
-
-        $("controls-for-monsters").classList.add("visible");
-        $("shop-ui").classList.remove("visible");
-        state.set({ currentScreen: "main" });
-      }
-    }, 4000);
-  }
-  if (currentMonster.name === "Dragon" && currentMonster.health <= 0) {
-    state.set({
-      currentScreen: "whiteScreen",
-      currentWhiteText: `You defeated the ${currentMonster.name}! \n Press reset to play again`,
-    });
+    if (state.currentMonsterIndex === getLastIndex(monsters)) {
+      state.set({
+        currentScreen: "whiteScreen",
+        currentWhiteText: `You defeated the ${monsterName}! \n Press reset to play again`,
+      });
+    } else {
+      await wait(4000);
+      state.set({
+        currentMonsterIndex: null,
+        currentMonsterHealth: replaceAtIndex(
+          state.currentMonsterHealth,
+          state.currentMonsterIndex,
+          [
+            INITIAL_GOUL_HEALTH,
+            INITIAL_BEAST_HEALTH,
+            INITIAL_WEREWOLF_HEALTH,
+            INITIAL_DRAGON_HEALTH,
+          ][state.currentMonsterIndex]
+        ),
+      });
+      state.set({ currentScreen: "main", currentLocation: "main" });
+    }
   }
 }
 
 export async function monsterHitPlayer() {
+  await textEffect({
+    text: "You completely missed the monster and it has attacked you!",
+    clearAfterMilliseconds: 1500,
+  });
+
   const currentMonster = monsters[state.currentMonsterIndex];
   const monsterStrength = currentMonster.strength;
 
-  state.set({ health: state.health - monsterStrength });
+  state.set({ currentHealth: state.currentHealth - monsterStrength });
 
-  if (state.health <= 0) {
+  if (state.currentHealth <= 0) {
     state.set({
-      currentScreen: "loser",
-      health: 0,
+      currentScreen: "whiteScreen",
+      currentHealth: 0,
       currentWhiteText: `${currentMonster.name} has bested you...`,
     });
-
-    $("button#buttonAttack").classList.remove("visible");
-    $("monster-stats").classList.remove("visible");
-
-    $$("controls button").forEach((button) => {
-      button.disabled = false;
-    });
-    state.set(startingState);
-  }
-}
-
-export function resetMonsterHealth(monsterIndex) {
-  const initialHealth = {
-    0: 50, // Ghoul
-    1: 100, // Beast
-    2: 200, // WereWolf
-    3: 500, // Dragon
-  };
-
-  monsters[monsterIndex].health = initialHealth[monsterIndex];
-
-  $("span#monsterName").innerText = monsters[monsterIndex].name;
-  $("span#monsterHealth").innerText = monsters[monsterIndex].health;
-}
-
-export function currentMonsterStats() {
-  const currentMonster = monsters[state.currentMonsterIndex];
-
-  if (currentMonster) {
-    $("span#monsterName").innerText = currentMonster.name;
-    $("span#monsterHealth").innerText = currentMonster.health;
-  } else {
-    monsterName.innerText = "No monster selected";
-    $("span#monsterHealth").innerText = "";
   }
 }

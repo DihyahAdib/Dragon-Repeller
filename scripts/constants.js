@@ -1,8 +1,16 @@
 export const xpMultiplier = 1.5;
 export const monsterMultipier = 2.5;
 
+export const INITIAL_GOUL_HEALTH = 50;
+export const INITIAL_BEAST_HEALTH = 100;
+export const INITIAL_WEREWOLF_HEALTH = 200;
+export const INITIAL_DRAGON_HEALTH = 500;
+
+export const NARROW_DODGE_MONSTER_XP_REWARD = 10;
+export const OVER_SWUNG_MONSTER_XP_REWARD = 10;
+export const PLAYER_HIT_MONSTER_XP_REWARD = 90;
+
 export const weapons = [
-  { name: "None", strength: 0 },
   { name: "Sword", strength: 25 },
   { name: "Scythe", strength: 50 },
   { name: "GreatHammer", strength: 75 },
@@ -12,45 +20,48 @@ export const weapons = [
 export const monsters = [
   {
     name: "Ghoul",
-    health: 50,
     strength: 25,
     worth: 10,
-    requiredWeaponIndex: 1,
+    requiredWeaponIndex: 0,
     requiredLevel: 0,
   },
   {
     name: "Beast",
-    health: 100,
     strength: 50,
     worth: 15,
-    requiredWeaponIndex: 2,
+    requiredWeaponIndex: 1,
     requiredLevel: 5,
   },
   {
     name: "WereWolf",
-    health: 200,
     strength: 100,
     worth: 20,
-    requiredWeaponIndex: 3,
+    requiredWeaponIndex: 2,
     requiredLevel: 10,
   },
   {
     name: "Dragon",
-    health: 500,
     strength: 200,
     worth: 25,
-    requiredWeaponIndex: 4,
+    requiredWeaponIndex: 3,
     requiredLevel: 15,
   },
 ];
 
 export const startingState = {
-  level: 0,
-  xp: 0,
-  health: 100,
-  gold: 50,
+  currentLevel: 0,
+  currentXP: 0,
+  currentHealth: 100,
+  currentGold: 50,
   currentScreen: "preloader",
-  currentWeaponIndex: 0,
-  currentMonsterIndex: 0,
-  inventory: ["None"],
+  currentWeaponIndex: null,
+  currentMonsterIndex: null,
+  currentInventoryArray: [],
+  currentMonsterHealth: [
+    INITIAL_GOUL_HEALTH,
+    INITIAL_BEAST_HEALTH,
+    INITIAL_WEREWOLF_HEALTH,
+    INITIAL_DRAGON_HEALTH,
+  ],
+  currentLocation: "main"
 };
