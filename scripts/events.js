@@ -1,3 +1,9 @@
+
+import {
+  $,
+  $$
+} from './util.js';
+
 import {
   playerGuess,
   buyHealth,
@@ -6,9 +12,8 @@ import {
   goCave,
   buyWeapon,
   fightMonster,
-  $,
-  $$
 } from "./functions.js";
+
 
 //amount, and required level.
 $("button#button10HP").onclick = () => buyHealth(10, 0);

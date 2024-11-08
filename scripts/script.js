@@ -4,11 +4,11 @@ import {
   startingState
 } from "./constants.js";
 import {
-    updateUi, 
-} from './functions.js'
+  updateUI, 
+} from './updateUI.js'
 
 window.state = JSON.parse(localStorage.getItem("state")) || startingState;
-updateUi();
+updateUI();
 
 state.save = function() {
   localStorage.setItem("state", JSON.stringify({
@@ -31,5 +31,5 @@ state.set = function(changedValues) {
 
   this.save();
 
-  updateUi();
+  updateUI();
 };
