@@ -10,6 +10,28 @@ export async function wait(milliseconds) {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
+export async function textEffect({
+  waitBefore = 0,
+  clearAfterMilliseconds = 0,
+  isLoadingText = false,
+  text,
+}) {
+  if (typeof text === 'undefined') throw new Error("Error: You did not pass any text to textEffect");
+  
+  await wait(waitBefore);
+  
+  if (isLoadingText){ 
+    await displayLoadingText(text);
+  }
+  else {
+    elements.text.innerText = text;
+  }
+  
+  await wait(clearAfterMilliseconds);
+  
+  elements.text.innerText = "";
+}
+
 export async function delayUpdate(element, message, delay) {
   await wait(delay);
   element.innerText = message;
@@ -19,7 +41,6 @@ export async function displayLoadingText(text) {
   for (let i = 0; i < 5; i++) {
     await delayUpdate(elements.text, text + ".".repeat(i), 100);
   }
-  await delayUpdate(elements.text, "", 100);
 }
 
 export function updateUi() {
@@ -55,9 +76,7 @@ export function updateUi() {
   elements.healthText.innerText = health;
   elements.goldText.innerText = gold;
 
-  buttons.loreSelection[currentWeaponIndex - 1]?.classList.add(
-    "visible"
-  );
+  buttons.loreSelection[currentWeaponIndex - 1]?.classList.add("visible");
 }
 
 export function levelUpIfRequired() {
@@ -69,11 +88,16 @@ export function levelUpIfRequired() {
 export async function buyHealth(amount, requiredLevel) {
   if (state.gold >= amount && state.level >= requiredLevel) {
     state.set({ gold: state.gold - amount, health: state.health + amount });
-    elements.text.innerText = `Health purchased, ${state.gold} gold left`;
+    await textEffect({
+      text: `Health purchased, ${state.gold} gold left`,
+      clearAfterMilliseconds: 1500,
+    });
   } else {
-    elements.text.innerText = "Not enough gold or levels!";
+    await textEffect({
+      text: `Not enough gold or levels!`,
+      clearAfterMilliseconds: 1500,
+    });
   }
-  await delayUpdate(elements.text, "", 1500);
 }
 
 export async function buyWeapon(index, cost, requiredLevel = 0) {
@@ -84,19 +108,30 @@ export async function buyWeapon(index, cost, requiredLevel = 0) {
         currentWeaponIndex: (state.currentWeaponIndex = index),
         inventory: [...state.inventory, weapons[index].name],
       });
-      elements.text.innerText = `Equipped: ${weapons[index].name}`;
+      await textEffect({
+        text: `Equipped: ${weapons[index].name}`,
+        clearAfterMilliseconds: 1000,
+      });
     } else {
-      elements.text.innerText = `You already own the ${weapons[index].name}!`;
+      await textEffect({
+        text: `You already own the ${weapons[index].name}!`,
+        clearAfterMilliseconds: 1000,
+      });
     }
   } else {
-    elements.text.innerText = "Not enough gold or levels!";
+    await textEffect({
+      text: `Not enough gold or levels!`,
+      clearAfterMilliseconds: 1000,
+    });
   }
-  await delayUpdate(elements.text, "", 1000);
 }
 
 export async function justBack() {
-  await displayLoadingText("Going Back To Main");
-  await delayUpdate(elements.text, "", 500);
+  await textEffect({
+    text: "Going Back To Main",
+    isLoadingText: true,
+    clearAfterMilliseconds: 100,
+  });
   elements.controlsForMonsters.classList.remove("visible");
   elements.shopUI.classList.remove("visible");
   elements.mainGame.style.transform = "translateX(25%)";
@@ -106,27 +141,31 @@ export async function justBack() {
 }
 
 export async function goStore() {
-  await displayLoadingText("Going To Store");
+  await textEffect({
+    text: "Going To Store",
+    isLoadingText: true, 
+    clearAfterMilliseconds: 100
+  })
   toggleStoreVisibility();
-  await delayUpdate(elements.text, "", 500);
   elements.controlsForMonsters.classList.remove("visible");
   elements.monsterStats.classList.remove("visible");
 }
 
 export async function goCave() {
-  await displayLoadingText("Going To Cave");
-  await delayUpdate(elements.text, "", 500);
+  await textEffect({
+    text: "Going to Cave",
+    isLoadingText: true,
+    clearAfterMilliseconds: 100
+  })
   elements.controlsForMonsters.classList.add("visible");
 }
 
 export async function toggleStoreVisibility() {
   if (elements.shopUI.classList.contains("visible")) {
     elements.mainGame.style.transform = "translateX(25%)";
-    await delayUpdate(elements.text, "", 300);
     elements.shopUI.classList.remove("visible");
   } else {
     elements.mainGame.style.transform = "translateX(0)";
-    await delayUpdate(elements.text, "", 250);
     elements.shopUI.classList.add("visible");
   }
 }
@@ -138,14 +177,18 @@ export async function fightMonster(index) {
   const { requiredWeaponIndex, requiredLevel } = monster;
 
   if (state.currentWeaponIndex < requiredWeaponIndex) {
-    elements.text.innerText = `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`;
-    await delayUpdate(elements.text, "", 2500);
+    await textEffect({
+      text: `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`,
+      clearAfterMilliseconds: 2500
+    });
     return;
   }
 
   if (state.level < requiredLevel) {
-    elements.text.innerText = `You need to be at least level ${requiredLevel} to fight the ${monster.name}.`;
-    await delayUpdate(elements.text, "", 2500);
+    await textEffect({
+      text:`You need to be at least level ${requiredLevel} to fight the ${monster.name}.`,
+      clearAfterMilliseconds: 2500
+    });
     return;
   }
 
@@ -159,13 +202,16 @@ export async function fightMonster(index) {
   });
 
   elements.mainGame.style.transform = "translateX(25%)";
-  await delayUpdate(elements.text, "", 300);
   elements.shopUI.classList.remove("visible");
 
   elements.buttonAttack.classList.add("visible");
 
-  elements.text.innerText = `You approach the ${monster.name}...`;
-  await delayUpdate(elements.text, " ", 800);
+
+  await textEffect({
+    text: `You approach the ${monster.name}...`,
+    clearAfterMilliseconds: 800
+  });
+
 
   elements.monsterStats.classList.add("visible");
   elements.monsterName.innerText = monster.name;
@@ -179,19 +225,20 @@ export async function playerGuess() {
   );
 
   if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
-    await delayUpdate(
-      text,
-      "Please enter a valid number between 1 and 3.",
-      1500
-    );
+    await textEffect({
+      text: "Please enter a valid number between 1 and 3.",
+      clearAfterMilliseconds: 1500
+    });
     return;
   }
 
   currentMonsterStats();
   if (playerRollNum === randomizedRollNumOutCome) {
     playerHitMonster();
-    elements.text.innerText = "You hit the monster!";
-    await delayUpdate(elements.text, "", 1500);
+    await textEffect({
+      text: "You hit the monster!",
+      clearAfterMilliseconds: 1500
+    });
   }
   if (
     playerRollNum !== randomizedRollNumOutCome &&
@@ -199,8 +246,11 @@ export async function playerGuess() {
   ) {
     state.set({ xp: state.xp + 10 });
     levelUpIfRequired();
-    text.innerText = "You over swung and missed the monster! try again...";
-    await delayUpdate(elements.text, "", 1500);
+    await textEffect({
+      text:  "You over swung and missed the monster! try again...",
+      clearAfterMilliseconds: 1500
+    });
+
   }
   if (
     playerRollNum !== randomizedRollNumOutCome &&
@@ -208,8 +258,10 @@ export async function playerGuess() {
   ) {
     state.set({ xp: state.xp + 10 });
     levelUpIfRequired();
-    text.innerText = "You narrowly dodged the monster! try again...";
-    await delayUpdate(elements.text, "", 1500);
+    await textEffect({
+      text:  "You narrowly dodged the monster! try again...",
+      clearAfterMilliseconds: 1500
+    });
   }
   if (
     (playerRollNum !== randomizedRollNumOutCome &&
@@ -217,9 +269,12 @@ export async function playerGuess() {
     playerRollNum === randomizedRollNumOutCome - 2
   ) {
     monsterHitPlayer();
-    text.innerText =
-      "You completely missed the monster and it has attacked you!";
-    await delayUpdate(elements.text, "", 1500);
+
+    await textEffect({
+      text:  "You completely missed the monster and it has attacked you!",
+      clearAfterMilliseconds: 1500
+    });
+
   }
   console.log("player number: ", playerRollNum);
   console.log("random number: ", randomizedRollNumOutCome);
@@ -243,7 +298,7 @@ export function playerHitMonster() {
   if (currentMonster.health <= 0) {
     state.set({
       currentScreen: "whiteScreen",
-      currentWhiteText: `You defeated the ${currentMonster.name}!`
+      currentWhiteText: `You defeated the ${currentMonster.name}!`,
     });
 
     elements.buttonAttack.classList.remove("visible");
@@ -252,17 +307,17 @@ export function playerHitMonster() {
     setTimeout(() => {
       if (state.currentMonsterIndex !== 3) {
         elements.buttonAttack.classList.add("visible");
-  
+
         resetMonsterHealth(state.currentMonsterIndex);
-  
+
         buttons.monsterSelection.forEach((button) => {
           button.disabled = false;
         });
-  
+
         buttons.navigation.forEach((button) => {
           button.disabled = false;
         });
-  
+
         elements.controlsForMonsters.classList.add("visible");
         elements.shopUI.classList.remove("visible");
         state.set({ currentScreen: "main" });
