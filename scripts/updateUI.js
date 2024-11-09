@@ -14,21 +14,31 @@ export function updateUI() {
     currentWhiteText,
     currentLocation
   } = state;
+  
   if (currentScreen === "preloader") {
     $("preloader-screen").classList.add("visible");
   } else {
     $("preloader-screen").classList.remove("visible");
   }
+
   if (currentScreen === "whiteScreen") {
     $("white-screen").classList.add("visible");
   } else {
     $("white-screen").classList.remove("visible");
   }
+
+  if (currentScreen === "hurtScreen") {
+    $("hurt-screen").classList.add("visible");
+  } else {
+    $("hurt-screen").classList.remove("visible");
+  }
+  
   if (currentHealth <= 0 || currentMonsterHealth[getLastIndex(monsters)] <= 0) {
     $("button#white-screen-restart-button").classList.add("visible");
   } else {
     $("button#white-screen-restart-button").classList.remove("visible");
   }
+
   $("p#Explain").innerText = currentWhiteText;
 
   $("player-stat span#levelText").innerText = currentLevel;
