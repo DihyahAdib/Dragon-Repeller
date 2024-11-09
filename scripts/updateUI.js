@@ -14,6 +14,7 @@ export function updateUI() {
     currentWhiteText,
     currentLocation
   } = state;
+  
   if (currentScreen === "preloader") {
     document.body.classList.add("screen-preloader");
     document.body.classList.remove("screen-white");
@@ -29,6 +30,7 @@ export function updateUI() {
   } else {
     document.body.classList.remove("died");
   }
+
   $("p#Explain").innerText = currentWhiteText;
 
   $("player-stat span#levelText").innerText = currentLevel;
