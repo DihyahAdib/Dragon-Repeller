@@ -53,6 +53,7 @@ export function updateUI() {
     $("main#mainGame").style.transform = "translateX(25%)";
     $("shop-ui").classList.remove("visible");
     $("controls-for-monsters").classList.remove("visible");
+    $("button.buttonBack").innerText = "Back";
     $$("controls button").forEach((button) => {
       button.disabled = false;
     });
@@ -60,10 +61,13 @@ export function updateUI() {
     $("controls-for-monsters").classList.remove("visible");
     $("monster-stats").classList.remove("visible");
     $("main#mainGame").style.transform = "translateX(0)";
+    $("button.buttonBack").innerText = "Leave Store";
     $("shop-ui").classList.add("visible");
+
   } else if (currentLocation === "cave") {
     $("main#mainGame").style.transform = "translateX(25%)";
     $("shop-ui").classList.remove("visible");
+    $("button.buttonBack").innerText = "Leave Cave";
     $("controls-for-monsters").classList.add("visible");
   }
 
@@ -89,7 +93,7 @@ export function updateUI() {
       }
     });
 
-    $$("controls button").forEach((button) => {
+    $$(".buttonStore,.buttonCave").forEach((button) => {
       button.disabled = true;
     });
 

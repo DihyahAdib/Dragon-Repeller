@@ -5,6 +5,7 @@ import {
   INITIAL_BEAST_HEALTH,
   INITIAL_WEREWOLF_HEALTH,
   INITIAL_DRAGON_HEALTH,
+  OVER_SWUNG_MONSTER_XP_REWARD,
   NARROW_DODGE_MONSTER_XP_REWARD,
   PLAYER_HIT_MONSTER_XP_REWARD
 } from "./constants.js";
@@ -64,7 +65,7 @@ export async function justBack() {
     isLoadingText: true,
     clearAfterMilliseconds: 100,
   });
-  state.set({ currentLocation: "main" });
+  state.set({ currentLocation: "main" , currentMonsterIndex: null });
 }
 
 export async function goStore() {
@@ -124,6 +125,8 @@ export async function playerGuess() {
   const playerRollNum = parseInt(
     prompt("Guess the correct number to Attack, 1 - 3: ")
   );
+  console.log("player number: ", playerRollNum);
+  console.log("random number: ", randomizedRollNumOutCome);
 
   if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
     await textEffect({
@@ -145,8 +148,6 @@ export async function playerGuess() {
   else if (isWithinTwo(playerRollNum, randomizedRollNumOutCome)) {
     await monsterHitPlayer();
   }
-  console.log("player number: ", playerRollNum);
-  console.log("random number: ", randomizedRollNumOutCome);
 }
 
 export async function narrowlyDodgedMonster() {
@@ -166,14 +167,10 @@ export async function overSwungMonster() {
 }
 
 export async function playerHitMonster() {
-  await textEffect({
-    text: "You hit the monster!",
-    clearAfterMilliseconds: 1500,
-  });
-
   const { strength: weaponStrength } = weapons[state.currentWeaponIndex];
   const { worth: monsterWorth, name: monsterName } =
     monsters[state.currentMonsterIndex];
+
   const currentMonsterHealth =
     state.currentMonsterHealth[state.currentMonsterIndex];
 
@@ -197,7 +194,7 @@ export async function playerHitMonster() {
       currentWhiteText: `You defeated the ${monsterName}!`
     });
 
-    if (state.currentMonsterIndex === getLastIndex(monsters)) {
+    if (state.currentMonsterIndex === getLastIndex(monsters)) { //checkin for dragon
       state.set({
         currentScreen: "whiteScreen",
         currentWhiteText: `You defeated the ${monsterName}! \n Press reset to play again`,
@@ -218,15 +215,16 @@ export async function playerHitMonster() {
         ),
       });
       state.set({ currentScreen: "main", currentLocation: "main" });
-    }
+    } 
+  } else {
+    await textEffect({
+      text: "You hit the monster!",
+      clearAfterMilliseconds: 1500,
+    });
   }
 }
 
 export async function monsterHitPlayer() {
-  await textEffect({
-    text: "You completely missed the monster and it has attacked you!",
-    clearAfterMilliseconds: 1500,
-  });
 
   const currentMonster = monsters[state.currentMonsterIndex];
   const monsterStrength = currentMonster.strength;
@@ -238,6 +236,11 @@ export async function monsterHitPlayer() {
       currentScreen: "whiteScreen",
       currentHealth: 0,
       currentWhiteText: `${currentMonster.name} has bested you...`,
+    });
+  } else {
+    await textEffect({
+      text: "You completely missed the monster and it has attacked you!",
+      clearAfterMilliseconds: 1500,
     });
   }
 }
