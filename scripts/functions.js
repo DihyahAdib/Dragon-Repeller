@@ -229,7 +229,11 @@ export async function monsterHitPlayer() {
   const currentMonster = monsters[state.currentMonsterIndex];
   const monsterStrength = currentMonster.strength;
 
-  state.set({ currentHealth: state.currentHealth - monsterStrength });
+  state.set({currentScreen: "hurtScreen", currentHealth: state.currentHealth - monsterStrength });
+  
+  setTimeout(() => {
+    state.set({currentScreen: "game"});
+  }, 1000);
 
   await flashDeathPulse();
   
