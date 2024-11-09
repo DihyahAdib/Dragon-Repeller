@@ -1,35 +1,46 @@
 // Inspired by FreeCodeCamp, Developed by Dihyah Adib.
 
-import {
-  startingState
-} from "./constants.js";
-import {
-    updateUi, 
-} from './functions.js'
+import { startingState } from "./constants.js";
+import { updateUI } from "./updateUI.js";
 
 window.state = JSON.parse(localStorage.getItem("state")) || startingState;
-updateUi();
+updateUI();
 
-state.save = function() {
-  localStorage.setItem("state", JSON.stringify({
-    level: this.level,
-    xp: this.xp,
-    health: this.health,
-    gold: this.gold,
-    currentWeaponIndex: this.currentWeaponIndex,
-    currentMonsterIndex: this.currentMonsterIndex,
-    inventory: this.inventory,
-  }));
+state.save = function () {
+  localStorage.setItem(
+    "state",
+    JSON.stringify({
+      currentLevel: this.currentLevel,
+      currentXP: this.currentXP,
+      currentHealth: this.currentHealth,
+      currentGold: this.currentGold,
+      currentWeaponIndex: this.currentWeaponIndex,
+      currentMonsterIndex: this.currentMonsterIndex,
+      currentInventoryArray: this.currentInventoryArray,
+      currentMonsterHealth: this.currentMonsterHealth,
+      currentLocation: this.currentLocation,
+    })
+  );
 };
 
-state.set = function(changedValues) {
-  const changedKeys = Object.keys(changedValues)
+state.levelUpIfRequired = function () {
+  if (this.currentXP >= 100) {
+    this.set({
+      currentXP: this.currentXP - 100,
+      currentLevel: this.currentLevel + 1,
+    });
+  }
+};
+
+state.set = function (changedValues) {
+  const changedKeys = Object.keys(changedValues);
   for (let i = 0; i < changedKeys.length; i++) {
     const key = changedKeys[i];
     this[key] = changedValues[key];
   }
 
-  this.save();
+  this.levelUpIfRequired();
 
-  updateUi();
+  this.save();
+  updateUI();
 };

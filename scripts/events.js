@@ -1,3 +1,9 @@
+
+import {
+  $,
+  $$
+} from './util.js';
+
 import {
   playerGuess,
   buyHealth,
@@ -6,9 +12,8 @@ import {
   goCave,
   buyWeapon,
   fightMonster,
-  $,
-  $$
 } from "./functions.js";
+
 
 //amount, and required level.
 $("button#button10HP").onclick = () => buyHealth(10, 0);
@@ -24,10 +29,10 @@ $("button.buttonRestart").onclick = () => {
 };
 
 //currentWeaponIndex, cost, required Level.
-$("button#buttonSword").onclick = () => buyWeapon(1, 30);
-$("button#buttonScythe").onclick = () => buyWeapon(2, 50, 5);
-$("button#buttonGreatHammer").onclick = () => buyWeapon(3, 150, 10);
-$("button#buttonExcalibur").onclick = () => buyWeapon(4, 250, 15);
+$("button#buttonSword").onclick = () => buyWeapon(0, 30);
+$("button#buttonScythe").onclick = () => buyWeapon(1, 50, 5);
+$("button#buttonGreatHammer").onclick = () => buyWeapon(2, 150, 10);
+$("button#buttonExcalibur").onclick = () => buyWeapon(3, 250, 15);
 
 $("button#buttonGhoul").onclick = () => fightMonster(0);
 $("button#buttonBeast").onclick = () => fightMonster(1);
