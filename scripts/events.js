@@ -57,12 +57,12 @@ $("#white-screen-restart-button")?.addEventListener("click", function () {
 
 document.addEventListener("keydown", () => {
   if (state.currentScreen === "preloader" || state.currentScreen === "whiteScreen") {
-    state.set({ currentScreen: "main" });
+    state.set({ currentScreen: "game", currentLocation: "main", currentMonsterIndex: null });
   }
 });
 
 document.addEventListener("click", () => {
-  if (state.currentScreen === "preloader" || state.currentScreen === "whiteScreen") {
-    state.set({ currentScreen: "main" });
+  if (state.currentScreen === "preloader") {
+    state.set({ currentScreen: "game" });
   }
 });

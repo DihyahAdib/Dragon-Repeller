@@ -214,7 +214,7 @@ export async function playerHitMonster() {
           ][state.currentMonsterIndex]
         ),
       });
-      state.set({ currentScreen: "main", currentLocation: "main" });
+      state.set({ currentScreen: "game", currentLocation: "main" });
     } 
   } else {
     await textEffect({
