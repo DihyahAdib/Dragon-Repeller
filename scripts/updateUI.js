@@ -1,7 +1,7 @@
 import { monsters } from "./constants.js";
 import { $, $$, getLastIndex } from "./util.js";
 
-export function updateUI() {
+export function updateUI() { 
   const {
     currentLevel,
     currentXP,
@@ -48,7 +48,7 @@ export function updateUI() {
     $("span#monsterName").innerText = "No monster selected";
     $("span#monsterHealth").innerText = "";
   }
-
+  
   if (currentLocation === "main") {
     $("main#mainGame").style.transform = "translateX(25%)";
     $("shop-ui").classList.remove("visible");
@@ -57,10 +57,12 @@ export function updateUI() {
     $$("controls button").forEach((button) => {
       button.disabled = false;
     });
+    $("button.buttonBack").disabled = true;
   } else if (currentLocation === "store") {
     $("controls-for-monsters").classList.remove("visible");
     $("monster-stats").classList.remove("visible");
     $("main#mainGame").style.transform = "translateX(0)";
+    $("button.buttonBack").disabled = false;
     $("button.buttonBack").innerText = "Leave Store";
     $("shop-ui").classList.add("visible");
 
@@ -68,6 +70,7 @@ export function updateUI() {
     $("main#mainGame").style.transform = "translateX(25%)";
     $("shop-ui").classList.remove("visible");
     $("button.buttonBack").innerText = "Leave Cave";
+    $("button.buttonBack").disabled = false;
     $("controls-for-monsters").classList.add("visible");
   }
 
@@ -77,13 +80,6 @@ export function updateUI() {
     $$("buttons-for-monsters button").forEach((button) => {
       button.disabled = false;
     });
-
-    $$("controls button").forEach((button) => {
-      button.disabled = false;
-    });
-
-    
-
   } else {
     $("button#buttonAttack").classList.add("visible");
     $("monster-stats").classList.add("visible");
