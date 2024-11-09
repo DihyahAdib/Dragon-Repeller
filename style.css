@@ -473,7 +473,7 @@ p#preloaderSkip {
     100% { opacity: 0; color: rgb(255, 1, 1); }
 }
 
-#restartButton {
+#white-screen-restart-button {
     font-size: 20px;
     font-family: "BOLD";
     margin: 20px;
@@ -486,11 +486,11 @@ p#preloaderSkip {
     transition: box-shadow 0.3s ease;
     visibility: hidden;
 }
-#restartButton:hover {
+#white-screen-restart-button:hover {
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.15),
     -10px 10px 10px white;
 }
-#restartButton.visible {
+#white-screen-restart-button.visible {
     visibility: visible;
 }
 
@@ -593,4 +593,11 @@ button.buttonsForWeaponsText.visible {
 
 shop-ui {
     display: block;
+}
+
+weapon-buttons, hp-buttons, inventory-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

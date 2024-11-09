@@ -1,4 +1,3 @@
-import { buttons, elements } from "./constants.js";
 import {
   playerGuess,
   buyHealth,
@@ -7,36 +6,37 @@ import {
   goCave,
   buyWeapon,
   fightMonster,
+  $,
+  $$
 } from "./functions.js";
 
 //amount, and required level.
-buttons.buyHealth[0].onclick = () => buyHealth(10, 0);
-buttons.buyHealth[1].onclick = () => buyHealth(50, 10);
-buttons.buyHealth[2].onclick = () => buyHealth(100, 15);
+$("button#button10HP").onclick = () => buyHealth(10, 0);
+$("button#button50HP").onclick = () => buyHealth(50, 10);
+$("button#button100HP").onclick = () => buyHealth(100, 15);
 
-buttons.navigation[0].onclick = () => justBack();
-buttons.navigation[1].onclick = () => goStore();
-buttons.navigation[2].onclick = () => goCave();
-buttons.navigation[3].onclick = () => {
-    localStorage.removeItem("state");
-    window.location.href = "/";
-}
+$("button.buttonBack").onclick = () => justBack();
+$("button.buttonStore").onclick = () => goStore();
+$("button.buttonCave").onclick = () => goCave();
+$("button.buttonRestart").onclick = () => {
+  localStorage.removeItem("state");
+  window.location.href = "/";
+};
 
 //currentWeaponIndex, cost, required Level.
-buttons.weaponPurchase[0].onclick = () => buyWeapon(1, 30);
-buttons.weaponPurchase[1].onclick = () => buyWeapon(2, 50, 5);
-buttons.weaponPurchase[2].onclick = () => buyWeapon(3, 150, 10);
-buttons.weaponPurchase[3].onclick = () => buyWeapon(4, 250, 15);
+$("button#buttonSword").onclick = () => buyWeapon(1, 30);
+$("button#buttonScythe").onclick = () => buyWeapon(2, 50, 5);
+$("button#buttonGreatHammer").onclick = () => buyWeapon(3, 150, 10);
+$("button#buttonExcalibur").onclick = () => buyWeapon(4, 250, 15);
 
-//currentMonsterIndex.
-buttons.monsterSelection[0].onclick = () => fightMonster(0);
-buttons.monsterSelection[1].onclick = () => fightMonster(1);
-buttons.monsterSelection[2].onclick = () => fightMonster(2);
-buttons.monsterSelection[3].onclick = () => fightMonster(3);
+$("button#buttonGhoul").onclick = () => fightMonster(0);
+$("button#buttonBeast").onclick = () => fightMonster(1);
+$("button#buttonWereWolf").onclick = () => fightMonster(2);
+$("button#buttonDragon").onclick = () => fightMonster(3);
 
-elements.buttonAttack.onclick = playerGuess;
+$("button#buttonAttack").onclick = playerGuess;
 
-buttons.buyHealth.forEach((button) => {
+$$("hp-buttons button").forEach((button) => {
   button.addEventListener("mouseover", () => {
     button.querySelector("abbr").classList.add("show");
   });
@@ -45,7 +45,7 @@ buttons.buyHealth.forEach((button) => {
   });
 });
 
-buttons.weaponPurchase.forEach((button) => {
+$$("weapon-buttons button").forEach((button) => {
   button.addEventListener("mouseover", () => {
     button.querySelector("abbr").classList.add("show");
   });
@@ -54,7 +54,7 @@ buttons.weaponPurchase.forEach((button) => {
   });
 });
 
-buttons.loreSelection.forEach((button) => {
+$$("inventory-buttons button").forEach((button) => {
   button.addEventListener("mouseover", () => {
     button.querySelector("abbr").classList.add("show");
   });
@@ -63,21 +63,19 @@ buttons.loreSelection.forEach((button) => {
   });
 });
 
-document
-  .getElementById("restartButton")
-  ?.addEventListener("click", function () {
-    localStorage.removeItem("state");
-    window.location.href = "/";
-  });
+$("#white-screen-restart-button")?.addEventListener("click", function () {
+  localStorage.removeItem("state");
+  window.location.href = "/";
+});
 
 document.addEventListener("keydown", () => {
   if (state.currentScreen === "preloader") {
-    state.set({currentScreen: "main"})
+    state.set({ currentScreen: "main" });
   }
 });
 
 document.addEventListener("click", () => {
   if (state.currentScreen === "preloader") {
-    state.set({currentScreen: "main"})
+    state.set({ currentScreen: "main" });
   }
 });

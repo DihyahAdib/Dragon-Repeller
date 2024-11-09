@@ -1,10 +1,4 @@
-import {
-  weapons,
-  monsters,
-  elements,
-  buttons,
-  startingState,
-} from "./constants.js";
+import { weapons, monsters, startingState } from "./constants.js";
 
 export async function wait(milliseconds) {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -16,20 +10,20 @@ export async function textEffect({
   isLoadingText = false,
   text,
 }) {
-  if (typeof text === 'undefined') throw new Error("Error: You did not pass any text to textEffect");
-  
+  if (typeof text === "undefined")
+    throw new Error("Error: You did not pass any text to textEffect");
+
   await wait(waitBefore);
-  
-  if (isLoadingText){ 
+
+  if (isLoadingText) {
     await displayLoadingText(text);
+  } else {
+    $("text").innerText = text;
   }
-  else {
-    elements.text.innerText = text;
-  }
-  
+
   await wait(clearAfterMilliseconds);
-  
-  elements.text.innerText = "";
+
+  $("text").innerText = "";
 }
 
 export async function delayUpdate(element, message, delay) {
@@ -39,9 +33,17 @@ export async function delayUpdate(element, message, delay) {
 
 export async function displayLoadingText(text) {
   for (let i = 0; i < 5; i++) {
-    await delayUpdate(elements.text, text + ".".repeat(i), 100);
+    await delayUpdate($("text"), text + ".".repeat(i), 100);
   }
 }
+
+export const $ = (selector) => {
+  return document.querySelector(selector);
+};
+
+export const $$ = (selector) => {
+  return document.querySelectorAll(selector);
+};
 
 export function updateUi() {
   const {
@@ -55,28 +57,28 @@ export function updateUi() {
     currentWhiteText,
   } = state;
   if (currentScreen === "preloader") {
-    elements.preloaderScreen.classList.add("visible");
+    $("preloader-screen").classList.add("visible");
   } else {
-    elements.preloaderScreen.classList.remove("visible");
+    $("preloader-screen").classList.remove("visible");
   }
   if (currentScreen === "whiteScreen") {
-    elements.whiteScreen.classList.add("visible");
+    $("white-screen").classList.add("visible");
   } else {
-    elements.whiteScreen.classList.remove("visible");
+    $("white-screen").classList.remove("visible");
   }
   if (currentMonsterIndex === 3) {
-    buttons.whiteScreen.restart.classList.add("visible");
+    $("button#white-screen-restart-button").classList.add("visible");
   } else {
-    buttons.whiteScreen.restart.classList.remove("visible");
+    $("button#white-screen-restart-button").classList.remove("visible");
   }
-  elements.Explain.innerText = currentWhiteText;
+  $("p#Explain").innerText = currentWhiteText;
 
-  elements.levelText.innerText = level;
-  elements.xpText.innerText = xp;
-  elements.healthText.innerText = health;
-  elements.goldText.innerText = gold;
+  $("player-stat span#levelText").innerText = level;
+  $("player-stat span#xpText").innerText = xp;
+  $("player-stat span#healthText").innerText = health;
+  $("player-stat span#goldText").innerText = gold;
 
-  buttons.loreSelection[currentWeaponIndex - 1]?.classList.add("visible");
+  $$("inventory-buttons button")[currentWeaponIndex - 1]?.classList.add("visible");
 }
 
 export function levelUpIfRequired() {
@@ -132,10 +134,10 @@ export async function justBack() {
     isLoadingText: true,
     clearAfterMilliseconds: 100,
   });
-  elements.controlsForMonsters.classList.remove("visible");
-  elements.shopUI.classList.remove("visible");
-  elements.mainGame.style.transform = "translateX(25%)";
-  buttons.navigation.forEach((button) => {
+  $("controls-for-monsters").classList.remove("visible");
+  $("shop-ui").classList.remove("visible");
+  $("main#mainGame").style.transform = "translateX(25%)";
+  $$("controls button").forEach((button) => {
     button.disabled = false;
   });
 }
@@ -143,30 +145,30 @@ export async function justBack() {
 export async function goStore() {
   await textEffect({
     text: "Going To Store",
-    isLoadingText: true, 
-    clearAfterMilliseconds: 100
-  })
+    isLoadingText: true,
+    clearAfterMilliseconds: 100,
+  });
   toggleStoreVisibility();
-  elements.controlsForMonsters.classList.remove("visible");
-  elements.monsterStats.classList.remove("visible");
+  $("controls-for-monsters").classList.remove("visible");
+  $("monster-stats").classList.remove("visible");
 }
 
 export async function goCave() {
   await textEffect({
     text: "Going to Cave",
     isLoadingText: true,
-    clearAfterMilliseconds: 100
-  })
-  elements.controlsForMonsters.classList.add("visible");
+    clearAfterMilliseconds: 100,
+  });
+  $("controls-for-monsters").classList.add("visible");
 }
 
 export async function toggleStoreVisibility() {
-  if (elements.shopUI.classList.contains("visible")) {
-    elements.mainGame.style.transform = "translateX(25%)";
-    elements.shopUI.classList.remove("visible");
+  if ($("shop-ui").classList.contains("visible")) {
+    $("main#mainGame").style.transform = "translateX(25%)";
+    $("shop-ui").classList.remove("visible");
   } else {
-    elements.mainGame.style.transform = "translateX(0)";
-    elements.shopUI.classList.add("visible");
+    $("main#mainGame").style.transform = "translateX(0)";
+    $("shop-ui").classList.add("visible");
   }
 }
 
@@ -179,43 +181,41 @@ export async function fightMonster(index) {
   if (state.currentWeaponIndex < requiredWeaponIndex) {
     await textEffect({
       text: `Your weapon is too weak to fight the ${monster.name}! You need ${weapons[requiredWeaponIndex].name}.`,
-      clearAfterMilliseconds: 2500
+      clearAfterMilliseconds: 2500,
     });
     return;
   }
 
   if (state.level < requiredLevel) {
     await textEffect({
-      text:`You need to be at least level ${requiredLevel} to fight the ${monster.name}.`,
-      clearAfterMilliseconds: 2500
+      text: `You need to be at least level ${requiredLevel} to fight the ${monster.name}.`,
+      clearAfterMilliseconds: 2500,
     });
     return;
   }
 
-  buttons.monsterSelection.forEach((button, i) => {
+  $$("buttons-for-monsters button").forEach((button, i) => {
     if (i !== index) {
       button.disabled = true;
-      buttons.navigation.forEach((button) => {
+      $$("controls button").forEach((button) => {
         button.disabled = true;
       });
     }
   });
 
-  elements.mainGame.style.transform = "translateX(25%)";
-  elements.shopUI.classList.remove("visible");
+  $("main#mainGame").style.transform = "translateX(25%)";
+  $("shop-ui").classList.remove("visible");
 
-  elements.buttonAttack.classList.add("visible");
-
+  $("button#buttonAttack").classList.add("visible");
 
   await textEffect({
     text: `You approach the ${monster.name}...`,
-    clearAfterMilliseconds: 800
+    clearAfterMilliseconds: 800,
   });
 
-
-  elements.monsterStats.classList.add("visible");
-  elements.monsterName.innerText = monster.name;
-  elements.monsterHealth.innerText = monster.health;
+  $("monster-stats").classList.add("visible");
+  $("span#monsterName").innerText = monster.name;
+  $("span#monsterHealth").innerText = monster.health;
 }
 
 export async function playerGuess() {
@@ -227,7 +227,7 @@ export async function playerGuess() {
   if (isNaN(playerRollNum) || playerRollNum < 1 || playerRollNum > 3) {
     await textEffect({
       text: "Please enter a valid number between 1 and 3.",
-      clearAfterMilliseconds: 1500
+      clearAfterMilliseconds: 1500,
     });
     return;
   }
@@ -237,7 +237,7 @@ export async function playerGuess() {
     playerHitMonster();
     await textEffect({
       text: "You hit the monster!",
-      clearAfterMilliseconds: 1500
+      clearAfterMilliseconds: 1500,
     });
   }
   if (
@@ -247,10 +247,9 @@ export async function playerGuess() {
     state.set({ xp: state.xp + 10 });
     levelUpIfRequired();
     await textEffect({
-      text:  "You over swung and missed the monster! try again...",
-      clearAfterMilliseconds: 1500
+      text: "You over swung and missed the monster! try again...",
+      clearAfterMilliseconds: 1500,
     });
-
   }
   if (
     playerRollNum !== randomizedRollNumOutCome &&
@@ -259,8 +258,8 @@ export async function playerGuess() {
     state.set({ xp: state.xp + 10 });
     levelUpIfRequired();
     await textEffect({
-      text:  "You narrowly dodged the monster! try again...",
-      clearAfterMilliseconds: 1500
+      text: "You narrowly dodged the monster! try again...",
+      clearAfterMilliseconds: 1500,
     });
   }
   if (
@@ -271,10 +270,9 @@ export async function playerGuess() {
     monsterHitPlayer();
 
     await textEffect({
-      text:  "You completely missed the monster and it has attacked you!",
-      clearAfterMilliseconds: 1500
+      text: "You completely missed the monster and it has attacked you!",
+      clearAfterMilliseconds: 1500,
     });
-
   }
   console.log("player number: ", playerRollNum);
   console.log("random number: ", randomizedRollNumOutCome);
@@ -293,7 +291,7 @@ export function playerHitMonster() {
 
   state.set({ gold: state.gold + reward });
   currentMonster.health -= currentWeapon.strength;
-  elements.monsterHealth.innerText = currentMonster.health;
+  $("span#monsterHealth").innerText = currentMonster.health;
 
   if (currentMonster.health <= 0) {
     state.set({
@@ -301,25 +299,25 @@ export function playerHitMonster() {
       currentWhiteText: `You defeated the ${currentMonster.name}!`,
     });
 
-    elements.buttonAttack.classList.remove("visible");
-    elements.monsterStats.classList.remove("visible");
+    $("button#buttonAttack").classList.remove("visible");
+    $("monster-stats").classList.remove("visible");
 
     setTimeout(() => {
       if (state.currentMonsterIndex !== 3) {
-        elements.buttonAttack.classList.add("visible");
+        $("button#buttonAttack").classList.add("visible");
 
         resetMonsterHealth(state.currentMonsterIndex);
 
-        buttons.monsterSelection.forEach((button) => {
+        $$("buttons-for-monsters button").forEach((button) => {
           button.disabled = false;
         });
 
-        buttons.navigation.forEach((button) => {
+        $$("controls button").forEach((button) => {
           button.disabled = false;
         });
 
-        elements.controlsForMonsters.classList.add("visible");
-        elements.shopUI.classList.remove("visible");
+        $("controls-for-monsters").classList.add("visible");
+        $("shop-ui").classList.remove("visible");
         state.set({ currentScreen: "main" });
       }
     }, 4000);
@@ -345,10 +343,10 @@ export async function monsterHitPlayer() {
       currentWhiteText: `${currentMonster.name} has bested you...`,
     });
 
-    elements.buttonAttack.classList.remove("visible");
-    elements.monsterStats.classList.remove("visible");
+    $("button#buttonAttack").classList.remove("visible");
+    $("monster-stats").classList.remove("visible");
 
-    buttons.navigation.forEach((button) => {
+    $$("controls button").forEach((button) => {
       button.disabled = false;
     });
     state.set(startingState);
@@ -365,18 +363,18 @@ export function resetMonsterHealth(monsterIndex) {
 
   monsters[monsterIndex].health = initialHealth[monsterIndex];
 
-  elements.monsterName.innerText = monsters[monsterIndex].name;
-  elements.monsterHealth.innerText = monsters[monsterIndex].health;
+  $("span#monsterName").innerText = monsters[monsterIndex].name;
+  $("span#monsterHealth").innerText = monsters[monsterIndex].health;
 }
 
 export function currentMonsterStats() {
   const currentMonster = monsters[state.currentMonsterIndex];
 
   if (currentMonster) {
-    elements.monsterName.innerText = currentMonster.name;
-    elements.monsterHealth.innerText = currentMonster.health;
+    $("span#monsterName").innerText = currentMonster.name;
+    $("span#monsterHealth").innerText = currentMonster.health;
   } else {
     monsterName.innerText = "No monster selected";
-    elements.monsterHealth.innerText = "";
+    $("span#monsterHealth").innerText = "";
   }
 }
