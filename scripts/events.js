@@ -1,4 +1,3 @@
-
 import {
   $,
   $$
@@ -24,6 +23,7 @@ $("button.buttonBack").onclick = () => justBack();
 $("button.buttonStore").onclick = () => goStore();
 $("button.buttonCave").onclick = () => goCave();
 $("button.buttonRestart").onclick = () => {
+  $("button.buttonRestart").classList.add("spin");
   localStorage.removeItem("state");
   window.location.href = "/";
 };
@@ -41,25 +41,7 @@ $("button#buttonDragon").onclick = () => fightMonster(3);
 
 $("button#buttonAttack").onclick = playerGuess;
 
-$$("hp-buttons button").forEach((button) => {
-  button.addEventListener("mouseover", () => {
-    button.querySelector("abbr").classList.add("show");
-  });
-  button.addEventListener("mouseout", () => {
-    button.querySelector("abbr").classList.remove("show");
-  });
-});
-
-$$("weapon-buttons button").forEach((button) => {
-  button.addEventListener("mouseover", () => {
-    button.querySelector("abbr").classList.add("show");
-  });
-  button.addEventListener("mouseout", () => {
-    button.querySelector("abbr").classList.remove("show");
-  });
-});
-
-$$("inventory-buttons button").forEach((button) => {
+$$("hp-buttons button, weapon-buttons button, inventory-buttons button").forEach((button) => {
   button.addEventListener("mouseover", () => {
     button.querySelector("abbr").classList.add("show");
   });
@@ -74,13 +56,13 @@ $("#white-screen-restart-button")?.addEventListener("click", function () {
 });
 
 document.addEventListener("keydown", () => {
-  if (state.currentScreen === "preloader") {
+  if (state.currentScreen === "preloader" || state.currentScreen === "whiteScreen") {
     state.set({ currentScreen: "main" });
   }
 });
 
 document.addEventListener("click", () => {
-  if (state.currentScreen === "preloader") {
+  if (state.currentScreen === "preloader" || state.currentScreen === "whiteScreen") {
     state.set({ currentScreen: "main" });
   }
 });
