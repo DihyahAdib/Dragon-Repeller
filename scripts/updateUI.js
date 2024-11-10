@@ -37,6 +37,12 @@ export function updateUI() {
     document.body.classList.remove("died");
   }
 
+  if (currentScreen === "hurtScreen") {
+    $("hurt-screen").classList.add("visible");
+  } else {
+    $("hurt-screen").classList.remove("visible");
+  }
+
   $("p#Explain").innerText = currentWhiteText;
 
   $("player-stat span#levelText").innerText = currentLevel;
@@ -44,7 +50,7 @@ export function updateUI() {
   $("player-stat span#healthText").innerText = currentHealth;
   $("player-stat span#goldText").innerText = currentGold;
 
-  $$("inventory-buttons button")[currentWeaponIndex].classList.add(
+  $$("inventory-buttons button")[currentWeaponIndex]?.classList.add(
     "visible"
   );
 
