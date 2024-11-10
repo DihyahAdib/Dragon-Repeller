@@ -663,7 +663,7 @@ hurt-screen {
     background: radial-gradient(circle, rgba(255, 0, 0, 0) 30%, rgba(255, 0, 0, 0.5) 70%, rgba(255, 0, 0, 0.7) 100%);
     opacity: 0;
     z-index: 100;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.21s ease;
     pointer-events: none;
 
     &.visible{

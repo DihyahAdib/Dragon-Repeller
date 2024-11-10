@@ -229,12 +229,10 @@ export async function monsterHitPlayer() {
   const currentMonster = monsters[state.currentMonsterIndex];
   const monsterStrength = currentMonster.strength;
 
-  state.set({currentScreen: "hurtScreen", currentHealth: state.currentHealth - monsterStrength });
-  
-  setTimeout(() => {
-    state.set({currentScreen: "game"});
-  }, 1000);
+  state.set({ currentHealth: state.currentHealth - monsterStrength });
 
+  flashDeathPulse();
+  
   if (state.currentHealth <= 0) {
     state.set({
       currentScreen: "whiteScreen",
@@ -247,4 +245,12 @@ export async function monsterHitPlayer() {
       clearAfterMilliseconds: 1500,
     });
   }
+}
+
+function flashDeathPulse() {
+  state.set({currentScreen: "hurtScreen"})
+    
+  setTimeout(() => {
+    state.set({currentScreen: "main"});
+  }, 1000);
 }
