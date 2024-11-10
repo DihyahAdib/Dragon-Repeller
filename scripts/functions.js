@@ -231,7 +231,7 @@ export async function monsterHitPlayer() {
 
   state.set({ currentHealth: state.currentHealth - monsterStrength });
 
-  flashDeathPulse();
+  await flashDeathPulse();
   
   if (state.currentHealth <= 0) {
     state.set({
@@ -247,10 +247,8 @@ export async function monsterHitPlayer() {
   }
 }
 
-function flashDeathPulse() {
+async function flashDeathPulse() {
   state.set({currentScreen: "hurtScreen"})
-    
-  setTimeout(() => {
-    state.set({currentScreen: "main"});
-  }, 1000);
+  await wait(1000);
+  state.set({currentScreen: "main"});
 }
