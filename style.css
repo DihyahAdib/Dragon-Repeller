@@ -52,9 +52,6 @@ shop-ui {
     border-radius: 20px;
     border: 4px black solid;
     visibility: hidden;
-    &.visible{
-        visibility: visible;
-    }
 }
 
 inventory-ui {
@@ -123,9 +120,6 @@ monster-stats { /**/
     background-color: red;
     width: 70%;
 }
-monster-stats.visible {
-    display: flex;
-}
 
 text { /**/
     font-family: "NORM";
@@ -151,9 +145,6 @@ controls-for-monsters {
     border: 2px black solid;
     border-radius: 20px 12px;
     padding: 2.8em;
-    &.visible {
-        visibility: visible;
-    }
 }
 
 button.buttonsForMonsters { /**/
@@ -322,10 +313,6 @@ button#buttonAttack {
     display: none;
 }
 
-button#buttonAttack.visible {
-    display: block;
-}
-
 /* Utility classes */
 preloader-centered {
     position: relative;
@@ -349,10 +336,6 @@ preloader-screen {
     opacity: 0;
     visibility: hidden;
 
-}
-preloader-screen.visible {
-    opacity: 1;
-    visibility: visible;
 }
 
 @keyframes fadeOut {
@@ -467,10 +450,6 @@ p#preloaderSkip {
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.15),
     -10px 10px 10px white;
 }
-#white-screen-restart-button.visible {
-    visibility: visible;
-}
-
 /* boss element changes */
 white-screen {
     font-size: 28px; 
@@ -495,11 +474,6 @@ white-screen {
         margin: 10px;
         padding: 10px;
     }
-}
-white-screen.visible {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 2s ease, visibility 0s;
 }
 
 p#Explain {
@@ -550,9 +524,6 @@ abbr.tooltipLore.show::after {
 
 button.buttonsForWeaponsText{
     display: none;
-}
-button.buttonsForWeaponsText.visible {
-    display: flex;
 }
 
 shop-ui {
@@ -651,4 +622,55 @@ h1#nameGame {
 .buttonContainer:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+body.location-main{
+    & main#mainGame {
+        transform: translateX(25%)
+    };
+}
+body.location-store{
+    & main#mainGame {
+        transform: translateX(0)
+    };
+    shop-ui {
+        visibility: visible;
+    }
+}
+body.location-cave{
+    & main#mainGame {
+        transform: translateX(25%)
+    };
+    & controls-for-monsters {
+        visibility: visible;
+    }
+}
+
+body.monster-fight {
+    & monster-stats {
+        display: flex;
+    }
+    & button#buttonAttack {
+        display: block;
+    }
+}
+
+body.screen-preloader {
+    & preloader-screen{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+body.screen-white {
+    & white-screen {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 2s ease, visibility 0s;
+    }
+}
+
+body.died {
+    button#white-screen-restart-button {
+        visibility: visible;
+    }
 }

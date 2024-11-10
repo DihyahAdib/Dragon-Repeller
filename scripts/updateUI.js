@@ -15,19 +15,19 @@ export function updateUI() {
     currentLocation
   } = state;
   if (currentScreen === "preloader") {
-    $("preloader-screen").classList.add("visible");
+    document.body.classList.add("screen-preloader");
+    document.body.classList.remove("screen-white");
+  } else if (currentScreen === "whiteScreen") {
+    document.body.classList.remove("screen-preloader");
+    document.body.classList.add("screen-white");
   } else {
-    $("preloader-screen").classList.remove("visible");
+    document.body.classList.remove("screen-preloader", "screen-white");
   }
-  if (currentScreen === "whiteScreen") {
-    $("white-screen").classList.add("visible");
-  } else {
-    $("white-screen").classList.remove("visible");
-  }
+
   if (currentHealth <= 0 || currentMonsterHealth[getLastIndex(monsters)] <= 0) {
-    $("button#white-screen-restart-button").classList.add("visible");
+    document.body.classList.add("died");
   } else {
-    $("button#white-screen-restart-button").classList.remove("visible");
+    document.body.classList.remove("died");
   }
   $("p#Explain").innerText = currentWhiteText;
 
@@ -36,7 +36,7 @@ export function updateUI() {
   $("player-stat span#healthText").innerText = currentHealth;
   $("player-stat span#goldText").innerText = currentGold;
 
-  $$("inventory-buttons button")[currentWeaponIndex - 1]?.classList.add(
+  $$("inventory-buttons button")[currentWeaponIndex].classList.add(
     "visible"
   );
 
@@ -48,41 +48,34 @@ export function updateUI() {
     $("span#monsterName").innerText = "No monster selected";
     $("span#monsterHealth").innerText = "";
   }
-  
+
   if (currentLocation === "main") {
-    $("main#mainGame").style.transform = "translateX(25%)";
-    $("shop-ui").classList.remove("visible");
-    $("controls-for-monsters").classList.remove("visible");
+    document.body.classList.add("location-main");
+    document.body.classList.remove("location-store", "location-cave");
     $("button.buttonBack").innerText = "Back";
     $$("controls button").forEach((button) => {
       button.disabled = false;
     });
     $("button.buttonBack").disabled = true;
   } else if (currentLocation === "store") {
-    $("controls-for-monsters").classList.remove("visible");
-    $("monster-stats").classList.remove("visible");
-    $("main#mainGame").style.transform = "translateX(0)";
+    document.body.classList.add("location-store");
+    document.body.classList.remove("location-main", "location-cave");
     $("button.buttonBack").disabled = false;
     $("button.buttonBack").innerText = "Leave Store";
-    $("shop-ui").classList.add("visible");
-
-  } else if (currentLocation === "cave") {
-    $("main#mainGame").style.transform = "translateX(25%)";
-    $("shop-ui").classList.remove("visible");
+  } else if (currentLocation === "cave"){
+    document.body.classList.add("location-cave");
+    document.body.classList.remove("location-main", "location-store");
     $("button.buttonBack").innerText = "Leave Cave";
     $("button.buttonBack").disabled = false;
-    $("controls-for-monsters").classList.add("visible");
   }
 
   if (currentMonsterIndex === null) {
-    $("button#buttonAttack").classList.remove("visible");
-    $("monster-stats").classList.remove("visible");
+    document.body.classList.remove("monster-fight");
     $$("buttons-for-monsters button").forEach((button) => {
       button.disabled = false;
     });
   } else {
-    $("button#buttonAttack").classList.add("visible");
-    $("monster-stats").classList.add("visible");
+    document.body.classList.add("monster-fight");
     $$("buttons-for-monsters button").forEach((button , i) => {
       if (i !== currentMonsterIndex){
         button.disabled = true;
