@@ -5,15 +5,9 @@ import {
   NARROW_DODGE_MONSTER_XP_REWARD,
   PLAYER_HIT_MONSTER_XP_REWARD,
 } from "./constants.js";
-import {
-  textEffect,
-  $,
-  $$,
-  getLastIndex,
-  replaceAtIndex,
-  isWithinTwo,
-  wait,
-} from "./util.js";
+import { $, $$, getLastIndex, isWithinTwo, wait } from "./util.js";
+
+import { textEffect, whiteScreenEffect, hurtScreenEffect } from "./effects.js";
 
 export async function buyHealth(amount, requiredLevel) {
   if (state.currentGold >= amount && state.currentLevel >= requiredLevel) {
@@ -181,28 +175,23 @@ export async function playerHitMonster() {
   const reward = 2 * monsterWorth;
   state.set({
     currentGold: state.currentGold + reward,
-    currentMonsterHealth: newMonsterHealth
+    currentMonsterHealth: newMonsterHealth,
   });
 
   if (newMonsterHealth <= 0) {
-    state.set({
-      currentScreen: "whiteScreen",
-      currentWhiteText: `You defeated the ${monsterName}!`,
-    });
+    whiteScreenEffect(`You defeated the ${monsterName}!`);
 
     if (state.currentMonsterIndex === getLastIndex(monsters)) {
-      //checkin for dragon
-      state.set({
-        currentScreen: "whiteScreen",
-        currentWhiteText: `You defeated the ${monsterName}! \n Press reset to play again`,
-      });
+      whiteScreenEffect(
+        `You defeated the ${monsterName}! \n Press reset to play again`
+      );
     } else {
       await wait(4000);
       state.set({
         currentMonsterIndex: null,
         currentMonsterHealth: null,
       });
-      state.set({ currentScreen: "game", currentLocation: "main" });
+      state.set({ currentLocation: "main" });
     }
   } else {
     await textEffect({
@@ -217,32 +206,18 @@ export async function monsterHitPlayer() {
   const monsterStrength = currentMonster.strength;
 
   state.set({
-    currentScreen: "hurtScreen",
     currentHealth: state.currentHealth - monsterStrength,
   });
 
-  setTimeout(() => {
-    state.set({ currentScreen: "game" });
-  }, 1000);
-
-  await flashDeathPulse();
+  await hurtScreenEffect();
 
   if (state.currentHealth <= 0) {
-    state.set({
-      currentScreen: "whiteScreen",
-      currentHealth: 0,
-      currentWhiteText: `${currentMonster.name} has bested you...`,
-    });
+    state.set({ currentHealth: 0 });
+    whiteScreenEffect(`${currentMonster.name} has bested you...`);
   } else {
     await textEffect({
       text: "You completely missed the monster and it has attacked you!",
       clearAfterMilliseconds: 1500,
     });
   }
-}
-
-async function flashDeathPulse() {
-  state.set({ currentScreen: "hurtScreen" });
-  await wait(1000);
-  state.set({ currentScreen: "main" });
 }

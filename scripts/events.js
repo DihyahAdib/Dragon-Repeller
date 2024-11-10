@@ -1,6 +1,7 @@
 import {
   $,
-  $$
+  $$,
+  hideScreens
 } from './util.js';
 
 import {
@@ -55,14 +56,8 @@ $("#white-screen-restart-button")?.addEventListener("click", function () {
   window.location.href = "/";
 });
 
-document.addEventListener("keydown", () => {
-  if (state.currentScreen === "preloader" || state.currentScreen === "whiteScreen") {
-    state.set({ currentScreen: "game", currentLocation: "main", currentMonsterIndex: null });
-  }
-});
+$("white-screen").addEventListener("keydown", hideScreens);
+$("white-screen").addEventListener("click", hideScreens);
 
-document.addEventListener("click", () => {
-  if (state.currentScreen === "preloader") {
-    state.set({ currentScreen: "game" });
-  }
-});
+$("preloader-screen").addEventListener("keydown", hideScreens);
+$("preloader-screen").addEventListener("click", hideScreens);

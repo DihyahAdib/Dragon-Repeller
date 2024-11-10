@@ -52,7 +52,6 @@ export const startingState = {
   currentXP: 0,
   currentHealth: 100,
   currentGold: 50,
-  currentScreen: "preloader",
   currentWeaponIndex: null,
   currentMonsterIndex: null,
   currentInventoryArray: [],
