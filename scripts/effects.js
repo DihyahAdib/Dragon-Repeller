@@ -1,7 +1,6 @@
 import { wait, displayLoadingText, $ } from "./util.js";
 
 
-let callCount = 0;
 export async function textEffect({
   clearAfterMilliseconds = 0,
   isLoadingText = false,
@@ -10,7 +9,7 @@ export async function textEffect({
   if (typeof text === "undefined")
     throw new Error("Error: You did not pass any text to textEffect");
 
-  const callId = ++callCount;
+  const callId = ++textEffect.callCount;
 
   if (isLoadingText) {
     await displayLoadingText(text);
@@ -20,10 +19,11 @@ export async function textEffect({
 
   await wait(clearAfterMilliseconds);
 
-  if (callId === callCount) {
+  if (callId === textEffect.callCount) {
     $("text").innerText = "";
   }
 }
+textEffect.callCount = 0;
 
 export async function whiteScreenEffect(text) {
     console.log("screen adding")
