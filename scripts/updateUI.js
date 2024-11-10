@@ -31,7 +31,7 @@ export function updateUI() {
     $("hurt-screen").classList.remove("visible");
   }
 
-  if (currentHealth <= 0 || currentMonsterHealth[getLastIndex(monsters)] <= 0) {
+  if (currentHealth <= 0) {
     document.body.classList.add("died");
   } else {
     document.body.classList.remove("died");
@@ -57,7 +57,7 @@ export function updateUI() {
   if (monsters[currentMonsterIndex]) {
     $("span#monsterName").innerText = monsters[currentMonsterIndex].name;
     $("span#monsterHealth").innerText =
-      currentMonsterHealth[currentMonsterIndex];
+      currentMonsterHealth;
   } else {
     $("span#monsterName").innerText = "No monster selected";
     $("span#monsterHealth").innerText = "";

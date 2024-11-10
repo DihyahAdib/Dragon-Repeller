@@ -1,11 +1,6 @@
 export const xpMultiplier = 1.5;
 export const monsterMultipier = 2.5;
 
-export const INITIAL_GOUL_HEALTH = 50;
-export const INITIAL_BEAST_HEALTH = 100;
-export const INITIAL_WEREWOLF_HEALTH = 200;
-export const INITIAL_DRAGON_HEALTH = 500;
-
 export const NARROW_DODGE_MONSTER_XP_REWARD = 10;
 export const OVER_SWUNG_MONSTER_XP_REWARD = 10;
 export const PLAYER_HIT_MONSTER_XP_REWARD = 90;
@@ -24,6 +19,7 @@ export const monsters = [
     worth: 10,
     requiredWeaponIndex: 0,
     requiredLevel: 0,
+    startingHealth: 50
   },
   {
     name: "Beast",
@@ -31,6 +27,7 @@ export const monsters = [
     worth: 15,
     requiredWeaponIndex: 1,
     requiredLevel: 5,
+    startingHealth: 100
   },
   {
     name: "WereWolf",
@@ -38,6 +35,7 @@ export const monsters = [
     worth: 20,
     requiredWeaponIndex: 2,
     requiredLevel: 10,
+    startingHealth: 200
   },
   {
     name: "Dragon",
@@ -45,6 +43,7 @@ export const monsters = [
     worth: 25,
     requiredWeaponIndex: 3,
     requiredLevel: 15,
+    startingHealth: 500
   },
 ];
 
@@ -57,11 +56,6 @@ export const startingState = {
   currentWeaponIndex: null,
   currentMonsterIndex: null,
   currentInventoryArray: [],
-  currentMonsterHealth: [
-    INITIAL_GOUL_HEALTH,
-    INITIAL_BEAST_HEALTH,
-    INITIAL_WEREWOLF_HEALTH,
-    INITIAL_DRAGON_HEALTH,
-  ],
+  currentMonsterHealth: null,
   currentLocation: "main"
 };

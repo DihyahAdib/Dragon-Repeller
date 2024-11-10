@@ -1,16 +1,19 @@
 import {
   weapons,
   monsters,
-  INITIAL_GOUL_HEALTH,
-  INITIAL_BEAST_HEALTH,
-  INITIAL_WEREWOLF_HEALTH,
-  INITIAL_DRAGON_HEALTH,
   OVER_SWUNG_MONSTER_XP_REWARD,
   NARROW_DODGE_MONSTER_XP_REWARD,
-  PLAYER_HIT_MONSTER_XP_REWARD
+  PLAYER_HIT_MONSTER_XP_REWARD,
 } from "./constants.js";
-import { textEffect, $, $$, getLastIndex, replaceAtIndex, isWithinTwo, wait } from "./util.js";
-
+import {
+  textEffect,
+  $,
+  $$,
+  getLastIndex,
+  replaceAtIndex,
+  isWithinTwo,
+  wait,
+} from "./util.js";
 
 export async function buyHealth(amount, requiredLevel) {
   if (state.currentGold >= amount && state.currentLevel >= requiredLevel) {
@@ -65,7 +68,7 @@ export async function justBack() {
     isLoadingText: true,
     clearAfterMilliseconds: 100,
   });
-  state.set({ currentLocation: "main" , currentMonsterIndex: null });
+  state.set({ currentLocation: "main", currentMonsterIndex: null });
 }
 
 export async function goStore() {
@@ -89,12 +92,15 @@ export async function goCave() {
 export async function fightMonster(currentMonsterIndex) {
   const {
     requiredWeaponIndex,
-    requiredLevel, 
+    requiredLevel,
     name: monsterName,
   } = monsters[currentMonsterIndex];
   const { name: weaponName } = weapons[requiredWeaponIndex];
 
-  if (state.currentWeaponIndex === null || state.currentWeaponIndex < requiredWeaponIndex) {
+  if (
+    state.currentWeaponIndex === null ||
+    state.currentWeaponIndex < requiredWeaponIndex
+  ) {
     await textEffect({
       text: `Your weapon is too weak to fight the ${monsterName}! You need ${weaponName}.`,
       clearAfterMilliseconds: 2500,
@@ -110,14 +116,15 @@ export async function fightMonster(currentMonsterIndex) {
     return;
   }
 
-  state.set({ currentMonsterIndex });
-
+  state.set({
+    currentMonsterIndex,
+    currentMonsterHealth: monsters[currentMonsterIndex].startingHealth,
+  });
 
   await textEffect({
     text: `You approach the ${monsterName}...`,
     clearAfterMilliseconds: 800,
   });
-
 }
 
 export async function playerGuess() {
@@ -138,14 +145,11 @@ export async function playerGuess() {
 
   if (playerRollNum === randomizedRollNumOutCome) {
     await playerHitMonster();
-  }
-  else if (playerRollNum === randomizedRollNumOutCome + 1) {
+  } else if (playerRollNum === randomizedRollNumOutCome + 1) {
     await overSwungMonster();
-  }
-  else if (playerRollNum === randomizedRollNumOutCome - 1) {
+  } else if (playerRollNum === randomizedRollNumOutCome - 1) {
     await narrowlyDodgedMonster();
-  }
-  else if (isWithinTwo(playerRollNum, randomizedRollNumOutCome)) {
+  } else if (isWithinTwo(playerRollNum, randomizedRollNumOutCome)) {
     await monsterHitPlayer();
   }
 }
@@ -171,30 +175,23 @@ export async function playerHitMonster() {
   const { worth: monsterWorth, name: monsterName } =
     monsters[state.currentMonsterIndex];
 
-  const currentMonsterHealth =
-    state.currentMonsterHealth[state.currentMonsterIndex];
-
   state.set({ currentXP: state.currentXP + PLAYER_HIT_MONSTER_XP_REWARD });
 
-
-  const newMonsterHealth = currentMonsterHealth - weaponStrength;
+  const newMonsterHealth = state.currentMonsterHealth - weaponStrength;
   const reward = 2 * monsterWorth;
   state.set({
     currentGold: state.currentGold + reward,
-    currentMonsterHealth: replaceAtIndex(
-      state.currentMonsterHealth,
-      state.currentMonsterIndex,
-      newMonsterHealth
-    ),
+    currentMonsterHealth: newMonsterHealth
   });
 
   if (newMonsterHealth <= 0) {
     state.set({
       currentScreen: "whiteScreen",
-      currentWhiteText: `You defeated the ${monsterName}!`
+      currentWhiteText: `You defeated the ${monsterName}!`,
     });
 
-    if (state.currentMonsterIndex === getLastIndex(monsters)) { //checkin for dragon
+    if (state.currentMonsterIndex === getLastIndex(monsters)) {
+      //checkin for dragon
       state.set({
         currentScreen: "whiteScreen",
         currentWhiteText: `You defeated the ${monsterName}! \n Press reset to play again`,
@@ -203,19 +200,10 @@ export async function playerHitMonster() {
       await wait(4000);
       state.set({
         currentMonsterIndex: null,
-        currentMonsterHealth: replaceAtIndex(
-          state.currentMonsterHealth,
-          state.currentMonsterIndex,
-          [
-            INITIAL_GOUL_HEALTH,
-            INITIAL_BEAST_HEALTH,
-            INITIAL_WEREWOLF_HEALTH,
-            INITIAL_DRAGON_HEALTH,
-          ][state.currentMonsterIndex]
-        ),
+        currentMonsterHealth: null,
       });
       state.set({ currentScreen: "game", currentLocation: "main" });
-    } 
+    }
   } else {
     await textEffect({
       text: "You hit the monster!",
@@ -225,18 +213,20 @@ export async function playerHitMonster() {
 }
 
 export async function monsterHitPlayer() {
-
   const currentMonster = monsters[state.currentMonsterIndex];
   const monsterStrength = currentMonster.strength;
 
-  state.set({currentScreen: "hurtScreen", currentHealth: state.currentHealth - monsterStrength });
-  
+  state.set({
+    currentScreen: "hurtScreen",
+    currentHealth: state.currentHealth - monsterStrength,
+  });
+
   setTimeout(() => {
-    state.set({currentScreen: "game"});
+    state.set({ currentScreen: "game" });
   }, 1000);
 
   await flashDeathPulse();
-  
+
   if (state.currentHealth <= 0) {
     state.set({
       currentScreen: "whiteScreen",
@@ -252,7 +242,7 @@ export async function monsterHitPlayer() {
 }
 
 async function flashDeathPulse() {
-  state.set({currentScreen: "hurtScreen"})
+  state.set({ currentScreen: "hurtScreen" });
   await wait(1000);
-  state.set({currentScreen: "main"});
+  state.set({ currentScreen: "main" });
 }
