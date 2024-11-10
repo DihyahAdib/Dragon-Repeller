@@ -231,6 +231,8 @@ export async function monsterHitPlayer() {
 
   state.set({ currentHealth: state.currentHealth - monsterStrength });
 
+  await flashDeathPulse();
+  
   if (state.currentHealth <= 0) {
     state.set({
       currentScreen: "whiteScreen",
@@ -243,4 +245,10 @@ export async function monsterHitPlayer() {
       clearAfterMilliseconds: 1500,
     });
   }
+}
+
+async function flashDeathPulse() {
+  state.set({currentScreen: "hurtScreen"})
+  await wait(1000);
+  state.set({currentScreen: "main"});
 }
