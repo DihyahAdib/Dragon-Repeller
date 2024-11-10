@@ -24,6 +24,10 @@
 }
 
 body {
+    margin: 0;
+}
+
+body {
     overflow: hidden;
     background-color:#1c4a70;
 }
@@ -34,8 +38,10 @@ main-game-and-shop-wrapper {
     flex-direction:row;
     flex-grow: 1;
     align-content: center;
-    justify-content: center;
-    padding: 5px;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1197px;
+    margin: 13px auto;
 }
 
 /*Chilren items*/
@@ -61,12 +67,6 @@ inventory-ui {
 }
 
 
-
-main-game-wrapper, shop-ui-wrapper {
-    margin-left: 1.35em;
-    margin-right: 1.35em;
-}
-
 main#mainGame {
     color: white;
     background-color: lightgray;
@@ -74,6 +74,8 @@ main#mainGame {
     border-radius: 10px 10px;
     width: 47em;
     height: 97vh;
+    padding: 0 45px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column; 
     justify-content: flex-start;
@@ -87,9 +89,8 @@ stats {
     border-radius: 24px 12px;
     color: black;
     height: 40px;
-    margin: 1em;
     text-align: center;
-    width: 40em;
+    width: 100%;
 }
 
 player-stat { /**/
@@ -101,12 +102,12 @@ player-stat { /**/
 
 controls {
     display: grid;
-    margin: 0.85em;
     border: 3px black solid;
     border-radius: 20px 12px;
     padding: 8px;
-    min-width: 80%;
-    width: 85%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 30px 0 14px;
 }
 
 
@@ -125,19 +126,18 @@ text { /**/
     font-family: "NORM";
     font-weight: 560;
     height: 180px;
-    width: 85%;
     background-color: rgba(0, 0, 0, 0.822);
     color: white;
     padding: 5px;
     font-size: 22px;
     text-align: center;
     border-radius: 20px;
+    width: 100%;
 }
 
 controls-for-monsters {
-    visibility: hidden;
+    display: none;
     height: 120px;
-    display: flex;
     justify-content: center;
     align-items: center;    
     gap: 10px; 
@@ -539,6 +539,7 @@ reset-button-wrapper {
     display: grid;
     grid-template-columns: 0.2fr 3fr;
     align-items: center;
+    margin-bottom: 1em;
 }
 
 .buttonContainer {
@@ -658,7 +659,7 @@ body.location-cave{
         transform: translateX(25%)
     };
     & controls-for-monsters {
-        visibility: visible;
+        display: flex;
     }
 }
 
