@@ -570,8 +570,8 @@ h1#nameGame {
     width: 50px;
     border: none;
     display: flex;
-    align-items: center; /*THIS IS FOR CENTERING THE ARROW PICTURE NOT THE ENTIRE BUTTON ITSELF(i keep forgetting)*/
-    justify-content: center; /*THIS IS FOR CENTERING THE ARROW PICTURE NOT THE ENTIRE BUTTON ITSELF(i keep forgetting)*/
+    align-items: center;
+    justify-content: center; 
 }
 
 .buttonInner {
