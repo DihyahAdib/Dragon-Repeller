@@ -333,9 +333,6 @@ preloader-screen {
     align-items: center;
     z-index: 100;
     animation: fadeOut 3.3s ease-out forwards 5s;
-    opacity: 0;
-    visibility: hidden;
-
 }
 
 @keyframes fadeOut {
@@ -468,7 +465,6 @@ white-screen {
     opacity: 0;
     z-index: 100;
     visibility: hidden;
-    transition: opacity 2s ease, visibility 0s 2s;
     
     & white-screen-text-wrapper {
         margin: 10px;
@@ -636,11 +632,14 @@ hurt-screen {
     z-index: 100;
     transition: opacity 0.21s ease;
     pointer-events: none;
+}
+body.hurt-screen {
 
-    &.visible{
+    & hurt-screen {
         opacity: 1;
     }
 }
+
 body.location-main{
     & main#mainGame {
         transform: translateX(25%)
@@ -672,13 +671,13 @@ body.monster-fight {
     }
 }
 
-body.screen-preloader {
+body.preloader-screen {
     & preloader-screen{
         opacity: 1;
         visibility: visible;
     }
 }
-body.screen-white {
+body.white-screen {
     & white-screen {
         opacity: 1;
         visibility: visible;
@@ -703,11 +702,8 @@ hurt-screen {
     z-index: 100;
     transition: opacity 0.3s ease;
     pointer-events: none;
-
-    &.visible{
-        opacity: 1;
-    }
 }
+
 body.location-main{
     & main#mainGame {
         transform: translateX(25%)
@@ -739,17 +735,18 @@ body.monster-fight {
     }
 }
 
-body.screen-preloader {
-    & preloader-screen{
+body.white-screen {
+    & white-screen {
         opacity: 1;
         visibility: visible;
     }
 }
-body.screen-white {
-    & white-screen {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 2s ease, visibility 0s;
+
+body.skip-preloader {
+
+    & preloader-screen {
+        opacity: 0;
+        visibility: hidden;
     }
 }
 

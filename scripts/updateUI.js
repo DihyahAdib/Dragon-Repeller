@@ -10,40 +10,14 @@ export function updateUI() {
     currentWeaponIndex,
     currentMonsterIndex,
     currentMonsterHealth,
-    currentScreen,
-    currentWhiteText,
     currentLocation
   } = state;
-  
-  if (currentScreen === "preloader") {
-    document.body.classList.add("screen-preloader");
-    document.body.classList.remove("screen-white");
-  } else if (currentScreen === "whiteScreen") {
-    document.body.classList.remove("screen-preloader");
-    document.body.classList.add("screen-white");
-  } else {
-    document.body.classList.remove("screen-preloader", "screen-white");
-  }
-
-  if (currentScreen === "hurtScreen") {
-    $("hurt-screen").classList.add("visible");
-  } else {
-    $("hurt-screen").classList.remove("visible");
-  }
 
   if (currentHealth <= 0) {
     document.body.classList.add("died");
   } else {
     document.body.classList.remove("died");
   }
-
-  if (currentScreen === "hurtScreen") {
-    $("hurt-screen").classList.add("visible");
-  } else {
-    $("hurt-screen").classList.remove("visible");
-  }
-
-  $("p#Explain").innerText = currentWhiteText;
 
   $("player-stat span#levelText").innerText = currentLevel;
   $("player-stat span#xpText").innerText = currentXP;
@@ -94,6 +68,12 @@ export function updateUI() {
       if (i !== currentMonsterIndex){
         button.disabled = true;
       }
+      // if (state.currentHealth <= state.currentHealth / 2) {
+      //   $("hurt-screen").style.opacity = "0.2";
+    
+      // } else if (state.currentHealth < state.currentHealth / 3) {
+      //   $("hurt-screen").style.opacity = "0.8";
+      // }
     });
 
     $$(".buttonStore,.buttonCave").forEach((button) => {
