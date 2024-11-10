@@ -691,3 +691,53 @@ hurt-screen {
         opacity: 1;
     }
 }
+body.location-main{
+    & main#mainGame {
+        transform: translateX(25%)
+    };
+}
+body.location-store{
+    & main#mainGame {
+        transform: translateX(0)
+    };
+    shop-ui {
+        visibility: visible;
+    }
+}
+body.location-cave{
+    & main#mainGame {
+        transform: translateX(25%)
+    };
+    & controls-for-monsters {
+        visibility: visible;
+    }
+}
+
+body.monster-fight {
+    & monster-stats {
+        display: flex;
+    }
+    & button#buttonAttack {
+        display: block;
+    }
+}
+
+body.screen-preloader {
+    & preloader-screen{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+body.screen-white {
+    & white-screen {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 2s ease, visibility 0s;
+    }
+}
+
+body.died {
+    button#white-screen-restart-button {
+        visibility: visible;
+    }
+}
