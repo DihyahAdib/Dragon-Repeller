@@ -209,7 +209,7 @@ export async function monsterHitPlayer() {
     currentHealth: state.currentHealth - monsterStrength,
   });
 
-  await hurtScreenEffect();
+  hurtScreenEffect();
 
   if (state.currentHealth <= 0) {
     state.set({ currentHealth: 0 });
