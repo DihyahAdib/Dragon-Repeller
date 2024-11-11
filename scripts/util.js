@@ -30,7 +30,6 @@ export function isWithinTwo(num1, num2) {
 }
 
 export function hideScreens() {
-  console.log("screen hidden")
   document.body.classList.add("skip-preloader");
   document.body.classList.remove("white-screen");
 }
