@@ -49,7 +49,7 @@ $("hp-buttons button, weapon-buttons button, inventory-buttons button").each(fun
   });
 });
 
-$("#white-screen-restart-button")?.on("click", function () {
+$("#white-screen-restart-button").on("click", function () {
   localStorage.removeItem("state");
   window.location.href = "/";
 });
