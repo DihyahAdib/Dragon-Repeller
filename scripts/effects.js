@@ -1,4 +1,4 @@
-import { wait, displayLoadingText, $ } from "./util.js";
+import { wait, displayLoadingText } from "./util.js";
 
 
 export async function textEffect({
@@ -14,25 +14,25 @@ export async function textEffect({
   if (isLoadingText) {
     await displayLoadingText(text);
   } else {
-    $("text").innerText = text;
+    $("text").html(text);
   }
 
   await wait(clearAfterMilliseconds);
 
   if (callId === textEffect.callCount) {
-    $("text").innerText = "";
+    $("text").empty();
   }
 }
 textEffect.callCount = 0;
 
 export async function whiteScreenEffect(text) {
     console.log("screen adding")
-    document.body.classList.add("white-screen");
-    $("p#Explain").innerText = text;
+    $(document.body).addClass("white-screen");
+    $("p#Explain").text(text);
 };
 
 export async function hurtScreenEffect() {
-    document.body.classList.add("hurt-screen");
+    $(document.body).addClass("hurt-screen");
     await wait(1200);
-    document.body.classList.remove("hurt-screen");
+    $(document.body).removeClass("hurt-screen");
 }

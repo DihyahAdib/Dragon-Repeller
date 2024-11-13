@@ -1,5 +1,4 @@
 import { monsters } from "./constants.js";
-import { $, $$, getLastIndex } from "./util.js";
 
 export function updateUI() { 
   const {
@@ -19,54 +18,43 @@ export function updateUI() {
     document.body.classList.remove("died");
   }
 
-  $("player-stat span#levelText").innerText = currentLevel;
-  $("player-stat span#xpText").innerText = currentXP;
-  $("player-stat span#healthText").innerText = currentHealth;
-  $("player-stat span#goldText").innerText = currentGold;
+  $("player-stat span#levelText").text(currentLevel);
+  $("player-stat span#xpText").text(currentXP);
+  $("player-stat span#healthText").text(currentHealth);
+  $("player-stat span#goldText").text(currentGold);
 
-  $$("inventory-buttons button")[currentWeaponIndex]?.classList.add(
-    "visible"
-  );
+  $(".inventory-buttons button").eq(currentWeaponIndex).addClass("visible");
+
 
   if (monsters[currentMonsterIndex]) {
-    $("span#monsterName").innerText = monsters[currentMonsterIndex].name;
-    $("span#monsterHealth").innerText =
-      currentMonsterHealth;
+    $("span#monsterName").text(monsters[currentMonsterIndex].name)
+    $("span#monsterHealth").text(currentMonsterHealth)
   } else {
-    $("span#monsterName").innerText = "No monster selected";
-    $("span#monsterHealth").innerText = "";
+    $("span#monsterName").text("No monster selected");
+    $("span#monsterHealth").empty();
   }
 
   if (currentLocation === "main") {
-    document.body.classList.add("location-main");
-    document.body.classList.remove("location-store", "location-cave");
-    $("button.buttonBack").innerText = "Back";
-    $$("controls button").forEach((button) => {
-      button.disabled = false;
-    });
-    $("button.buttonBack").disabled = true;
+    $(document.body).addClass("location-main").removeClass("location-store location-cave");
+    $("button.buttonBack").text("Back").prop("disabled", true);;
+    $("controls button").prop("disabled", false);
   } else if (currentLocation === "store") {
-    document.body.classList.add("location-store");
-    document.body.classList.remove("location-main", "location-cave");
-    $("button.buttonBack").disabled = false;
-    $("button.buttonBack").innerText = "Leave Store";
+    $(document.body).addClass("location-store").removeClass("location-main", "location-cave");;
+    $("button.buttonBack").prop("disabled", false).text("Leave Store");
   } else if (currentLocation === "cave"){
-    document.body.classList.add("location-cave");
-    document.body.classList.remove("location-main", "location-store");
-    $("button.buttonBack").innerText = "Leave Cave";
-    $("button.buttonBack").disabled = false;
+    $(document.body).addClass("location-cave").removeClass("location-main location-store");
+    $("button.buttonBack").text("Leave Cave").prop("disabled", false);
   }
 
   if (currentMonsterIndex === null) {
-    document.body.classList.remove("monster-fight");
-    $$("buttons-for-monsters button").forEach((button) => {
-      button.disabled = false;
-    });
+    $(document.body).removeClass("monster-fight");
+    $("buttons-for-monsters button").prop("disabled", false);
   } else {
-    document.body.classList.add("monster-fight");
-    $$("buttons-for-monsters button").forEach((button , i) => {
+    $(document.body).addClass("monster-fight");
+
+    $("buttons-for-monsters button").each(function(i){
       if (i !== currentMonsterIndex){
-        button.disabled = true;
+        $(this).prop("disabled",true);
       }
       // if (state.currentHealth <= state.currentHealth / 2) {
       //   $("hurt-screen").style.opacity = "0.2";
@@ -76,9 +64,7 @@ export function updateUI() {
       // }
     });
 
-    $$(".buttonStore,.buttonCave").forEach((button) => {
-      button.disabled = true;
-    });
+    $(".buttonStore,.buttonCave").prop("disabled", true);
 
   }
 
