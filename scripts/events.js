@@ -1,6 +1,4 @@
 import {
-  $,
-  $$,
   hideScreens
 } from './util.js';
 
@@ -16,48 +14,48 @@ import {
 
 
 //amount, and required level.
-$("button#button10HP").onclick = () => buyHealth(10, 0);
-$("button#button50HP").onclick = () => buyHealth(50, 10);
-$("button#button100HP").onclick = () => buyHealth(100, 15);
+$("button#button10HP").on("click", () => buyHealth(10, 0));
+$("button#button50HP").on("click", () => buyHealth(50, 10));
+$("button#button100HP").on("click", () => buyHealth(100, 15));
 
-$("button.buttonBack").onclick = () => justBack();
-$("button.buttonStore").onclick = () => goStore();
-$("button.buttonCave").onclick = () => goCave();
-$("button.buttonRestart").onclick = () => {
-  $("button.buttonRestart").classList.add("spin");
+$("button.buttonBack").on("click", justBack);
+$("button.buttonStore").on("click", goStore);
+$("button.buttonCave").on("click", goCave);
+$("button.buttonRestart").on("click", () => {
+  $("button.buttonRestart").addClass("spin");
   localStorage.removeItem("state");
   window.location.href = "/";
-};
+});
 
 //currentWeaponIndex, cost, required Level.
-$("button#buttonSword").onclick = () => buyWeapon(0, 30);
-$("button#buttonScythe").onclick = () => buyWeapon(1, 50, 5);
-$("button#buttonGreatHammer").onclick = () => buyWeapon(2, 150, 10);
-$("button#buttonExcalibur").onclick = () => buyWeapon(3, 250, 15);
+$("button#buttonSword").on("click", () => buyWeapon(0, 30))
+$("button#buttonScythe").on("click", () => buyWeapon(1, 50, 5))
+$("button#buttonGreatHammer").on("click", () => buyWeapon(2, 150, 10))
+$("button#buttonExcalibur").on("click", () => buyWeapon(3, 250, 15))
 
-$("button#buttonGhoul").onclick = () => fightMonster(0);
-$("button#buttonBeast").onclick = () => fightMonster(1);
-$("button#buttonWereWolf").onclick = () => fightMonster(2);
-$("button#buttonDragon").onclick = () => fightMonster(3);
+$("button#buttonGhoul").on("click", () => fightMonster(0))
+$("button#buttonBeast").on("click", () => fightMonster(1))
+$("button#buttonWereWolf").on("click", () => fightMonster(2))
+$("button#buttonDragon").on("click", () => fightMonster(3))
 
-$("button#buttonAttack").onclick = playerGuess;
+$("button#buttonAttack").on("click", playerGuess)
 
-$$("hp-buttons button, weapon-buttons button, inventory-buttons button").forEach((button) => {
-  button.addEventListener("mouseover", () => {
-    button.querySelector("abbr").classList.add("show");
+$("hp-buttons button, weapon-buttons button, inventory-buttons button").each(function() {
+  $(this).on("mouseover", () => {
+    $(this).find("abbr").addClass("show");
   });
-  button.addEventListener("mouseout", () => {
-    button.querySelector("abbr").classList.remove("show");
+  $(this).on("mouseout", () => {
+    $(this).find("abbr").removeClass("show");
   });
 });
 
-$("#white-screen-restart-button")?.addEventListener("click", function () {
+$("#white-screen-restart-button").on("click", function () {
   localStorage.removeItem("state");
   window.location.href = "/";
 });
 
-$("white-screen").addEventListener("keydown", hideScreens);
-$("white-screen").addEventListener("click", hideScreens);
+$("white-screen").on("keydown", hideScreens);
+$("white-screen").on("click", hideScreens);
 
-$("preloader-screen").addEventListener("keydown", hideScreens);
-$("preloader-screen").addEventListener("click", hideScreens);
+$("preloader-screen").on("keydown", hideScreens);
+$("preloader-screen").on("click", hideScreens);

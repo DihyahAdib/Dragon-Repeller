@@ -5,7 +5,7 @@ import {
   NARROW_DODGE_MONSTER_XP_REWARD,
   PLAYER_HIT_MONSTER_XP_REWARD,
 } from "./constants.js";
-import { $, $$, getLastIndex, isWithinTwo, wait } from "./util.js";
+import { getLastIndex, isWithinTwo, wait } from "./util.js";
 
 import { textEffect, whiteScreenEffect, hurtScreenEffect } from "./effects.js";
 
